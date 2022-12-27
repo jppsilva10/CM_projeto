@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_workout"
+        android:icon="@drawable/ic_gym"
+        android:title="@string/title_workout" />
+
+    <item
+        android:id="@+id/navigation_nutrition"
+        android:icon="@drawable/ic_restaurant"
+        android:title="@string/title_nutrition" />
+
+    <item
+        android:id="@+id/navigation_account"
+        android:icon="@drawable/ic_user"
+        android:title="@string/title_account" />
+
+</menu>

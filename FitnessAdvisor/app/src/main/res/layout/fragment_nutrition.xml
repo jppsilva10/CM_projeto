@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    tools:context=".NutritionFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:elevation="6dp"
+
+            android:orientation="vertical"
+            android:background="@drawable/nutrition_header">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:text="Nutrition"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="50dp"
+                android:clipToPadding="false">
+
+                <LinearLayout
+                    android:id="@+id/view"
+                    android:layout_width="150dp"
+                    android:layout_height="180dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/nutrition_div"
+                    android:elevation="6dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" >
+
+
+                    <TextView
+                        android:id="@+id/caloriesLabel"
+                        style="@style/LableNutrition"
+                        android:text="Consumed Calories" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/view2"
+                    android:layout_width="150dp"
+                    android:layout_height="120dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/nutrition_div"
+                    android:elevation="6dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" >
+
+                    <TextView
+                        android:id="@+id/textView"
+                        style="@style/LableNutrition"
+                        android:text="BMR" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="120dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/nutrition_div"
+                    android:elevation="6dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" >
+
+                    <TextView
+                        android:id="@+id/hydrationLabel"
+                        style="@style/LableNutrition"
+                        android:text="Hydration" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="180dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/nutrition_div"
+                    android:elevation="6dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" >
+
+                    <TextView
+                        android:id="@+id/macronutrientsLabel"
+                        style="@style/LableNutrition"
+                        android:text="macronutrients" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/body"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <ExpandableListView
+                android:id="@+id/expandableListView"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+                android:divider="#A4C739"
+                android:dividerHeight="0.5dp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</FrameLayout>
