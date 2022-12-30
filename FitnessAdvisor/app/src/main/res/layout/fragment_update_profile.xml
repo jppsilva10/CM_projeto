@@ -69,7 +69,7 @@
                 android:paddingBottom="20dp">
 
                 <TextView
-                    android:id="@+id/NameLable"
+                    android:id="@+id/nameLable"
                     style="@style/Lable"
                     android:layout_marginLeft="25dp"
                     android:layout_width="wrap_content"
@@ -81,7 +81,7 @@
 
 
                 <EditText
-                    android:id="@+id/NameValue"
+                    android:id="@+id/nameValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

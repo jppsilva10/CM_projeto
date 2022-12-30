@@ -64,6 +64,8 @@ public class AccountFragment extends Fragment implements TaskManager.Callback{
         }
         this.profile = profile;
         TextView text;
+        text = v.findViewById(R.id.username);
+        text.setText(profile.name);
         text = v.findViewById(R.id.genderValue);
         text.setText(profile.gender);
         text = v.findViewById(R.id.ageValue);
