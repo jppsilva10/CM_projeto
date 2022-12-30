@@ -17,7 +17,7 @@ public interface ProfileDao {
     Profile loadById(long id);
 
     @Insert
-    void insert(Profile profile);
+    static void insert(Profile profile);
 
     @Delete
     void delete(Profile profile);

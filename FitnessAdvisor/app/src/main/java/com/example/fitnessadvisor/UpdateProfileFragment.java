@@ -64,7 +64,7 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
 
     @Override
     public void onLoadProfileComplete(Profile profile) {
-        
+
         this.profile = profile;
     }
 

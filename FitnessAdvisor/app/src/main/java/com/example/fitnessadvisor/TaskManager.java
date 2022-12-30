@@ -44,7 +44,7 @@ public class TaskManager {
         executor.execute(() -> {
 
             ProfileDao profileDao = db.profileDao();
-            ProfileDao.insert(profile);
+            profileDao.insert(profile);
 
             handler.post(() -> {
                 calback.onProfileUpdateComplete(profile);
