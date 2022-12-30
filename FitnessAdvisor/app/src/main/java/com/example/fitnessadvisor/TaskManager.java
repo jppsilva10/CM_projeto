@@ -21,7 +21,7 @@ public class TaskManager {
     }
 
     public interface Callback{
-        void onLoadProfileComplete(Profile profile);
+        void onLoadProfileComplete(Profile profile, boolean empty);
         void onProfileUpdateComplete(Profile profile);
     }
 
@@ -30,12 +30,13 @@ public class TaskManager {
 
             ProfileDao profileDao = db.profileDao();
             List<Profile> profiles = profileDao.getAll();
-            Profile profile = null;
+            Profile profile = new Profile();
             if(profiles.size()!=0)
                 profile = profiles.get(0);
 
+            Profile finalProfile = profile;
             handler.post(() -> {
-                calback.onLoadProfileComplete(profile);
+                calback.onLoadProfileComplete(finalProfile, profiles.size()==0);
             });
         });
     }

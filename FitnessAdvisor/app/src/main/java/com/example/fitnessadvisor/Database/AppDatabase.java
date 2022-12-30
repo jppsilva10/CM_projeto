@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 @Database(
-        entities = {Workout.class, Exercise.class, Profile.class},
+        entities = {Workout.class, Exercise.class, Profile.class, Workout_Exercise.class},
         version = 1
 )
 @TypeConverters(Converters.class)

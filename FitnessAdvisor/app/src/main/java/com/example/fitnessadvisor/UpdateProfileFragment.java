@@ -96,6 +96,15 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
                 text = act.findViewById(R.id.weightValue);
                 p.weight = Float.parseFloat(text.getText().toString());
 
+                text = act.findViewById(R.id.targetWeightValue);
+                p.target_weight = Float.parseFloat(text.getText().toString());
+
+                text = act.findViewById(R.id.goalDeadlineValue);
+                try {
+                    p.goal_deadline = new SimpleDateFormat("dd/MM/yyyy").parse(text.getText().toString());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
                 if (profile == null) {
                     taskManager.executeProfileInsertionAsync(viewmodel.getDB(), p);
@@ -118,8 +127,8 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
     }
 
     @Override
-    public void onLoadProfileComplete(Profile profile) {
-        if (profile != null) {
+    public void onLoadProfileComplete(Profile profile, boolean empty) {
+        if (!empty) {
             this.profile = profile;
 
             MainActivity act = (MainActivity) getActivity();

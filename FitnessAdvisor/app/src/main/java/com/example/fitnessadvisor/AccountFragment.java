@@ -54,13 +54,14 @@ public class AccountFragment extends Fragment implements TaskManager.Callback{
     }
 
     @Override
-    public void onLoadProfileComplete(Profile profile) {
-        if(profile == null){
+    public void onLoadProfileComplete(Profile profile, boolean empty) {
+        if(empty){
             getActivity()
                     .getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container_view, NoProfileFragment.class, null)
                     .commit();
+            return;
         }
         this.profile = profile;
         TextView text;
@@ -75,7 +76,7 @@ public class AccountFragment extends Fragment implements TaskManager.Callback{
         Calendar bd = Calendar.getInstance();
         bd.setTime(profile.birth_date);
         int age = now.get(Calendar.YEAR) - bd.get(Calendar.YEAR);
-        if (now.get(Calendar.MONTH) > bd.get(Calendar.MONTH) || now.get(Calendar.MONTH) == bd.get(Calendar.MONTH) && now.get(Calendar.DATE) > bd.get(Calendar.DATE))) {
+        if (now.get(Calendar.MONTH) > bd.get(Calendar.MONTH) || now.get(Calendar.MONTH) == bd.get(Calendar.MONTH) && now.get(Calendar.DATE) > bd.get(Calendar.DATE)) {
             age--;
         }
 
