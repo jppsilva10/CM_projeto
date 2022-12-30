@@ -3,19 +3,24 @@ package com.example.fitnessadvisor;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.fitnessadvisor.Database.AppDatabase;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.room.Room;
 
 import com.example.fitnessadvisor.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
+    protected SharedViewModel viewModel;
+    protected AppDatabase db;
     BottomNavigationView navView;
 
     @Override
@@ -27,6 +32,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         navView.setOnNavigationItemSelectedListener(this);
         navView.setSelectedItemId(R.id.navigation_account);
+
+        db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "MyDatabase").build();
+
+        viewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+        viewModel.setDB(db);
 
     }
 
@@ -47,6 +58,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 return true;
         }
         return false;
+    }
+
+    public SharedViewModel getViewModel(){
+        return viewModel;
     }
 
 }
