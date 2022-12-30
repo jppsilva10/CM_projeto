@@ -2,6 +2,8 @@ package com.example.fitnessadvisor;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -21,7 +23,7 @@ public class AccountFragment extends Fragment implements TaskManager.Callback{
     protected View v;
 
     protected SharedViewModel viewmodel;
-    protected Profile profile;
+    protected Profile profile = null;
 
     protected TaskManager taskManager = new TaskManager(this);
 
@@ -63,29 +65,31 @@ public class AccountFragment extends Fragment implements TaskManager.Callback{
                     .commit();
             return;
         }
+        MainActivity act = (MainActivity) getActivity();
+
         this.profile = profile;
         TextView text;
-        text = v.findViewById(R.id.username);
+        text = act.findViewById(R.id.username);
         text.setText(profile.name);
-        text = v.findViewById(R.id.genderValue);
+        text = act.findViewById(R.id.genderValue);
         text.setText(profile.gender);
-        text = v.findViewById(R.id.ageValue);
+        text = act.findViewById(R.id.ageValue);
 
         Calendar now = Calendar.getInstance();
         now.setTime(new Date(System.currentTimeMillis()));
         Calendar bd = Calendar.getInstance();
         bd.setTime(profile.birth_date);
-        int age = now.get(Calendar.YEAR) - bd.get(Calendar.YEAR);
-        if (now.get(Calendar.MONTH) > bd.get(Calendar.MONTH) || now.get(Calendar.MONTH) == bd.get(Calendar.MONTH) && now.get(Calendar.DATE) > bd.get(Calendar.DATE)) {
+        int age = now.YEAR - bd.YEAR;
+        if (now.MONTH > bd.MONTH || now.MONTH == bd.MONTH && now.DAY_OF_MONTH > bd.DAY_OF_MONTH) {
             age--;
         }
 
-        text.setText(age);
-        text = v.findViewById(R.id.lifeStyleValue);
+        text.setText("" + age);
+        text = act.findViewById(R.id.lifeStyleValue);
         text.setText(profile.life_style);
-        text = v.findViewById(R.id.heightValue);
+        text = act.findViewById(R.id.heightValue);
         text.setText(""+profile.height);
-        text = v.findViewById(R.id.weightValue);
+        text = act.findViewById(R.id.weightValue);
         text.setText(""+profile.weight);
     }
 

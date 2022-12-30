@@ -1,5 +1,6 @@
 package com.example.fitnessadvisor;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,7 +29,7 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
     protected View v;
 
     protected SharedViewModel viewmodel;
-    protected Profile profile;
+    protected Profile profile = null;
 
     protected TaskManager taskManager = new TaskManager(this);
 
@@ -65,9 +67,10 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
 
         MainActivity act = (MainActivity) getActivity();
 
-        Button b = act.findViewById(R.id.create_profile);
+        Button b = act.findViewById(R.id.updateProfile);
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
                 Profile p = new Profile();
 
                 MainActivity act = (MainActivity) getActivity();
@@ -103,6 +106,7 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
                 try {
                     p.goal_deadline = new SimpleDateFormat("dd/MM/yyyy").parse(text.getText().toString());
                 } catch (ParseException e) {
+                    System.out.println("-------ERRO--------");
                     e.printStackTrace();
                 }
 
@@ -123,6 +127,46 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
         adapter = ArrayAdapter.createFromResource(act, R.array.lifeStyles, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
+
+        EditText date1 = (EditText) act.findViewById(R.id.birthDateValue);
+        date1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(act, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        date1.setText(new StringBuilder().append(day).append("/").append(month+1).append("/").append(year));
+                    }
+                }, year, month, day);
+                datePickerDialog.show();
+            }
+        });
+
+        EditText date2 = (EditText) act.findViewById(R.id.goalDeadlineValue);
+        date2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(act, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        date2.setText(new StringBuilder().append(day).append("/").append(month+1).append("/").append(year));
+                    }
+                }, year, month, day);
+                datePickerDialog.show();
+            }
+        });
 
     }
 
@@ -174,6 +218,7 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
 
     @Override
     public void onProfileUpdateComplete(Profile profile) {
+        System.out.println("---------updated---------");
         this.profile = profile;
         getActivity()
                 .getSupportFragmentManager()

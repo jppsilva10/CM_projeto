@@ -29,11 +29,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
                     android:text="Personal Information"
                     android:textColor="#FFFFFF"
                     android:textSize="20dp"
                     android:textStyle="bold"
-                    android:layout_marginLeft="20dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -53,286 +53,290 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/body"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/account_body"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/row1"
+                android:id="@+id/body"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
+                android:layout_height="match_parent"
+                android:background="@drawable/account_body"
+                android:orientation="vertical"
+                android:paddingBottom="?android:attr/actionBarSize">
 
-                <TextView
-                    android:id="@+id/nameLable"
-                    style="@style/Lable"
-                    android:layout_marginLeft="25dp"
+                <LinearLayout
+                    android:id="@+id/row1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/nameLable"
+                        style="@style/Lable"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:paddingRight="20dp"
+                        android:text="Name:"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+
+                    <EditText
+                        android:id="@+id/nameValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="textPersonName"
+                        android:text="" />
+                </LinearLayout>
+
+                <View style="@style/HorizontalDivider" />
+
+                <LinearLayout
+                    android:id="@+id/row2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/genderLable"
+                        style="@style/Lable"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:paddingRight="20dp"
+                        android:text="Gender:"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/genderValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"
+                        android:spinnerMode="dropdown" />
+
+                </LinearLayout>
+
+                <View style="@style/HorizontalDivider" />
+
+                <LinearLayout
+                    android:id="@+id/row3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/birthDateLable"
+                        style="@style/Lable"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:paddingRight="20dp"
+                        android:text="Birth Date:"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/birthDateValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="date" />
+
+                </LinearLayout>
+
+                <View style="@style/HorizontalDivider" />
+
+                <LinearLayout
+                    android:id="@+id/row4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/heightLable"
+                        style="@style/Lable"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:paddingRight="20dp"
+                        android:text="Height:"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/heightValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:text="" />
+
+                </LinearLayout>
+
+                <View style="@style/HorizontalDivider" />
+
+                <LinearLayout
+                    android:id="@+id/row5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/weightLable"
+                        style="@style/Lable"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:paddingRight="20dp"
+                        android:text="Weight:"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/weightValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="numberDecimal"
+                        android:text="" />
+
+                </LinearLayout>
+
+                <View style="@style/HorizontalDivider" />
+
+                <LinearLayout
+                    android:id="@+id/row6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/lifeStyleLable"
+                        style="@style/Lable"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:paddingRight="20dp"
+                        android:text="Life Style:"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/lifeStyleValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"
+                        android:spinnerMode="dropdown" />
+
+                </LinearLayout>
+
+                <View style="@style/HorizontalDivider" />
+
+                <LinearLayout
+                    android:id="@+id/row7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/targetWeightLable"
+                        style="@style/Lable"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:paddingRight="20dp"
+                        android:text="Target Weight:"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/targetWeightValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="numberDecimal"
+                        android:text="" />
+
+                </LinearLayout>
+
+                <View style="@style/HorizontalDivider" />
+
+                <LinearLayout
+                    android:id="@+id/row8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/goalDeadlineLable"
+                        style="@style/Lable"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:paddingRight="20dp"
+                        android:text="Goal Deadline:"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/goalDeadlineValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="date"
+                        android:text="" />
+
+                </LinearLayout>
+
+                <View style="@style/HorizontalDivider" />
+
+                <Button
+                    android:id="@+id/updateProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name:"
-                    android:textStyle="bold"
-                    android:textSize="20dp"
-                    android:paddingRight="20dp"/>
-
-
-                <EditText
-                    android:id="@+id/nameValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text=""
-                    android:layout_marginRight="20dp"/>
-            </LinearLayout>
-
-            <View
-                style="@style/HorizontalDivider"/>
-
-            <LinearLayout
-                android:id="@+id/row2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
-
-                <TextView
-                    android:id="@+id/genderLable"
-                    style="@style/Lable"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:paddingRight="20dp"
-                    android:text="Gender:"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-                <Spinner
-                    android:id="@+id/genderValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:spinnerMode="dropdown"
-                    android:layout_marginRight="20dp"/>
-
-            </LinearLayout>
-            <View
-                style="@style/HorizontalDivider"/>
-
-            <LinearLayout
-                android:id="@+id/row3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
-
-                <TextView
-                    android:id="@+id/birthDateLable"
-                    style="@style/Lable"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:paddingRight="20dp"
-                    android:text="Birth Date:"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/birthDateValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="date"
-                    android:text=""
-                    android:layout_marginRight="20dp"/>
-
-            </LinearLayout>
-            <View
-                style="@style/HorizontalDivider"/>
-
-            <LinearLayout
-                android:id="@+id/row4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
-
-                <TextView
-                    android:id="@+id/heightLable"
-                    style="@style/Lable"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:paddingRight="20dp"
-                    android:text="Height:"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/heightValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
                     android:layout_marginRight="20dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="number"
-                    android:text="" />
-
-            </LinearLayout>
-            <View
-                style="@style/HorizontalDivider"/>
-
-            <LinearLayout
-                android:id="@+id/row5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
-
-                <TextView
-                    android:id="@+id/weightLable"
-                    style="@style/Lable"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
+                    android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:text="Weight:"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:text="Save" />
 
-                <EditText
-                    android:id="@+id/weightValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="numberDecimal"
-                    android:text="" />
 
             </LinearLayout>
-            <View
-                style="@style/HorizontalDivider"/>
-
-            <LinearLayout
-                android:id="@+id/row6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
-
-                <TextView
-                    android:id="@+id/lifeStyleLable"
-                    style="@style/Lable"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:paddingRight="20dp"
-                    android:text="Life Style:"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-                <Spinner
-                    android:id="@+id/lifeStyleValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:spinnerMode="dropdown"
-                    android:layout_marginRight="20dp"/>
-
-            </LinearLayout>
-            <View
-                style="@style/HorizontalDivider"/>
-
-            <LinearLayout
-                android:id="@+id/row7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
-
-                <TextView
-                    android:id="@+id/targetWeightLable"
-                    style="@style/Lable"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:paddingRight="20dp"
-                    android:text="Target Weight:"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/targetWeightValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="numberDecimal"
-                    android:text="" />
-
-            </LinearLayout>
-            <View
-                style="@style/HorizontalDivider"/>
-
-            <LinearLayout
-                android:id="@+id/row8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
-
-                <TextView
-                    android:id="@+id/goalDeadlineLable"
-                    style="@style/Lable"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:paddingRight="20dp"
-                    android:text="Goal Deadline:"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/goalDeadlineValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="date"
-                    android:text=""
-                    android:layout_marginRight="20dp"/>
-
-            </LinearLayout>
-            <View
-                style="@style/HorizontalDivider"/>
-
-            <Button
-                android:id="@+id/updateProfile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="20dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="Save" />
-
-
-        </LinearLayout>
+        </ScrollView>
 
     </LinearLayout>
 </FrameLayout>
