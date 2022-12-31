@@ -18,8 +18,12 @@
 
         <ListView
             android:id="@+id/workout_list"
-            android:layout_width="match_parent"
-            android:layout_height="422dp" />
+            android:layout_width="342dp"
+            android:layout_height="422dp"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="15.0sp" />
 
         <ImageButton
             android:id="@+id/add_button"

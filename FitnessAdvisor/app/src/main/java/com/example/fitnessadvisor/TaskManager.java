@@ -115,18 +115,17 @@ public class TaskManager {
         });
     }
 
-    public long executeInsertWorkout(AppDatabase db, Workout workout){
+    public void executeInsertWorkout(AppDatabase db, Workout workout){
         executor.execute(() -> {
 
 
             WorkoutDao workoutDao = db.workoutDao();
             workoutDao.insert(workout);
-
+            List<Workout> workouts = workoutDao.getAll();
             handler.post(() -> {
-
+                calback.onLoadWorkoutComplete(workouts);
             });
         });
-        return workout.id;
     }
 
     public void executeDeleteWorkout(AppDatabase db, long id){
@@ -151,11 +150,17 @@ public class TaskManager {
             Workout_ExerciseDao WEDao = db.workout_exerciseDao();
             Workout_Exercise WE = new Workout_Exercise();
 
+            //WorkoutDao workoutDao = db.workoutDao();
+            //Workout workout = workoutDao.loadById(workoutId);
+
             WE.workout = workoutId;
             WE.exercise = exerciseId;
             WE.sets = 3;
             WE.repetitions = 12;
             WEDao.insert(WE);
+
+            for(int i=0;i<WEDao.getAll().size();i++)
+                System.out.println(WEDao.getAll().get(i).repetitions);
 
             handler.post(() -> {
 

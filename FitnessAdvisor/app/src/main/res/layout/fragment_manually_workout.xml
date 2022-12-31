@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <EditText
+        <TextView
             android:id="@+id/WorkoutName"
             android:layout_width="match_parent"
             android:layout_height="61dp"
@@ -23,6 +23,7 @@
             android:id="@+id/workout_list"
             android:layout_width="match_parent"
             android:layout_height="422dp" />
+
 
         <ImageButton
             android:id="@+id/add_button"

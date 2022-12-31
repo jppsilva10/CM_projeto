@@ -69,9 +69,8 @@ public class CreateWorkoutFragment extends Fragment implements TaskManager.Callb
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Workout workout = new Workout();
                         workout.name = input.getText().toString();
-                        long id = taskManager.executeInsertWorkout(viewmodel.getDB(), workout);
+                        taskManager.executeInsertWorkout(viewmodel.getDB(), workout);
                         viewmodel.setWorkout(workout.name);
-                        viewmodel.setWorkoutId(id);
                         getActivity()
                                 .getSupportFragmentManager()
                                 .beginTransaction()
@@ -102,7 +101,7 @@ public class CreateWorkoutFragment extends Fragment implements TaskManager.Callb
     }
     @Override
     public void onLoadWorkoutComplete(List<Workout> workouts) {
-
+        viewmodel.setWorkoutId(workouts.get(workouts.size() -1 ).id);
     }
     @Override
     public void onLoadExerciseComplete(List<Exercise> exercises) {
