@@ -4,8 +4,13 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.example.fitnessadvisor.Database.AppDatabase;
+import com.example.fitnessadvisor.Database.Exercise;
+import com.example.fitnessadvisor.Database.ExerciseDao;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.ProfileDao;
+
+import com.example.fitnessadvisor.Database.Workout;
+import com.example.fitnessadvisor.Database.WorkoutDao;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -21,6 +26,7 @@ public class TaskManager {
     }
 
     public interface Callback{
+        void onLoadWorkoutComplete(List<Workout> workouts);
         void onLoadProfileComplete(Profile profile, boolean empty);
         void onProfileUpdateComplete(Profile profile);
     }
@@ -63,6 +69,34 @@ public class TaskManager {
                 calback.onProfileUpdateComplete(profile);
             });
 
+        });
+    }
+
+    public void executeLoadWorkoutAsync(AppDatabase db){
+        executor.execute(() -> {
+
+            WorkoutDao workoutDao = db.workoutDao();
+            List<Workout> notes = workoutDao.getAll();
+
+            handler.post(() -> {
+                calback.onLoadWorkoutComplete(notes);
+            });
+        });
+    }
+
+    public void executeExerciseInsertionAsync(AppDatabase db, Exercise exercise){
+        executor.execute(() -> {
+            Profile profile = null;
+            ExerciseDao exerciseDao = db.exerciseDao();
+            if(exerciseDao.loadByName(exercise.name).size() == 0){
+                exerciseDao.insert(exercise);
+            }
+            for(int i=0;i<exerciseDao.getAll().size();i++)
+                System.out.println(exerciseDao.getAll().get(i).name);
+
+            handler.post(() -> {
+                calback.onProfileUpdateComplete(profile);
+            });
         });
     }
 

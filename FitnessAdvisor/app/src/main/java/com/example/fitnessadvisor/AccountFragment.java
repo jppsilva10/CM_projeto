@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.fitnessadvisor.Database.Profile;
+import com.example.fitnessadvisor.Database.Workout;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class AccountFragment extends Fragment implements TaskManager.Callback{
 
@@ -126,4 +128,9 @@ public class AccountFragment extends Fragment implements TaskManager.Callback{
     public void onProfileUpdateComplete(Profile profile) {
         this.profile = profile;
     }
+
+    @Override
+    public void onLoadWorkoutComplete(List<Workout> workouts){
+
+    };
 }

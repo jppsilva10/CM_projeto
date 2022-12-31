@@ -19,11 +19,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.fitnessadvisor.Database.Profile;
+import com.example.fitnessadvisor.Database.Workout;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class UpdateProfileFragment extends Fragment implements TaskManager.Callback {
 
@@ -251,4 +253,8 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
                 .replace(R.id.fragment_container_view, AccountFragment.class, null)
                 .commit();
     }
+    @Override
+    public void onLoadWorkoutComplete(List<Workout> workouts){
+
+    };
 }
