@@ -1,10 +1,15 @@
 package com.example.fitnessadvisor;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -26,6 +31,7 @@ public class WorkoutListFragment extends Fragment implements TaskManager.Callbac
     protected SharedViewModel viewmodel;
     protected TaskManager taskManager = new TaskManager(this);
     protected ImageButton butt;
+    protected long selected_id;
     protected Button help; //This is just a button to add exercises preemptively
 
 
@@ -55,6 +61,8 @@ public class WorkoutListFragment extends Fragment implements TaskManager.Callbac
         viewmodel = act.getViewModel();
         //helper = viewmodel.getHelper();
         taskManager.executeLoadWorkoutAsync(viewmodel.getDB());
+
+        registerForContextMenu(list);
         butt = v.findViewById(R.id.add_button);
         help = v.findViewById(R.id.add_exercise);
         setListener();
@@ -101,6 +109,37 @@ public class WorkoutListFragment extends Fragment implements TaskManager.Callbac
                         .commit();
             }
         });
+        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapter, View v, int position, long id) {
+
+                selected_id = id;
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        getActivity().getMenuInflater().inflate(R.menu.popup_menu_workout, menu);
+
+    }
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog mydialog;
+
+        switch(item.getItemId()) {
+            case R.id.option1:
+                //add exercise to the workout
+                taskManager.executeDeleteWorkout(viewmodel.getDB(),selected_id);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+
     }
 
     @Override
