@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.fitnessadvisor.Database.Exercise;
+import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
 
@@ -121,4 +122,8 @@ public class WorkoutListFragment extends Fragment implements TaskManager.Callbac
 
     }
 
+    @Override
+    public void onLoadMealComplete(List<Meal> meals) {
+
+    }
 }
