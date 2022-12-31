@@ -116,5 +116,9 @@ public class WorkoutListFragment extends Fragment implements TaskManager.Callbac
         list.setAdapter(myAdapter);
         setListListener();
     }
+    @Override
+    public void onLoadExerciseComplete(List<Exercise> exercises) {
+
+    }
 
 }

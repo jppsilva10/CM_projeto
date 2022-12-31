@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
 
@@ -133,4 +134,8 @@ public class AccountFragment extends Fragment implements TaskManager.Callback{
     public void onLoadWorkoutComplete(List<Workout> workouts){
 
     };
+    @Override
+    public void onLoadExerciseComplete(List<Exercise> exercises) {
+
+    }
 }

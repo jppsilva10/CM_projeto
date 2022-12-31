@@ -26,6 +26,7 @@ public class TaskManager {
     }
 
     public interface Callback{
+        void onLoadExerciseComplete(List<Exercise> exercises);
         void onLoadWorkoutComplete(List<Workout> workouts);
         void onLoadProfileComplete(Profile profile, boolean empty);
         void onProfileUpdateComplete(Profile profile);
@@ -76,10 +77,22 @@ public class TaskManager {
         executor.execute(() -> {
 
             WorkoutDao workoutDao = db.workoutDao();
-            List<Workout> notes = workoutDao.getAll();
+            List<Workout> workouts = workoutDao.getAll();
 
             handler.post(() -> {
-                calback.onLoadWorkoutComplete(notes);
+                calback.onLoadWorkoutComplete(workouts);
+            });
+        });
+    }
+
+    public void executeLoadExerciseAsync(AppDatabase db){
+        executor.execute(() -> {
+
+            ExerciseDao exerciseDao = db.exerciseDao();
+            List<Exercise> exercises = exerciseDao.getAll();
+
+            handler.post(() -> {
+                calback.onLoadExerciseComplete(exercises);
             });
         });
     }

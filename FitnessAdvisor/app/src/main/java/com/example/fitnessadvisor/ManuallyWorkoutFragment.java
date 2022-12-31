@@ -8,19 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
-import com.example.fitnessadvisor.Database.Exercise;
+public class ManuallyWorkoutFragment extends Fragment {
 
-public class CreateWorkoutFragment extends Fragment {
+    protected ImageButton butt;
 
-    protected Button butt;
-
-    public CreateWorkoutFragment() {
+    public ManuallyWorkoutFragment() {
 
     }
 
-    public static CreateWorkoutFragment newInstance() {
-        CreateWorkoutFragment fragment = new CreateWorkoutFragment();
+    public static ManuallyWorkoutFragment newInstance() {
+        ManuallyWorkoutFragment fragment = new ManuallyWorkoutFragment();
         return fragment;
     }
 
@@ -33,12 +32,11 @@ public class CreateWorkoutFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_create_workout, container, false);
-        butt = v.findViewById(R.id.button2);
+        View v = inflater.inflate(R.layout.fragment_manually_workout, container, false);
+        butt = v.findViewById(R.id.add_button);
         setListener();
         return v;
     }
-
     public void setListener(){
         butt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +44,7 @@ public class CreateWorkoutFragment extends Fragment {
                 getActivity()
                         .getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container_view, ManuallyWorkoutFragment.class, null)
+                        .replace(R.id.fragment_container_view, ExerciseListFragment.class, null)
                         .commit();
             }
         });
