@@ -11,6 +11,8 @@ import com.example.fitnessadvisor.Database.ProfileDao;
 
 import com.example.fitnessadvisor.Database.Workout;
 import com.example.fitnessadvisor.Database.WorkoutDao;
+import com.example.fitnessadvisor.Database.Workout_Exercise;
+import com.example.fitnessadvisor.Database.Workout_ExerciseDao;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -109,6 +111,38 @@ public class TaskManager {
 
             handler.post(() -> {
                 calback.onProfileUpdateComplete(profile);
+            });
+        });
+    }
+
+    public long executeInsertWorkout(AppDatabase db, Workout workout){
+        executor.execute(() -> {
+
+
+            WorkoutDao workoutDao = db.workoutDao();
+            workoutDao.insert(workout);
+
+            handler.post(() -> {
+
+            });
+        });
+        return workout.id;
+    }
+
+    public void executeExerciseToWorkout(AppDatabase db,long workoutId, long exerciseId){
+        executor.execute(() -> {
+
+            Workout_ExerciseDao WEDao = db.workout_exerciseDao();
+            Workout_Exercise WE = new Workout_Exercise();
+
+            WE.workout = workoutId;
+            WE.exercise = exerciseId;
+            WE.sets = 3;
+            WE.repetitions = 12;
+            WEDao.insert(WE);
+
+            handler.post(() -> {
+
             });
         });
     }
