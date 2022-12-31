@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         navView.setSelectedItemId(R.id.navigation_account);
 
         db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "MyDatabase").build();
+                AppDatabase.class, "MyDatabase").fallbackToDestructiveMigration().build();
 
         viewModel = new ViewModelProvider(this).get(SharedViewModel.class);
         viewModel.setDB(db);
