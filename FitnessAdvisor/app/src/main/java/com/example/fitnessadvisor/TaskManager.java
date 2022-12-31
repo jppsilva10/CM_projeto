@@ -129,6 +129,22 @@ public class TaskManager {
         return workout.id;
     }
 
+    public void executeDeleteWorkout(AppDatabase db, long id){
+        executor.execute(() -> {
+
+
+            WorkoutDao workoutDao = db.workoutDao();
+            Workout workout = workoutDao.loadById(id);
+            workoutDao.delete(workout);
+
+            List<Workout> workouts = workoutDao.getAll();
+
+            handler.post(() -> {
+                calback.onLoadWorkoutComplete(workouts);
+            });
+        });
+    }
+
     public void executeExerciseToWorkout(AppDatabase db,long workoutId, long exerciseId){
         executor.execute(() -> {
 
