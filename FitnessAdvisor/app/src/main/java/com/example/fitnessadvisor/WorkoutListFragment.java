@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -24,7 +25,7 @@ public class WorkoutListFragment extends Fragment implements TaskManager.Callbac
     protected SharedViewModel viewmodel;
     protected TaskManager taskManager = new TaskManager(this);
     protected ImageButton butt;
-    protected ImageButton help; //This is just a button to add exercises preemptively
+    protected Button help; //This is just a button to add exercises preemptively
 
 
     public WorkoutListFragment() {

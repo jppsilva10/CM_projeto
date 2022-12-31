@@ -29,13 +29,11 @@
             android:background="@drawable/add_button"
             android:gravity="center" />
 
-        <ImageButton
+        <Button
             android:id="@+id/add_exercise"
-            android:layout_width="85dp"
-            android:layout_height="78dp"
-            android:layout_marginLeft="320dp"
-            android:background="@drawable/add_button"
-            android:gravity="center" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Adicionar exercicio à BD (Apagar mais tarde)" />
 
 
     </LinearLayout>
