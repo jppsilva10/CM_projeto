@@ -24,6 +24,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.fitnessadvisor.Database.Exercise;
+import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
 
@@ -135,6 +136,11 @@ public class ExerciseListFragment extends Fragment implements TaskManager.Callba
         MyAdapterExercise myAdapter = new MyAdapterExercise(getActivity().getApplicationContext(), exercises);
         list.setAdapter(myAdapter);
         setListListener();
+    }
+
+    @Override
+    public void onLoadMealComplete(List<Meal> meals) {
+
     }
 
 }

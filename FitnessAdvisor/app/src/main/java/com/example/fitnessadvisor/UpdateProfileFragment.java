@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.fitnessadvisor.Database.Exercise;
+import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
 
@@ -260,6 +261,11 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
     };
     @Override
     public void onLoadExerciseComplete(List<Exercise> exercises) {
+
+    }
+
+    @Override
+    public void onLoadMealComplete(List<Meal> meals) {
 
     }
 }

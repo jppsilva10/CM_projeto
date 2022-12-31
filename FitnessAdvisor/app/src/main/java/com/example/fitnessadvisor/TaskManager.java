@@ -6,6 +6,8 @@ import android.os.Looper;
 import com.example.fitnessadvisor.Database.AppDatabase;
 import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.ExerciseDao;
+import com.example.fitnessadvisor.Database.Meal;
+import com.example.fitnessadvisor.Database.MealDao;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.ProfileDao;
 
@@ -30,6 +32,7 @@ public class TaskManager {
     public interface Callback{
         void onLoadExerciseComplete(List<Exercise> exercises);
         void onLoadWorkoutComplete(List<Workout> workouts);
+        void onLoadMealComplete(List<Meal> meals);
         void onLoadProfileComplete(Profile profile, boolean empty);
         void onProfileUpdateComplete(Profile profile);
     }
@@ -95,6 +98,18 @@ public class TaskManager {
 
             handler.post(() -> {
                 calback.onLoadExerciseComplete(exercises);
+            });
+        });
+    }
+
+    public void executeLoadMealAsync(AppDatabase db){
+        executor.execute(() -> {
+
+            MealDao mealDao = db.mealDao();
+            List<Meal> meals = mealDao.getAll();
+
+            handler.post(() -> {
+                calback.onLoadMealComplete(meals);
             });
         });
     }
