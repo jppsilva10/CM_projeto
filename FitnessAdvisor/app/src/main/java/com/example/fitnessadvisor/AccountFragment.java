@@ -9,10 +9,15 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.fitnessadvisor.Database.Profile;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
@@ -56,6 +61,23 @@ public class AccountFragment extends Fragment implements TaskManager.Callback{
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        MainActivity act = (MainActivity) getActivity();
+
+        Button b = act.findViewById(R.id.editProfile);
+        b.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                act
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container_view, UpdateProfileFragment.class, null)
+                        .commit();
+            }
+        });
+    }
+
+    @Override
     public void onLoadProfileComplete(Profile profile, boolean empty) {
         if(empty){
             getActivity()
@@ -79,18 +101,25 @@ public class AccountFragment extends Fragment implements TaskManager.Callback{
         now.setTime(new Date(System.currentTimeMillis()));
         Calendar bd = Calendar.getInstance();
         bd.setTime(profile.birth_date);
-        int age = now.YEAR - bd.YEAR;
-        if (now.MONTH > bd.MONTH || now.MONTH == bd.MONTH && now.DAY_OF_MONTH > bd.DAY_OF_MONTH) {
+        int age = now.get(Calendar.YEAR) - bd.get(Calendar.YEAR);
+        if (now.get(Calendar.MONTH) < bd.get(Calendar.MONTH) || now.get(Calendar.MONTH) == bd.get(Calendar.MONTH) && now.get(Calendar.DAY_OF_MONTH) < bd.get(Calendar.DAY_OF_MONTH)) {
             age--;
         }
 
         text.setText("" + age);
+
         text = act.findViewById(R.id.lifeStyleValue);
         text.setText(profile.life_style);
+
         text = act.findViewById(R.id.heightValue);
-        text.setText(""+profile.height);
+        text.setText(""+profile.height + " cm");
+
         text = act.findViewById(R.id.weightValue);
-        text.setText(""+profile.weight);
+        text.setText(""+profile.weight + " Kg");
+
+        text = act.findViewById(R.id.bmiValue);
+        float bmi = (float) (profile.weight /(Math.pow(profile.height/100, 2)));
+        text.setText(String.format("%.2f", bmi));
     }
 
     @Override

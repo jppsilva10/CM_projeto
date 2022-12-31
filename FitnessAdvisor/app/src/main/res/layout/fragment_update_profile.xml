@@ -30,24 +30,13 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
-                    android:text="Personal Information"
+                    android:text="Update Personal Information"
                     android:textColor="#FFFFFF"
                     android:textSize="20dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    android:id="@+id/button"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="20dp"
-                    android:background="@drawable/ic_edit"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="TouchTargetSizeCheck" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -118,7 +107,7 @@
                         android:textStyle="bold" />
 
                     <Spinner
-                        android:id="@+id/genderValue"
+                        android:id="@+id/genderValueSpinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
@@ -155,7 +144,7 @@
                         android:layout_marginRight="20dp"
                         android:layout_weight="1"
                         android:ems="10"
-                        android:inputType="date" />
+                        android:inputType="none" />
 
                 </LinearLayout>
 
@@ -247,7 +236,7 @@
                         android:textStyle="bold" />
 
                     <Spinner
-                        android:id="@+id/lifeStyleValue"
+                        android:id="@+id/lifeStyleValueSpinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
@@ -317,8 +306,7 @@
                         android:layout_marginRight="20dp"
                         android:layout_weight="1"
                         android:ems="10"
-                        android:inputType="date"
-                        android:text="" />
+                        android:inputType="none"/>
 
                 </LinearLayout>
 

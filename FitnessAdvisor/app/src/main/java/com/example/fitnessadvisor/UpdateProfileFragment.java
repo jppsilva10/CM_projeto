@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,6 +74,10 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
 
                 Profile p = new Profile();
 
+                if(profile!=null){
+                    p = profile;
+                }
+
                 MainActivity act = (MainActivity) getActivity();
                 EditText text;
                 Spinner spinner;
@@ -80,7 +85,7 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
                 text = act.findViewById(R.id.nameValue);
                 p.name = String.valueOf(text.getText());
 
-                spinner = act.findViewById(R.id.genderValue);
+                spinner = act.findViewById(R.id.genderValueSpinner);
                 p.gender = spinner.getSelectedItem().toString();
 
                 text = act.findViewById(R.id.birthDateValue);
@@ -90,7 +95,7 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
                     e.printStackTrace();
                 }
 
-                spinner = act.findViewById(R.id.lifeStyleValue);
+                spinner = act.findViewById(R.id.lifeStyleValueSpinner);
                 p.life_style = spinner.getSelectedItem().toString();
 
                 text = act.findViewById(R.id.heightValue);
@@ -118,22 +123,32 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
             }
         });
 
-        Spinner spinner = act.findViewById(R.id.genderValue);
+        Spinner spinner = act.findViewById(R.id.genderValueSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(act, R.array.genders, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
 
-        spinner = act.findViewById(R.id.lifeStyleValue);
+        spinner = act.findViewById(R.id.lifeStyleValueSpinner);
         adapter = ArrayAdapter.createFromResource(act, R.array.lifeStyles, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
 
         EditText date1 = (EditText) act.findViewById(R.id.birthDateValue);
+        date1.setInputType(InputType.TYPE_NULL);
         date1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                Date d = new Date(System.currentTimeMillis());
+                if(date1.getText().toString().length()!=0){
+                    try {
+                        d = new SimpleDateFormat("dd/MM/yyyy").parse(date1.getText().toString());
+                    } catch (ParseException e) {
+
+                    }
+                }
                 final Calendar cal = Calendar.getInstance();
+                cal.setTime(d);
                 int year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
@@ -149,11 +164,21 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
         });
 
         EditText date2 = (EditText) act.findViewById(R.id.goalDeadlineValue);
+        date2.setInputType(InputType.TYPE_NULL);
         date2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                Date d = new Date(System.currentTimeMillis());
+                if(date2.getText().toString().length()!=0){
+                    try {
+                        d = new SimpleDateFormat("dd/MM/yyyy").parse(date2.getText().toString());
+                    } catch (ParseException e) {
+
+                    }
+                }
                 final Calendar cal = Calendar.getInstance();
+                cal.setTime(d);
                 int year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
@@ -182,7 +207,7 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
             text = act.findViewById(R.id.nameValue);
             text.setText(profile.name);
 
-            spinner = act.findViewById(R.id.genderValue);
+            spinner = act.findViewById(R.id.genderValueSpinner);
             int gender = 0;
             if (profile.gender.equals("Female")) {
                 gender = 1;
@@ -192,9 +217,9 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
             text = act.findViewById(R.id.birthDateValue);
             Calendar cal = Calendar.getInstance();
             cal.setTime(profile.birth_date);
-            text.setText(new StringBuilder().append(cal.DAY_OF_MONTH).append("/").append(cal.MONTH).append("/").append(cal.YEAR));
+            text.setText(new StringBuilder().append(cal.get(Calendar.DAY_OF_MONTH)).append("/").append(cal.get(Calendar.MONTH)+1).append("/").append(cal.get(Calendar.YEAR)));
 
-            spinner = act.findViewById(R.id.lifeStyleValue);
+            spinner = act.findViewById(R.id.lifeStyleValueSpinner);
             int lifeStyle = 0;
             if (profile.gender.equals("Active")) {
                 lifeStyle = 1;
@@ -207,12 +232,12 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
             text = act.findViewById(R.id.weightValue);
             text.setText("" + profile.weight);
 
-            text = act.findViewById(R.id.targetWeightLable);
+            text = act.findViewById(R.id.targetWeightValue);
             text.setText("" + profile.target_weight);
 
             text = act.findViewById(R.id.goalDeadlineValue);
             cal.setTime(profile.goal_deadline);
-            text.setText(new StringBuilder().append(cal.DAY_OF_MONTH).append("/").append(cal.MONTH).append("/").append(cal.YEAR));
+            text.setText(new StringBuilder().append(cal.get(Calendar.DAY_OF_MONTH)).append("/").append(cal.get(Calendar.MONTH)+1).append("/").append(cal.get(Calendar.YEAR)));
         }
     }
 
