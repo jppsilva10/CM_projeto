@@ -90,11 +90,35 @@ public class TaskManager {
         });
     }
 
+    public void executeWorkoutSearchAsync(AppDatabase db, String name){
+        executor.execute(() -> {
+
+            WorkoutDao workoutDao = db.workoutDao();
+            List<Workout> workouts = workoutDao.loadByName(name);
+
+            handler.post(() -> {
+                calback.onLoadWorkoutComplete(workouts);
+            });
+        });
+    }
+
     public void executeLoadExerciseAsync(AppDatabase db){
         executor.execute(() -> {
 
             ExerciseDao exerciseDao = db.exerciseDao();
             List<Exercise> exercises = exerciseDao.getAll();
+
+            handler.post(() -> {
+                calback.onLoadExerciseComplete(exercises);
+            });
+        });
+    }
+
+    public void executeExerciseSearchAsync(AppDatabase db, String name){
+        executor.execute(() -> {
+
+            ExerciseDao exerciseDao = db.exerciseDao();
+            List<Exercise> exercises = exerciseDao.loadByName(name);
 
             handler.post(() -> {
                 calback.onLoadExerciseComplete(exercises);

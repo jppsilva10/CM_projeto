@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Meal;
@@ -67,6 +68,28 @@ public class WorkoutListFragment extends Fragment implements TaskManager.Callbac
         help = v.findViewById(R.id.add_exercise);
         setListener();
         return v;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        MainActivity act = (MainActivity) getActivity();
+
+        SearchView searchView = (SearchView) act.findViewById(R.id.search);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                taskManager.executeWorkoutSearchAsync(viewmodel.getDB(), "%" + newText + "%");
+                return true;
+            }
+        });
     }
 
     public void setListener(){

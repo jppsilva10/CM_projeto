@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,31 +9,39 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:paddingBottom="?android:attr/actionBarSize">
 
         <TextView
             android:id="@+id/WorkoutName"
             android:layout_width="match_parent"
             android:layout_height="61dp"
             android:gravity="center"
-            android:textStyle="bold"
-            android:text="New Workout" />
+            android:text="New Workout"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false">
+
+            <ListView
+                android:id="@+id/workout_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
 
-        <ListView
-            android:id="@+id/workout_list"
-            android:layout_width="match_parent"
-            android:layout_height="422dp" />
-
-
-        <ImageButton
-            android:id="@+id/add_button"
-            android:layout_width="85dp"
-            android:layout_height="78dp"
-            android:layout_marginLeft="320dp"
-            android:background="@drawable/add_button"
-            android:gravity="center"
-            tools:ignore="SpeakableTextPresentCheck" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/add_button"
+                android:layout_width="125dp"
+                android:layout_height="91dp"
+                android:layout_marginLeft="320dp"
+                android:layout_marginTop="550dp"
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:src="@drawable/ic_add"
+                app:backgroundTint="#65E8A9"/>
+        </RelativeLayout>
 
 
     </LinearLayout>
