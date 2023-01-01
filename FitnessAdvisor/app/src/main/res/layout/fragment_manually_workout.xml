@@ -4,46 +4,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/account_header"
     tools:context=".ManuallyWorkoutFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="?android:attr/actionBarSize">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/WorkoutName"
+        <LinearLayout
+            android:id="@+id/header"
             android:layout_width="match_parent"
-            android:layout_height="61dp"
-            android:gravity="center"
-            android:text="New Workout"
-            android:textStyle="bold" />
+            android:layout_height="70dp"
+            android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false">
-
-            <ListView
-                android:id="@+id/workout_list"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/WorkoutName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:text="New Workout"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/account_body"
+            android:paddingBottom="?android:attr/actionBarSize">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false">
+
+                <ListView
+                    android:id="@+id/workout_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"/>
 
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/add_button"
-                android:layout_width="125dp"
-                android:layout_height="91dp"
-                android:layout_marginLeft="320dp"
-                android:layout_marginTop="550dp"
-                android:layout_marginBottom="10dp"
-                android:clickable="true"
-                android:src="@drawable/ic_add"
-                app:backgroundTint="#65E8A9"/>
-        </RelativeLayout>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/add_button"
+                    android:layout_width="225dp"
+                    android:layout_height="225dp"
+                    android:layout_marginLeft="300dp"
+                    android:layout_marginTop="450dp"
+                    android:layout_marginBottom="10dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_add"
+                    app:backgroundTint="#65E8A9" />
+            </RelativeLayout>
 
 
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>

@@ -4,55 +4,92 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
+    android:background="@drawable/account_header"
     tools:context=".WorkoutListFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="?android:attr/actionBarSize">
+        android:orientation="vertical">
 
-        <SearchView
-            android:id="@+id/search"
+        <LinearLayout
+            android:id="@+id/header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="70dp"
+            android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/add_button"
-                android:layout_width="125dp"
-                android:layout_height="91dp"
-                android:layout_marginLeft="330dp"
-                android:layout_marginTop="400dp"
-                android:layout_marginBottom="10dp"
-                android:clickable="true"
-                android:src="@drawable/ic_add"
-                app:backgroundTint="#65E8A9"/>
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:text="My Workout Plans"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <ListView
-                android:id="@+id/workout_list"
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/account_body"
+            android:paddingBottom="?android:attr/actionBarSize">
+
+            <SearchView
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="422dp"
-                android:paddingRight="20dp"
-                android:paddingLeft="20dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:divider="@android:color/transparent"
-                android:dividerHeight="15.0sp" />
-        </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clipToPadding="false">
 
-        <Button
-            android:id="@+id/add_exercise"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Adicionar exercicio à BD (Apagar mais tarde)" />
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/add_button"
+                    android:layout_width="425dp"
+                    android:layout_height="425dp"
+                    android:layout_marginLeft="300dp"
+                    android:layout_marginTop="400dp"
+                    android:layout_marginBottom="10dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_add"
+                    app:backgroundTint="#65E8A9" />
 
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/add_exercise"
+                    android:layout_width="425dp"
+                    android:layout_height="425dp"
+                    android:layout_marginLeft="300dp"
+                    android:layout_marginBottom="10dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_add"/>
 
+                <ListView
+                    android:id="@+id/workout_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:divider="@android:color/transparent"
+                    android:dividerHeight="15.0sp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp" />
+            </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>

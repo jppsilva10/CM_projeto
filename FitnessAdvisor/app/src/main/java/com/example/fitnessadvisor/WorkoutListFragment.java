@@ -22,6 +22,7 @@ import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -31,9 +32,9 @@ public class WorkoutListFragment extends Fragment implements TaskManager.Callbac
     protected ListView list;
     protected SharedViewModel viewmodel;
     protected TaskManager taskManager = new TaskManager(this);
-    protected ImageButton butt;
+    protected FloatingActionButton butt;
     protected long selected_id;
-    protected Button help; //This is just a button to add exercises preemptively
+    protected FloatingActionButton help; //This is just a button to add exercises preemptively
 
 
     public WorkoutListFragment() {
