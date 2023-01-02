@@ -22,6 +22,7 @@ import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
+import com.example.fitnessadvisor.Database.Workout_Exercise;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -266,6 +267,11 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
 
     @Override
     public void onLoadExerciseComplete(Exercise exercise) {
+
+    }
+
+    @Override
+    public void onAddExerciseComplete(Workout_Exercise we) {
 
     }
 

@@ -23,6 +23,7 @@ import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.PopulateDatabase;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
+import com.example.fitnessadvisor.Database.Workout_Exercise;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -182,6 +183,11 @@ public class WorkoutListFragment extends Fragment implements TaskManager.Callbac
 
     @Override
     public void onLoadExerciseComplete(Exercise exercise) {
+
+    }
+
+    @Override
+    public void onAddExerciseComplete(Workout_Exercise we) {
 
     }
 

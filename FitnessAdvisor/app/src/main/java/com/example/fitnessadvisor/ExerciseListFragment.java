@@ -27,6 +27,7 @@ import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
+import com.example.fitnessadvisor.Database.Workout_Exercise;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,7 +107,7 @@ public class ExerciseListFragment extends Fragment implements TaskManager.Callba
                 getActivity()
                         .getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container_view, ExerciseFragment.class, null)
+                        .replace(R.id.fragment_container_view, AddExerciseFragment.class, null)
                         .commit();
             }
         });
@@ -142,6 +143,11 @@ public class ExerciseListFragment extends Fragment implements TaskManager.Callba
 
     @Override
     public void onLoadExerciseComplete(Exercise exercise) {
+
+    }
+
+    @Override
+    public void onAddExerciseComplete(Workout_Exercise we) {
 
     }
 

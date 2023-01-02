@@ -32,4 +32,7 @@ public class Workout_Exercise {
 
     @ColumnInfo(name = "repetitions")
     public int repetitions;
+
+    @ColumnInfo(name = "weight")
+    public float weight;
 }
