@@ -16,7 +16,6 @@ import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.ProfileDao;
 
 import com.example.fitnessadvisor.Database.Workout;
-import com.example.fitnessadvisor.Database.WorkoutAndExercise;
 import com.example.fitnessadvisor.Database.WorkoutDao;
 import com.example.fitnessadvisor.Database.Workout_Exercise;
 import com.example.fitnessadvisor.Database.Workout_ExerciseDao;
@@ -41,9 +40,9 @@ public class TaskManager {
         void onLoadExerciseComplete(Exercise exercise);
         void onAddExerciseComplete(Workout_Exercise we);
         void onLoadWorkoutComplete(List<Workout> workouts);
-        void onLoadWorkoutComplete(Workout workout);
-        void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes);
         void onLoadMealComplete(HashMap<String, List<String>> mealList);
+        void onLoadFoodComplete(List<Food> food);
+        void onInsertMealComplete(long mealId);
         void onLoadProfileComplete(Profile profile, boolean empty);
         void onProfileUpdateComplete(Profile profile);
     }
@@ -101,14 +100,63 @@ public class TaskManager {
         });
     }
 
-    public void executeLoadWorkoutAsync(AppDatabase db, Long workoutId){
+    public void executeLoadFoodAsync(AppDatabase db){
         executor.execute(() -> {
 
-            WorkoutDao workoutDao = db.workoutDao();
-            Workout workout = workoutDao.loadById(workoutId);
+            FoodDao foodDao = db.foodDao();
+            List<Food> food = foodDao.getAll();
 
             handler.post(() -> {
-                calback.onLoadWorkoutComplete(workout);
+                calback.onLoadFoodComplete(food);
+            });
+        });
+    }
+
+    /*public void executeLoadMealAsync(AppDatabase db){
+        executor.execute(() -> {
+
+            MealDao mealDao = db.mealDao();
+            List<Meal> meals = mealDao.getAll();
+
+            handler.post(() -> {
+                calback.onLoadMealComplete(meals);
+            });
+        });
+    }*/
+
+    public void executeLoadMealAsync(AppDatabase db, String day){
+        executor.execute(() -> {
+            MealDao mealDao = db.mealDao();
+            List<Meal> meals = mealDao.loadByDate(day);
+
+            Meal_FoodDao meal_foodDao = db.meal_foodDao();
+            FoodDao foodDao = db.foodDao();
+
+            HashMap<String, List<String>> mealList = new HashMap<String, List<String>>();
+            for(int i = 0; i < meals.size(); i++){
+                List<Meal_Food> meal_food_list = meal_foodDao.loadByMeal(meals.get(i).id);
+                List<String> one_meal = new ArrayList<String>();
+                for(int j = 0; j < meal_food_list.size(); j++){
+                    Food food = foodDao.loadById(meal_food_list.get(j).food);
+                    one_meal.add(food.name);
+                }
+                mealList.put(meals.get(i).title + " " + meals.get(i).day + " " + meals.get(i).time, one_meal);
+            }
+
+            handler.post(() -> {
+                calback.onLoadMealComplete(mealList);
+            });
+        });
+    }
+
+    public void executeFoodSearchAsync(AppDatabase db, String name){
+        executor.execute(() -> {
+
+            FoodDao foodDao = db.foodDao();
+            List<Food> food = foodDao.loadByName(name);
+
+            handler.post(() -> {
+                calback.onLoadFoodComplete(food);
             });
         });
     }
@@ -173,31 +221,6 @@ public class TaskManager {
         });
     }
 
-    public void executeLoadWorkout_ExerciseAsync(AppDatabase db, long workoutId){
-        executor.execute(() -> {
-
-            System.out.println("-------executeLoadWorkout_ExerciseAsync-------");
-
-            Workout_ExerciseDao workout_exerciseDao = db.workout_exerciseDao();
-            List<Workout_Exercise> wes = workout_exerciseDao.loadByWorkout(workoutId);
-
-            ExerciseDao exerciseDao = db.exerciseDao();
-            List<Exercise> exercises = exerciseDao.getAll();
-
-            System.out.println("-------wes-------");
-
-            WorkoutDao workoutDao = db.workoutDao();
-            WorkoutAndExercise workoutAndExercise = workoutDao.getWorkoutWithExercises(workoutId);
-
-            System.out.println("-------workoutAndExercise-------");
-
-
-            handler.post(() -> {
-                calback.onLoadWorkout_ExerciseComplete(workoutAndExercise.exercises, wes);
-            });
-        });
-    }
-
     /*public void executeLoadMealAsync(AppDatabase db){
         executor.execute(() -> {
 
@@ -231,10 +254,10 @@ public class TaskManager {
 
 
             WorkoutDao workoutDao = db.workoutDao();
-            workout.id = workoutDao.insert(workout);
-
+            workoutDao.insert(workout);
+            List<Workout> workouts = workoutDao.getAll();
             handler.post(() -> {
-                calback.onLoadWorkoutComplete(workout);
+                calback.onLoadWorkoutComplete(workouts);
             });
         });
     }
@@ -279,43 +302,19 @@ public class TaskManager {
         });
     }
 
-    public void executeLoadMealAsync(AppDatabase db, String day){
-        executor.execute(() -> {
-            MealDao mealDao = db.mealDao();
-            List<Meal> meals = mealDao.loadByDate(day);
-
-            Meal_FoodDao meal_foodDao = db.meal_foodDao();
-            FoodDao foodDao = db.foodDao();
-
-            HashMap<String, List<String>> mealList = new HashMap<String, List<String>>();
-            for(int i = 0; i < meals.size(); i++){
-                List<Meal_Food> meal_food_list = meal_foodDao.loadByMeal(meals.get(i).id);
-                List<String> one_meal = new ArrayList<String>();
-                for(int j = 0; j < meal_food_list.size(); j++){
-                    Food food = foodDao.loadById(meal_food_list.get(j).food);
-                    one_meal.add(food.name);
-                }
-                mealList.put(meals.get(i).title + " " + meals.get(i).day + " " + meals.get(i).time, one_meal);
-            }
-
-            handler.post(() -> {
-                calback.onLoadMealComplete(mealList);
-            });
-        });
-    }
-
 
     public long executeInsertMeal(AppDatabase db, Meal meal){
         executor.execute(() -> {
-
+            long id;
 
             MealDao mealDao = db.mealDao();
-            mealDao.insert(meal);
+            id = mealDao.insert(meal);
 
             handler.post(() -> {
-
+                calback.onInsertMealComplete(id);
             });
         });
+
         return meal.id;
     }
 

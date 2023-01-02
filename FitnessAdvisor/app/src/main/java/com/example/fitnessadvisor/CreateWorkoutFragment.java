@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.fitnessadvisor.Database.Exercise;
+import com.example.fitnessadvisor.Database.Food;
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
@@ -159,6 +160,17 @@ public class CreateWorkoutFragment extends Fragment implements TaskManager.Callb
 
     @Override
     public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
+
+    }
+
+    @Override
+    public void onLoadFoodComplete(List<Food> food) {
+
+    }
+
+
+    @Override
+    public void onInsertMealComplete(long mealId) {
 
     }
 

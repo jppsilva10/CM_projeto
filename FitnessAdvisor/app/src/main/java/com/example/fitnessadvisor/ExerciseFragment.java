@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.fitnessadvisor.Database.Exercise;
+import com.example.fitnessadvisor.Database.Food;
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
@@ -98,6 +99,16 @@ public class ExerciseFragment extends Fragment implements TaskManager.Callback{
 
     @Override
     public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
+
+    }
+
+    @Override
+    public void onLoadFoodComplete(List<Food> food) {
+
+    }
+
+    @Override
+    public void onInsertMealComplete(long mealId) {
 
     }
 

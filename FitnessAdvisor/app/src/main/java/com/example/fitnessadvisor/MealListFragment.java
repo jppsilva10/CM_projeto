@@ -100,8 +100,21 @@ public class MealListFragment extends Fragment implements TaskManager.Callback{
             }
         });
 
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container_view, AddMealFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("stack")
+                        .commit();
+            }
+        });
+
         return v;
     }
+
 
     private void updateLabel(){
         String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
@@ -155,6 +168,16 @@ public class MealListFragment extends Fragment implements TaskManager.Callback{
     public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
         expandableListDetail = mealList;
         fillTheScreen();
+    }
+
+    @Override
+    public void onLoadFoodComplete(List<Food> food) {
+
+    }
+
+    @Override
+    public void onInsertMealComplete(long mealId) {
+
     }
 
     @Override

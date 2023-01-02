@@ -198,6 +198,16 @@ public class NutritionFragment extends Fragment implements TaskManager.Callback{
     }
 
     @Override
+    public void onLoadFoodComplete(List<Food> food) {
+
+    }
+
+    @Override
+    public void onInsertMealComplete(long mealId) {
+
+    }
+
+    @Override
     public void onLoadProfileComplete(Profile profile, boolean empty) {
 
     }
