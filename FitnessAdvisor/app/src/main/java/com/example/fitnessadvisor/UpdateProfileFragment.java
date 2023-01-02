@@ -28,6 +28,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class UpdateProfileFragment extends Fragment implements TaskManager.Callback {
@@ -259,7 +260,14 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
     @Override
     public void onLoadWorkoutComplete(List<Workout> workouts){
 
-    };
+    }
+
+    @Override
+    public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
+
+    }
+
+    ;
     @Override
     public void onLoadExerciseComplete(List<Exercise> exercises) {
 
@@ -272,11 +280,6 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
 
     @Override
     public void onAddExerciseComplete(Workout_Exercise we) {
-
-    }
-
-    @Override
-    public void onLoadMealComplete(List<Meal> meals) {
 
     }
 }

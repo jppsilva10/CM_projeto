@@ -25,6 +25,7 @@ import com.example.fitnessadvisor.Database.Workout;
 import com.example.fitnessadvisor.Database.Workout_Exercise;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -146,6 +147,12 @@ public class CreateWorkoutFragment extends Fragment implements TaskManager.Callb
     public void onLoadWorkoutComplete(List<Workout> workouts) {
         viewmodel.setWorkoutId(workouts.get(workouts.size() -1 ).id);
     }
+
+    @Override
+    public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
+
+    }
+
     @Override
     public void onLoadExerciseComplete(List<Exercise> exercises) {
 
@@ -158,11 +165,6 @@ public class CreateWorkoutFragment extends Fragment implements TaskManager.Callb
 
     @Override
     public void onAddExerciseComplete(Workout_Exercise we) {
-
-    }
-
-    @Override
-    public void onLoadMealComplete(List<Meal> meals) {
 
     }
 }

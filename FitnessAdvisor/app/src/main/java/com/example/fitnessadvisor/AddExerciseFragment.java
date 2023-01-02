@@ -28,6 +28,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import pl.droidsonroids.gif.GifImageView;
@@ -136,7 +137,7 @@ public class AddExerciseFragment extends Fragment implements TaskManager.Callbac
     }
 
     @Override
-    public void onLoadMealComplete(List<Meal> meals) {
+    public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
 
     }
 

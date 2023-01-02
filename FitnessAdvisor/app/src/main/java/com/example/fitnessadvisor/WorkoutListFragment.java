@@ -26,6 +26,7 @@ import com.example.fitnessadvisor.Database.Workout;
 import com.example.fitnessadvisor.Database.Workout_Exercise;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -176,6 +177,12 @@ public class WorkoutListFragment extends Fragment implements TaskManager.Callbac
         list.setAdapter(myAdapter);
         setListListener();
     }
+
+    @Override
+    public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
+
+    }
+
     @Override
     public void onLoadExerciseComplete(List<Exercise> exercises) {
 
@@ -188,11 +195,6 @@ public class WorkoutListFragment extends Fragment implements TaskManager.Callbac
 
     @Override
     public void onAddExerciseComplete(Workout_Exercise we) {
-
-    }
-
-    @Override
-    public void onLoadMealComplete(List<Meal> meals) {
 
     }
 }

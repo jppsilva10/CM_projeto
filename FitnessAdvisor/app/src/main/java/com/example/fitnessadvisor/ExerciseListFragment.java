@@ -30,6 +30,7 @@ import com.example.fitnessadvisor.Database.Workout;
 import com.example.fitnessadvisor.Database.Workout_Exercise;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ExerciseListFragment extends Fragment implements TaskManager.Callback {
@@ -134,6 +135,12 @@ public class ExerciseListFragment extends Fragment implements TaskManager.Callba
     public void onLoadWorkoutComplete(List<Workout> workouts) {
 
     }
+
+    @Override
+    public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
+
+    }
+
     @Override
     public void onLoadExerciseComplete(List<Exercise> exercises) {
         MyAdapterExercise myAdapter = new MyAdapterExercise(getActivity().getApplicationContext(), exercises);
@@ -148,11 +155,6 @@ public class ExerciseListFragment extends Fragment implements TaskManager.Callba
 
     @Override
     public void onAddExerciseComplete(Workout_Exercise we) {
-
-    }
-
-    @Override
-    public void onLoadMealComplete(List<Meal> meals) {
 
     }
 

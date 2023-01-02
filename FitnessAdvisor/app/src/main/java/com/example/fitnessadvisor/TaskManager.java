@@ -38,6 +38,7 @@ public class TaskManager {
     public interface Callback{
         void onLoadExerciseComplete(List<Exercise> exercises);
         void onLoadExerciseComplete(Exercise exercise);
+        void onAddExerciseComplete(Workout_Exercise we);
         void onLoadWorkoutComplete(List<Workout> workouts);
         void onLoadMealComplete(HashMap<String, List<String>> mealList);
         void onLoadProfileComplete(Profile profile, boolean empty);
@@ -141,6 +142,18 @@ public class TaskManager {
 
             handler.post(() -> {
                 calback.onLoadExerciseComplete(exercises);
+            });
+        });
+    }
+
+    public void executeAddExerciseAsync(AppDatabase db, Workout_Exercise we){
+        executor.execute(() -> {
+
+            Workout_ExerciseDao workout_exerciseDao = db.workout_exerciseDao();
+            workout_exerciseDao.insert(we);
+
+            handler.post(() -> {
+                calback.onAddExerciseComplete(we);
             });
         });
     }

@@ -26,6 +26,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class AccountFragment extends Fragment implements TaskManager.Callback{
@@ -135,7 +136,14 @@ public class AccountFragment extends Fragment implements TaskManager.Callback{
     @Override
     public void onLoadWorkoutComplete(List<Workout> workouts){
 
-    };
+    }
+
+    @Override
+    public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
+
+    }
+
+    ;
     @Override
     public void onLoadExerciseComplete(List<Exercise> exercises) {
 
@@ -148,11 +156,6 @@ public class AccountFragment extends Fragment implements TaskManager.Callback{
 
     @Override
     public void onAddExerciseComplete(Workout_Exercise we) {
-
-    }
-
-    @Override
-    public void onLoadMealComplete(List<Meal> meals) {
 
     }
 }

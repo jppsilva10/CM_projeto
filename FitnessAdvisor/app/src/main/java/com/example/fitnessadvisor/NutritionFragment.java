@@ -14,6 +14,7 @@ import com.example.fitnessadvisor.Database.Food;
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
+import com.example.fitnessadvisor.Database.Workout_Exercise;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -166,6 +167,11 @@ public class NutritionFragment extends Fragment implements TaskManager.Callback{
 
     @Override
     public void onLoadExerciseComplete(Exercise exercise) {
+
+    }
+
+    @Override
+    public void onAddExerciseComplete(Workout_Exercise we) {
 
     }
 
