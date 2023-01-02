@@ -30,14 +30,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-public class AccountFragment extends Fragment implements TaskManager.Callback{
+public class AccountFragment extends Fragment implements AccountTaskManager.Callback{
 
     protected View v;
 
     protected SharedViewModel viewmodel;
     protected Profile profile = null;
 
-    protected TaskManager taskManager = new TaskManager(this);
+    protected AccountTaskManager taskManager = new AccountTaskManager(this);
 
     public AccountFragment() {
         // Required empty public constructor
@@ -136,49 +136,4 @@ public class AccountFragment extends Fragment implements TaskManager.Callback{
         this.profile = profile;
     }
 
-    @Override
-    public void onLoadWorkoutComplete(List<Workout> workouts){
-
-    }
-
-    @Override
-    public void onLoadWorkoutComplete(Workout workout) {
-
-    }
-
-    @Override
-    public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
-
-    }
-
-    @Override
-    public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
-
-    }
-
-    ;
-    @Override
-    public void onLoadExerciseComplete(List<Exercise> exercises) {
-
-    }
-
-    @Override
-    public void onLoadExerciseComplete(Exercise exercise) {
-
-    }
-
-    @Override
-    public void onAddExerciseComplete(Workout_Exercise we) {
-
-    }
-
-    @Override
-    public void onLoadFoodComplete(List<Food> food) {
-
-    }
-
-    @Override
-    public void onInsertMealComplete(long mealId) {
-
-    }
 }

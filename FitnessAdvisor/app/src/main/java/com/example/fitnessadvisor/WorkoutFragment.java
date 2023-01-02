@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.fitnessadvisor.Database.Exercise;
+import com.example.fitnessadvisor.Database.Food;
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
@@ -24,14 +25,14 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class WorkoutFragment extends Fragment implements TaskManager.Callback {
+public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Callback {
 
     protected ListView list;
     protected FloatingActionButton butt;
     protected Workout workout;
     protected SharedViewModel viewmodel;
     protected long selected_id;
-    protected TaskManager taskManager = new TaskManager(this);
+    protected WorkoutTaskManager taskManager = new WorkoutTaskManager(this);
 
     public WorkoutFragment() {
 
@@ -90,14 +91,6 @@ public class WorkoutFragment extends Fragment implements TaskManager.Callback {
     }
 
     @Override
-    public void onLoadProfileComplete(Profile profile, boolean empty) {
-
-    }
-    @Override
-    public void onProfileUpdateComplete(Profile profile) {
-
-    }
-    @Override
     public void onLoadWorkoutComplete(List<Workout> workouts) {
 
     }
@@ -118,11 +111,6 @@ public class WorkoutFragment extends Fragment implements TaskManager.Callback {
         MyAdapterExerciseWorkout myAdapter = new MyAdapterExerciseWorkout(getActivity().getApplicationContext(), exercises, wes);
         list.setAdapter(myAdapter);
         setListListener();
-    }
-
-    @Override
-    public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
-
     }
 
     @Override

@@ -47,9 +47,16 @@ public class MyAdapterExerciseWorkout extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = inflater.inflate(R.layout.list_item, null);
-        TextView title = (TextView) view.findViewById(R.id.textView);
-        long exercise_id = wes.get(i).exercise;
+        view = inflater.inflate(R.layout.list_item_exercise_workout, null);
+        Workout_Exercise we = wes.get(i);
+
+        TextView sets = (TextView) view.findViewById(R.id.sets);
+        sets.setText("x" + we.sets);
+        TextView reps = (TextView) view.findViewById(R.id.reps);
+        reps.setText("" + we.repetitions + " reps");
+
+        TextView exerciseName = (TextView) view.findViewById(R.id.exerciseName);
+        long exercise_id = we.exercise;
         System.out.println(exercise_id);
         System.out.println(exercises.size());
         Exercise exercise = null;
@@ -58,7 +65,8 @@ public class MyAdapterExerciseWorkout extends BaseAdapter {
                 exercise = exercises.get(j);
             }
         }
-        title.setText(exercise.name);
+        exerciseName.setText(exercise.name);
+
         return view;
     }
 }

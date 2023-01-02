@@ -165,6 +165,16 @@ public class AddMealFragment extends Fragment implements TaskManager.Callback{
     }
 
     @Override
+    public void onLoadWorkoutComplete(Workout workout) {
+
+    }
+
+    @Override
+    public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
+
+    }
+
+    @Override
     public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
 
     }

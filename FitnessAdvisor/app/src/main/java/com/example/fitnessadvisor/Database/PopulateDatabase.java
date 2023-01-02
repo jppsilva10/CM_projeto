@@ -2,10 +2,11 @@ package com.example.fitnessadvisor.Database;
 
 import com.example.fitnessadvisor.R;
 import com.example.fitnessadvisor.TaskManager;
+import com.example.fitnessadvisor.WorkoutTaskManager;
 
 public class PopulateDatabase {
 
-    public static void populateExercises(AppDatabase db, TaskManager taskManager){
+    public static void populateExercises(AppDatabase db, WorkoutTaskManager taskManager){
         Exercise exercise = new Exercise();
         exercise.name = "Barbell Bench Press";
         exercise.description = "Lying on a flat bench place your hands up on the bar griping it slightly wider than shoulder width apart. Place your feet on the ground in line with or behind your knees. Create an arch in your lower back and push your chest up. Lift the bar up off the rack so that the bar is above your chest. Lower the bar directly down to the chest with your elbow pointing at approximately 45 degrees. Once the bar touches the chest, pause, and then press directly up again. Continue until all reps are completed and then re-rack the barbell.";

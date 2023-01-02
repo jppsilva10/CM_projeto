@@ -25,14 +25,14 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class ManuallyWorkoutFragment extends Fragment implements TaskManager.Callback {
+public class ManuallyWorkoutFragment extends Fragment implements WorkoutTaskManager.Callback {
 
     protected ListView list;
     protected FloatingActionButton butt;
     protected Workout workout;
     protected SharedViewModel viewmodel;
     protected long selected_id;
-    protected TaskManager taskManager = new TaskManager(this);
+    protected WorkoutTaskManager taskManager = new WorkoutTaskManager(this);
 
     public ManuallyWorkoutFragment() {
 
@@ -108,14 +108,6 @@ public class ManuallyWorkoutFragment extends Fragment implements TaskManager.Cal
     }
 
     @Override
-    public void onLoadProfileComplete(Profile profile, boolean empty) {
-
-    }
-    @Override
-    public void onProfileUpdateComplete(Profile profile) {
-
-    }
-    @Override
     public void onLoadWorkoutComplete(List<Workout> workouts) {
 
     }
@@ -136,21 +128,6 @@ public class ManuallyWorkoutFragment extends Fragment implements TaskManager.Cal
         MyAdapterExerciseWorkout myAdapter = new MyAdapterExerciseWorkout(getActivity().getApplicationContext(), exercises, wes);
         list.setAdapter(myAdapter);
         setListListener();
-    }
-
-    @Override
-    public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
-
-    }
-
-    @Override
-    public void onLoadFoodComplete(List<Food> food) {
-
-    }
-
-    @Override
-    public void onInsertMealComplete(long mealId) {
-
     }
 
     @Override

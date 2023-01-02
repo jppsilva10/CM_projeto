@@ -35,11 +35,11 @@ import java.util.List;
 
 import pl.droidsonroids.gif.GifImageView;
 
-public class AddExerciseFragment extends Fragment implements TaskManager.Callback{
+public class AddExerciseFragment extends Fragment implements WorkoutTaskManager.Callback{
 
     protected SharedViewModel viewmodel;
 
-    protected TaskManager taskManager = new TaskManager(this);
+    protected WorkoutTaskManager taskManager = new WorkoutTaskManager(this);
 
     public AddExerciseFragment() {
         // Required empty public constructor
@@ -170,31 +170,6 @@ public class AddExerciseFragment extends Fragment implements TaskManager.Callbac
 
     @Override
     public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
-
-    }
-
-    @Override
-    public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
-
-    }
-
-    @Override
-    public void onLoadFoodComplete(List<Food> food) {
-
-    }
-
-    @Override
-    public void onInsertMealComplete(long mealId) {
-
-    }
-
-    @Override
-    public void onLoadProfileComplete(Profile profile, boolean empty) {
-
-    }
-
-    @Override
-    public void onProfileUpdateComplete(Profile profile) {
 
     }
 }

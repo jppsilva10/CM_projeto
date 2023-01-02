@@ -31,11 +31,11 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class WorkoutListFragment extends Fragment implements TaskManager.Callback{
+public class WorkoutListFragment extends Fragment implements WorkoutTaskManager.Callback{
 
     protected ListView list;
     protected SharedViewModel viewmodel;
-    protected TaskManager taskManager = new TaskManager(this);
+    protected WorkoutTaskManager taskManager = new WorkoutTaskManager(this);
     protected FloatingActionButton butt;
     protected long selected_id;
     protected FloatingActionButton help; //This is just a button to add exercises preemptively
@@ -169,14 +169,6 @@ public class WorkoutListFragment extends Fragment implements TaskManager.Callbac
     }
 
     @Override
-    public void onLoadProfileComplete(Profile profile, boolean empty) {
-
-    }
-    @Override
-    public void onProfileUpdateComplete(Profile profile) {
-
-    }
-    @Override
     public void onLoadWorkoutComplete(List<Workout> workouts) {
         MyAdapter myAdapter = new MyAdapter(getActivity().getApplicationContext(), workouts);
         list.setAdapter(myAdapter);
@@ -194,11 +186,6 @@ public class WorkoutListFragment extends Fragment implements TaskManager.Callbac
     }
 
     @Override
-    public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
-
-    }
-
-    @Override
     public void onLoadExerciseComplete(List<Exercise> exercises) {
 
     }
@@ -210,16 +197,6 @@ public class WorkoutListFragment extends Fragment implements TaskManager.Callbac
 
     @Override
     public void onAddExerciseComplete(Workout_Exercise we) {
-
-    }
-
-    @Override
-    public void onLoadFoodComplete(List<Food> food) {
-
-    }
-
-    @Override
-    public void onInsertMealComplete(long mealId) {
 
     }
 }

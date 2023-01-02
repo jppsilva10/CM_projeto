@@ -34,13 +34,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ExerciseListFragment extends Fragment implements TaskManager.Callback {
+public class ExerciseListFragment extends Fragment implements WorkoutTaskManager.Callback {
 
     protected long selected_id;
     protected List exercises = new ArrayList();
     protected ListView list;
     protected SharedViewModel viewmodel;
-    protected TaskManager taskManager = new TaskManager(this);
+    protected WorkoutTaskManager taskManager = new WorkoutTaskManager(this);
     protected ImageButton butt;
     protected long workoutId;
 
@@ -125,15 +125,6 @@ public class ExerciseListFragment extends Fragment implements TaskManager.Callba
         });
     }
 
-
-    @Override
-    public void onLoadProfileComplete(Profile profile, boolean empty) {
-
-    }
-    @Override
-    public void onProfileUpdateComplete(Profile profile) {
-
-    }
     @Override
     public void onLoadWorkoutComplete(List<Workout> workouts) {
 
@@ -146,11 +137,6 @@ public class ExerciseListFragment extends Fragment implements TaskManager.Callba
 
     @Override
     public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
-
-    }
-
-    @Override
-    public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
 
     }
 
@@ -168,16 +154,6 @@ public class ExerciseListFragment extends Fragment implements TaskManager.Callba
 
     @Override
     public void onAddExerciseComplete(Workout_Exercise we) {
-
-    }
-
-    @Override
-    public void onLoadFoodComplete(List<Food> food) {
-
-    }
-
-    @Override
-    public void onInsertMealComplete(long mealId) {
 
     }
 
