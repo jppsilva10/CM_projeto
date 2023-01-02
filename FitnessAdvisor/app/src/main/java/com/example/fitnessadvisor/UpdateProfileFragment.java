@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.fitnessadvisor.Database.Exercise;
+import com.example.fitnessadvisor.Database.Food;
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;

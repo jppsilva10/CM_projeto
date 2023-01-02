@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.example.fitnessadvisor.Database.Exercise;
+import com.example.fitnessadvisor.Database.Food;
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.PopulateDatabase;
 import com.example.fitnessadvisor.Database.Profile;
