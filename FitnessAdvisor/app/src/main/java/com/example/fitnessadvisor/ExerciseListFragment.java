@@ -101,6 +101,8 @@ public class ExerciseListFragment extends Fragment implements TaskManager.Callba
             @Override
             public void onItemClick(AdapterView<?>adapter,View v, int position, long id){
 
+                viewmodel.setExerciseId(id);
+
                 getActivity()
                         .getSupportFragmentManager()
                         .beginTransaction()
@@ -136,6 +138,11 @@ public class ExerciseListFragment extends Fragment implements TaskManager.Callba
         MyAdapterExercise myAdapter = new MyAdapterExercise(getActivity().getApplicationContext(), exercises);
         list.setAdapter(myAdapter);
         setListListener();
+    }
+
+    @Override
+    public void onLoadExerciseComplete(Exercise exercise) {
+
     }
 
     @Override

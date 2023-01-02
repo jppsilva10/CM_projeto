@@ -19,10 +19,11 @@ public class Exercise {
     public String type;
 
     @ColumnInfo(name = "image")
-    public String image;
+    public int image;
 
     @ColumnInfo(name = "muscle_group")
-    public String muscle_group;
+    public String muscle_groups;
 
-
+    @ColumnInfo(name = "main_muscle")
+    public String main_muscle;
 }

@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/exerciseName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -25,7 +25,7 @@
             android:orientation="horizontal">
 
             <pl.droidsonroids.gif.GifImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/exerciseImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -33,7 +33,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/exerciseDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView" />

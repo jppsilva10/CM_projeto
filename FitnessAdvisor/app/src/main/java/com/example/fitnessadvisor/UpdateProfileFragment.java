@@ -265,6 +265,11 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
     }
 
     @Override
+    public void onLoadExerciseComplete(Exercise exercise) {
+
+    }
+
+    @Override
     public void onLoadMealComplete(List<Meal> meals) {
 
     }

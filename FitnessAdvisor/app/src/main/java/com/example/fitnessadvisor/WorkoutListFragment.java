@@ -20,6 +20,7 @@ import android.widget.SearchView;
 
 import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Meal;
+import com.example.fitnessadvisor.Database.PopulateDatabase;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -108,13 +109,7 @@ public class WorkoutListFragment extends Fragment implements TaskManager.Callbac
             @Override
             public void onClick(View view) {
                 //Edit these values to add different exercises
-                Exercise exercise = new Exercise();
-                exercise.name = "Standing lat push-down";
-                exercise.description = "Grasp the attachment with an overhand grip and your arms fully extended. Keeping your arms straight, squeeze your lats to bring the bar down to your thighs. Pause briefly at the bottom of the rep, squeeze your lats hard, and slowly return to the starting position. Maintain tightness in your core and repeat.";
-                exercise.type = "treino";
-                exercise.image = String.valueOf(R.drawable.standinglat);
-                exercise.muscle_group = "Back";
-                taskManager.executeExerciseInsertionAsync(viewmodel.getDB(),exercise);
+                PopulateDatabase.populateExercises(viewmodel.getDB(), taskManager);
             }
         });
     }
@@ -182,6 +177,11 @@ public class WorkoutListFragment extends Fragment implements TaskManager.Callbac
     }
     @Override
     public void onLoadExerciseComplete(List<Exercise> exercises) {
+
+    }
+
+    @Override
+    public void onLoadExerciseComplete(Exercise exercise) {
 
     }
 

@@ -15,13 +15,14 @@ import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
 
 public class ManuallyWorkoutFragment extends Fragment implements TaskManager.Callback {
 
-    protected ImageButton butt;
+    protected FloatingActionButton butt;
     protected TextView workoutName;
     protected SharedViewModel viewmodel;
 
@@ -83,6 +84,12 @@ public class ManuallyWorkoutFragment extends Fragment implements TaskManager.Cal
     public void onLoadExerciseComplete(List<Exercise> exercises) {
 
     }
+
+    @Override
+    public void onLoadExerciseComplete(Exercise exercise) {
+
+    }
+
     @Override
     public void onLoadMealComplete(List<Meal> meals){
 
