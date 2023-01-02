@@ -12,11 +12,16 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.fitnessadvisor.Database.Exercise;
+<<<<<<< Updated upstream
+=======
+import com.example.fitnessadvisor.Database.Food;
+>>>>>>> Stashed changes
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -80,6 +85,12 @@ public class ManuallyWorkoutFragment extends Fragment implements TaskManager.Cal
     public void onLoadWorkoutComplete(List<Workout> workouts) {
 
     }
+
+    @Override
+    public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
+
+    }
+
     @Override
     public void onLoadExerciseComplete(List<Exercise> exercises) {
 

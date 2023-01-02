@@ -119,22 +119,14 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/body"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical">
-
-            <ExpandableListView
-                android:id="@+id/expandableListView"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
-                android:divider="#A4C739"
-                android:dividerHeight="0.5dp" />
-
-        </LinearLayout>
+        <Button
+            android:id="@+id/goToMealList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gerar Refeições"
+            android:layout_marginTop="70dp"
+            android:layout_marginLeft="80dp"
+            android:textSize="25sp" />
 
 
     </LinearLayout>

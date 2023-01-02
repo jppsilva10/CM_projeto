@@ -17,7 +17,7 @@ public interface Meal_FoodDao {
     Meal_Food loadById(long id);
 
     @Query("SELECT * FROM meal_food WHERE meal = :meal")
-    Meal_Food loadByMeal(long meal);
+    List<Meal_Food> loadByMeal(long meal);
 
     @Insert
     void insert(Meal_Food meal_food);

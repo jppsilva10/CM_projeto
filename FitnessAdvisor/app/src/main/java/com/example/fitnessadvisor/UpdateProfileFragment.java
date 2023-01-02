@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.fitnessadvisor.Database.Exercise;
+import com.example.fitnessadvisor.Database.Food;
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
@@ -27,6 +28,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class UpdateProfileFragment extends Fragment implements TaskManager.Callback {
@@ -265,12 +267,16 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
     }
 
     @Override
+<<<<<<< Updated upstream
     public void onLoadExerciseComplete(Exercise exercise) {
 
     }
 
     @Override
     public void onLoadMealComplete(List<Meal> meals) {
+=======
+    public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
+>>>>>>> Stashed changes
 
     }
 }

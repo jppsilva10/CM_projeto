@@ -19,11 +19,16 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.fitnessadvisor.Database.Exercise;
+<<<<<<< Updated upstream
+=======
+import com.example.fitnessadvisor.Database.Food;
+>>>>>>> Stashed changes
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -145,6 +150,12 @@ public class CreateWorkoutFragment extends Fragment implements TaskManager.Callb
     public void onLoadWorkoutComplete(List<Workout> workouts) {
         viewmodel.setWorkoutId(workouts.get(workouts.size() -1 ).id);
     }
+
+    @Override
+    public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
+
+    }
+
     @Override
     public void onLoadExerciseComplete(List<Exercise> exercises) {
 

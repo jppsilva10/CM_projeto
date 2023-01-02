@@ -19,12 +19,14 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.example.fitnessadvisor.Database.Exercise;
+import com.example.fitnessadvisor.Database.Food;
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.PopulateDatabase;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -181,12 +183,16 @@ public class WorkoutListFragment extends Fragment implements TaskManager.Callbac
     }
 
     @Override
+<<<<<<< Updated upstream
     public void onLoadExerciseComplete(Exercise exercise) {
 
     }
 
     @Override
     public void onLoadMealComplete(List<Meal> meals) {
+=======
+    public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
+>>>>>>> Stashed changes
 
     }
 }

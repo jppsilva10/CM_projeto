@@ -6,6 +6,7 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
 import com.example.fitnessadvisor.Database.AppDatabase;
+import com.example.fitnessadvisor.Database.Meal;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
@@ -27,7 +28,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected SharedViewModel viewModel;
     protected AppDatabase db;
     BottomNavigationView navView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 return true;
 
             case R.id.navigation_nutrition:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, MealListFragment.class/*NutritionFragment.class*/, null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, NutritionFragment.class, null).commit();
                 return true;
 
             case R.id.navigation_account:
@@ -75,5 +75,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public SharedViewModel getViewModel(){
         return viewModel;
     }
+
+
 
 }

@@ -24,11 +24,13 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.fitnessadvisor.Database.Exercise;
+import com.example.fitnessadvisor.Database.Food;
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ExerciseListFragment extends Fragment implements TaskManager.Callback {
@@ -141,12 +143,16 @@ public class ExerciseListFragment extends Fragment implements TaskManager.Callba
     }
 
     @Override
+<<<<<<< Updated upstream
     public void onLoadExerciseComplete(Exercise exercise) {
 
     }
 
     @Override
     public void onLoadMealComplete(List<Meal> meals) {
+=======
+    public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
+>>>>>>> Stashed changes
 
     }
 
