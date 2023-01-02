@@ -7,27 +7,52 @@
     android:background="#F5F5F5"
     tools:context=".MealListFragment">
 
-    <SearchView
-        android:id="@+id/search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:icon="@drawable/search_icon" />
-
     <LinearLayout
         android:id="@+id/body"
         android:layout_width="wrap_content"
-        android:layout_height="589dp"
-        android:layout_marginTop="100dp"
+        android:layout_height="500dp"
+        android:layout_gravity="bottom"
         android:orientation="vertical">
 
         <ExpandableListView
             android:id="@+id/expandableListView"
             android:layout_width="match_parent"
-            android:layout_height="689dp"
+            android:layout_height="500dp"
             android:divider="#A4C739"
             android:dividerHeight="0.5dp"
             android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft" />
 
     </LinearLayout>
+
+
+    <Button
+        android:id="@+id/addMeal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Adicionar Refeição"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="20dp"/>
+
+    <Button
+        android:id="@+id/removeMeal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remover Refeição"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="right"
+        android:layout_marginRight="20dp"/>
+
+    <EditText
+        android:id="@+id/pageTitle"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="Refeições de Hoje"
+        android:textSize="25dp"
+        android:layout_gravity="top|center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 
 </FrameLayout>

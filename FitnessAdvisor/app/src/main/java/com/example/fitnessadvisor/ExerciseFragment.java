@@ -15,6 +15,7 @@ import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
 import com.example.fitnessadvisor.Database.Workout_Exercise;
 
+import java.util.HashMap;
 import java.util.List;
 
 import pl.droidsonroids.gif.GifImageView;
@@ -86,7 +87,7 @@ public class ExerciseFragment extends Fragment implements TaskManager.Callback{
     }
 
     @Override
-    public void onLoadMealComplete(List<Meal> meals) {
+    public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
 
     }
 

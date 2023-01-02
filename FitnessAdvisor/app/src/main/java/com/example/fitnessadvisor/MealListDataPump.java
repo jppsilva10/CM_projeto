@@ -1,9 +1,11 @@
 package com.example.fitnessadvisor;
+import com.example.fitnessadvisor.Database.Meal;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MealListDataPump {
+public class MealListDataPump{
     public static HashMap<String, List<String>> getData() {
         HashMap<String, List<String>> expandableListDetail = new HashMap<String, List<String>>();
 
@@ -30,4 +32,6 @@ public class MealListDataPump {
         expandableListDetail.put("Jantar", dinner);
         return expandableListDetail;
     }
+
+
 }
