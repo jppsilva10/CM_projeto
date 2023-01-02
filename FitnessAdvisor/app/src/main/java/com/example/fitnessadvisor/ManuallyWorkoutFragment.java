@@ -12,10 +12,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.fitnessadvisor.Database.Exercise;
-<<<<<<< Updated upstream
-=======
 import com.example.fitnessadvisor.Database.Food;
->>>>>>> Stashed changes
+
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
@@ -101,8 +99,4 @@ public class ManuallyWorkoutFragment extends Fragment implements TaskManager.Cal
 
     }
 
-    @Override
-    public void onLoadMealComplete(List<Meal> meals){
-
-    }
 }

@@ -165,6 +165,11 @@ public class NutritionFragment extends Fragment implements TaskManager.Callback{
     }
 
     @Override
+    public void onLoadExerciseComplete(Exercise exercise) {
+
+    }
+
+    @Override
     public void onLoadWorkoutComplete(List<Workout> workouts) {
 
     }

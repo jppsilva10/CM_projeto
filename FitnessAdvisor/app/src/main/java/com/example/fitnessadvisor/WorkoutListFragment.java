@@ -183,16 +183,12 @@ public class WorkoutListFragment extends Fragment implements TaskManager.Callbac
     }
 
     @Override
-<<<<<<< Updated upstream
     public void onLoadExerciseComplete(Exercise exercise) {
 
     }
 
     @Override
-    public void onLoadMealComplete(List<Meal> meals) {
-=======
     public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
->>>>>>> Stashed changes
 
     }
 }

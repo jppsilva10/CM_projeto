@@ -121,7 +121,6 @@ public class TaskManager {
         });
     }
 
-<<<<<<< Updated upstream
     public void executeLoadExerciseByIdAsync(AppDatabase db, long exerciseId){
         executor.execute(() -> {
 
@@ -146,7 +145,7 @@ public class TaskManager {
         });
     }
 
-    public void executeLoadMealAsync(AppDatabase db){
+    /*public void executeLoadMealAsync(AppDatabase db){
         executor.execute(() -> {
 
             MealDao mealDao = db.mealDao();
@@ -156,10 +155,8 @@ public class TaskManager {
                 calback.onLoadMealComplete(meals);
             });
         });
-    }
+    }*/
 
-=======
->>>>>>> Stashed changes
     public void executeExerciseInsertionAsync(AppDatabase db, Exercise exercise){
         executor.execute(() -> {
             Profile profile = null;

@@ -267,16 +267,12 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
     }
 
     @Override
-<<<<<<< Updated upstream
     public void onLoadExerciseComplete(Exercise exercise) {
 
     }
 
     @Override
-    public void onLoadMealComplete(List<Meal> meals) {
-=======
     public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
->>>>>>> Stashed changes
 
     }
 }

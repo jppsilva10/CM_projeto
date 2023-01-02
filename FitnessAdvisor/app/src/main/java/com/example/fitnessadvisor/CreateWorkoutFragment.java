@@ -19,10 +19,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.fitnessadvisor.Database.Exercise;
-<<<<<<< Updated upstream
-=======
+
 import com.example.fitnessadvisor.Database.Food;
->>>>>>> Stashed changes
+
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
@@ -166,8 +165,4 @@ public class CreateWorkoutFragment extends Fragment implements TaskManager.Callb
 
     }
 
-    @Override
-    public void onLoadMealComplete(List<Meal> meals) {
-
-    }
 }

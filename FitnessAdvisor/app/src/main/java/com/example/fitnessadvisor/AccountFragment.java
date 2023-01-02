@@ -143,16 +143,12 @@ public class AccountFragment extends Fragment implements TaskManager.Callback{
     }
 
     @Override
-<<<<<<< Updated upstream
     public void onLoadExerciseComplete(Exercise exercise) {
 
     }
 
     @Override
-    public void onLoadMealComplete(List<Meal> meals) {
-=======
     public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
->>>>>>> Stashed changes
 
     }
 }
