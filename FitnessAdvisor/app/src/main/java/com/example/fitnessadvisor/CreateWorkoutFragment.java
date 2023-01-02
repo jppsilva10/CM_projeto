@@ -154,6 +154,16 @@ public class CreateWorkoutFragment extends Fragment implements TaskManager.Callb
     }
 
     @Override
+    public void onLoadFoodComplete(List<Food> food) {
+
+    }
+
+    @Override
+    public void onInsertMealComplete(long mealId) {
+
+    }
+
+    @Override
     public void onLoadExerciseComplete(List<Exercise> exercises) {
 
     }

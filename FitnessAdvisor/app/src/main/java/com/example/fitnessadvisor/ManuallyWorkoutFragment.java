@@ -89,6 +89,16 @@ public class ManuallyWorkoutFragment extends Fragment implements TaskManager.Cal
     }
 
     @Override
+    public void onLoadFoodComplete(List<Food> food) {
+
+    }
+
+    @Override
+    public void onInsertMealComplete(long mealId) {
+
+    }
+
+    @Override
     public void onLoadExerciseComplete(List<Exercise> exercises) {
 
     }

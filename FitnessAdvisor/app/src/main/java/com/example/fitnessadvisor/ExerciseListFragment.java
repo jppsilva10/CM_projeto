@@ -158,4 +158,14 @@ public class ExerciseListFragment extends Fragment implements TaskManager.Callba
 
     }
 
+    @Override
+    public void onLoadFoodComplete(List<Food> food) {
+
+    }
+
+    @Override
+    public void onInsertMealComplete(long mealId) {
+
+    }
+
 }

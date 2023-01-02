@@ -24,7 +24,7 @@ public interface MealDao {
     List<Meal> loadByDate(String day);
 
     @Insert
-    void insert(Meal meal);
+    long insert(Meal meal);
 
     @Delete
     void delete(Meal meal);

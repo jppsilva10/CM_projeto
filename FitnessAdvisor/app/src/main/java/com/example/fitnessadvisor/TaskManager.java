@@ -41,6 +41,8 @@ public class TaskManager {
         void onAddExerciseComplete(Workout_Exercise we);
         void onLoadWorkoutComplete(List<Workout> workouts);
         void onLoadMealComplete(HashMap<String, List<String>> mealList);
+        void onLoadFoodComplete(List<Food> food);
+        void onInsertMealComplete(long mealId);
         void onLoadProfileComplete(Profile profile, boolean empty);
         void onProfileUpdateComplete(Profile profile);
     }
@@ -94,6 +96,67 @@ public class TaskManager {
 
             handler.post(() -> {
                 calback.onLoadWorkoutComplete(workouts);
+            });
+        });
+    }
+
+    public void executeLoadFoodAsync(AppDatabase db){
+        executor.execute(() -> {
+
+            FoodDao foodDao = db.foodDao();
+            List<Food> food = foodDao.getAll();
+
+            handler.post(() -> {
+                calback.onLoadFoodComplete(food);
+            });
+        });
+    }
+
+    /*public void executeLoadMealAsync(AppDatabase db){
+        executor.execute(() -> {
+
+            MealDao mealDao = db.mealDao();
+            List<Meal> meals = mealDao.getAll();
+
+            handler.post(() -> {
+                calback.onLoadMealComplete(meals);
+            });
+        });
+    }*/
+
+    public void executeLoadMealAsync(AppDatabase db, String day){
+        executor.execute(() -> {
+            MealDao mealDao = db.mealDao();
+            List<Meal> meals = mealDao.loadByDate(day);
+
+            Meal_FoodDao meal_foodDao = db.meal_foodDao();
+            FoodDao foodDao = db.foodDao();
+
+            HashMap<String, List<String>> mealList = new HashMap<String, List<String>>();
+            for(int i = 0; i < meals.size(); i++){
+                List<Meal_Food> meal_food_list = meal_foodDao.loadByMeal(meals.get(i).id);
+                List<String> one_meal = new ArrayList<String>();
+                for(int j = 0; j < meal_food_list.size(); j++){
+                    Food food = foodDao.loadById(meal_food_list.get(j).food);
+                    one_meal.add(food.name);
+                }
+                mealList.put(meals.get(i).title + " " + meals.get(i).day + " " + meals.get(i).time, one_meal);
+            }
+
+            handler.post(() -> {
+                calback.onLoadMealComplete(mealList);
+            });
+        });
+    }
+
+    public void executeFoodSearchAsync(AppDatabase db, String name){
+        executor.execute(() -> {
+
+            FoodDao foodDao = db.foodDao();
+            List<Food> food = foodDao.loadByName(name);
+
+            handler.post(() -> {
+                calback.onLoadFoodComplete(food);
             });
         });
     }
@@ -239,43 +302,19 @@ public class TaskManager {
         });
     }
 
-    public void executeLoadMealAsync(AppDatabase db, String day){
-        executor.execute(() -> {
-            MealDao mealDao = db.mealDao();
-            List<Meal> meals = mealDao.loadByDate(day);
-
-            Meal_FoodDao meal_foodDao = db.meal_foodDao();
-            FoodDao foodDao = db.foodDao();
-
-            HashMap<String, List<String>> mealList = new HashMap<String, List<String>>();
-            for(int i = 0; i < meals.size(); i++){
-                List<Meal_Food> meal_food_list = meal_foodDao.loadByMeal(meals.get(i).id);
-                List<String> one_meal = new ArrayList<String>();
-                for(int j = 0; j < meal_food_list.size(); j++){
-                    Food food = foodDao.loadById(meal_food_list.get(j).food);
-                    one_meal.add(food.name);
-                }
-                mealList.put(meals.get(i).title + " " + meals.get(i).day + " " + meals.get(i).time, one_meal);
-            }
-
-            handler.post(() -> {
-                calback.onLoadMealComplete(mealList);
-            });
-        });
-    }
-
 
     public long executeInsertMeal(AppDatabase db, Meal meal){
         executor.execute(() -> {
-
+            long id;
 
             MealDao mealDao = db.mealDao();
-            mealDao.insert(meal);
+            id = mealDao.insert(meal);
 
             handler.post(() -> {
-
+                calback.onInsertMealComplete(id);
             });
         });
+
         return meal.id;
     }
 

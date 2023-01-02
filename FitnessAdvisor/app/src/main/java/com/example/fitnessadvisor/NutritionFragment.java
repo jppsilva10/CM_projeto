@@ -59,6 +59,8 @@ public class NutritionFragment extends Fragment implements TaskManager.Callback{
                         .getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container_view, MealListFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("stack")
                         .commit();
             }
         });
@@ -182,6 +184,16 @@ public class NutritionFragment extends Fragment implements TaskManager.Callback{
 
     @Override
     public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
+
+    }
+
+    @Override
+    public void onLoadFoodComplete(List<Food> food) {
+
+    }
+
+    @Override
+    public void onInsertMealComplete(long mealId) {
 
     }
 
