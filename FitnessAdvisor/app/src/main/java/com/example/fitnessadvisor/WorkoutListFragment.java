@@ -104,6 +104,8 @@ public class WorkoutListFragment extends Fragment implements TaskManager.Callbac
                         .getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container_view, CreateWorkoutFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("stack")
                         .commit();
             }
         });
@@ -127,6 +129,8 @@ public class WorkoutListFragment extends Fragment implements TaskManager.Callbac
                         .getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container_view, WorkoutFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("stack")
                         .commit();
             }
         });
@@ -176,6 +180,16 @@ public class WorkoutListFragment extends Fragment implements TaskManager.Callbac
         MyAdapter myAdapter = new MyAdapter(getActivity().getApplicationContext(), workouts);
         list.setAdapter(myAdapter);
         setListListener();
+    }
+
+    @Override
+    public void onLoadWorkoutComplete(Workout workout) {
+
+    }
+
+    @Override
+    public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
+
     }
 
     @Override

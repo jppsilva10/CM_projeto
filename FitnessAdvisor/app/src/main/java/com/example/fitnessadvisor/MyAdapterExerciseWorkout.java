@@ -14,22 +14,24 @@ import java.util.List;
 
 public class MyAdapterExerciseWorkout extends BaseAdapter {
     Context context;
-    List<Workout_Exercise> exercises;
+    List<Workout_Exercise> wes;
+    List<Exercise> exercises;
     LayoutInflater inflater;
 
-    public MyAdapterExerciseWorkout(Context applicationContext, List<Workout_Exercise> exercises) {
+    public MyAdapterExerciseWorkout(Context applicationContext, List<Exercise> exercises, List<Workout_Exercise> wes) {
         this.exercises = exercises;
+        this.wes = wes;
         this.context = applicationContext;
         inflater = (LayoutInflater.from(applicationContext));
     }
 
-    public void setExercises(List<Workout_Exercise> workouts) {
-        this.exercises = workouts;
+    public void setWes(List<Workout_Exercise> wes) {
+        this.wes = wes;
     }
 
     @Override
     public int getCount() {
-        return exercises.size();
+        return wes.size();
     }
 
     @Override
@@ -40,13 +42,23 @@ public class MyAdapterExerciseWorkout extends BaseAdapter {
     @Override
     public long getItemId(int i) {
 
-        return exercises.get(i).id;
+        return wes.get(i).id;
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = inflater.inflate(R.layout.list_item_exercise_workout, null);
+        view = inflater.inflate(R.layout.list_item, null);
         TextView title = (TextView) view.findViewById(R.id.textView);
+        long exercise_id = wes.get(i).exercise;
+        System.out.println(exercise_id);
+        System.out.println(exercises.size());
+        Exercise exercise = null;
+        for(int j=0; j<exercises.size(); j++){
+            if(exercises.get(j).id==exercise_id){
+                exercise = exercises.get(j);
+            }
+        }
+        title.setText(exercise.name);
         return view;
     }
 }

@@ -56,17 +56,33 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        for(int i=0; i<count; i++ ){
+            getSupportFragmentManager().popBackStack();
+        }
+
         switch (item.getItemId()) {
             case R.id.navigation_workout:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, WorkoutListFragment.class, null).commit();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container_view, WorkoutListFragment.class, null)
+                        .commit();
                 return true;
 
             case R.id.navigation_nutrition:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, NutritionFragment.class, null).commit();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container_view, NutritionFragment.class, null)
+                        .commit();
                 return true;
 
             case R.id.navigation_account:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, AccountFragment.class, null).commit();
+
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container_view, AccountFragment.class, null)
+                        .commit();
                 return true;
         }
         return false;

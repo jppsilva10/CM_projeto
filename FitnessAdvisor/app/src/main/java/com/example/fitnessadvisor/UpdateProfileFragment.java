@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,6 +78,7 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
         Button b = act.findViewById(R.id.updateProfile);
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                boolean error = false;
 
                 Profile p = new Profile();
 
@@ -89,36 +91,77 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
                 Spinner spinner;
 
                 text = act.findViewById(R.id.nameValue);
-                p.name = String.valueOf(text.getText());
+                if (TextUtils.isEmpty(text.getText())){
+                    text.setError( "Name is required!" );
+                    error = true;
+                }
+                else {
+                    p.name = String.valueOf(text.getText());
+                }
 
                 spinner = act.findViewById(R.id.genderValueSpinner);
                 p.gender = spinner.getSelectedItem().toString();
 
                 text = act.findViewById(R.id.birthDateValue);
-                try {
-                    p.birth_date = new SimpleDateFormat("dd/MM/yyyy").parse(text.getText().toString());
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                if (TextUtils.isEmpty(text.getText())){
+                    text.setError( "Birth Date is required!" );
+                    error = true;
+                }
+                else {
+                    try {
+                        p.birth_date = new SimpleDateFormat("dd/MM/yyyy").parse(text.getText().toString());
+                    } catch (ParseException e) {
+                        text.setError( "Invalid Birth Date value" );
+                        error = true;
+                    }
                 }
 
                 spinner = act.findViewById(R.id.lifeStyleValueSpinner);
                 p.life_style = spinner.getSelectedItem().toString();
 
                 text = act.findViewById(R.id.heightValue);
-                p.height = Float.parseFloat(text.getText().toString());
+                if (TextUtils.isEmpty(text.getText())){
+                    text.setError( "Height is required!" );
+                    error = true;
+                }
+                else {
+                    p.height = Float.parseFloat(text.getText().toString());
+                }
 
                 text = act.findViewById(R.id.weightValue);
-                p.weight = Float.parseFloat(text.getText().toString());
+                if (TextUtils.isEmpty(text.getText())){
+                    text.setError( "Weight is required!" );
+                    error = true;
+                }
+                else {
+                    p.weight = Float.parseFloat(text.getText().toString());
+                }
 
                 text = act.findViewById(R.id.targetWeightValue);
-                p.target_weight = Float.parseFloat(text.getText().toString());
+                if (TextUtils.isEmpty(text.getText())){
+                    text.setError( "Target Weight is required!" );
+                    error = true;
+                }
+                else {
+                    p.target_weight = Float.parseFloat(text.getText().toString());
+                }
 
                 text = act.findViewById(R.id.goalDeadlineValue);
-                try {
-                    p.goal_deadline = new SimpleDateFormat("dd/MM/yyyy").parse(text.getText().toString());
-                } catch (ParseException e) {
-                    System.out.println("-------ERRO--------");
-                    e.printStackTrace();
+                if (TextUtils.isEmpty(text.getText())){
+                    text.setError( "Goal Deadline is required!" );
+                    error = true;
+                }
+                else {
+                    try {
+                        p.goal_deadline = new SimpleDateFormat("dd/MM/yyyy").parse(text.getText().toString());
+                    } catch (ParseException e) {
+                        text.setError( "Invalid Goal Deadline value" );
+                        error = true;
+                    }
+                }
+
+                if (error){
+                    return;
                 }
 
                 if (profile == null) {
@@ -251,14 +294,34 @@ public class UpdateProfileFragment extends Fragment implements TaskManager.Callb
     public void onProfileUpdateComplete(Profile profile) {
         System.out.println("---------updated---------");
         this.profile = profile;
-        getActivity()
+
+        MainActivity act = (MainActivity) getActivity();
+        int count = act.getSupportFragmentManager().getBackStackEntryCount();
+
+        for(int i=0; i<count; i++ ){
+            act.getSupportFragmentManager().popBackStack();
+        }
+
+        act
                 .getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container_view, AccountFragment.class, null)
+                .setReorderingAllowed(true)
+                .addToBackStack("stack")
                 .commit();
     }
     @Override
     public void onLoadWorkoutComplete(List<Workout> workouts){
+
+    }
+
+    @Override
+    public void onLoadWorkoutComplete(Workout workout) {
+
+    }
+
+    @Override
+    public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
 
     }
 

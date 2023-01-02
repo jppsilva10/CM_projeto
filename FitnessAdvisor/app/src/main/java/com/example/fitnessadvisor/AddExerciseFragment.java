@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +77,7 @@ public class AddExerciseFragment extends Fragment implements TaskManager.Callbac
         Button b = act.findViewById(R.id.addExercise);
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                boolean error = false;
 
                 Workout_Exercise we = new Workout_Exercise();
                 we.workout = viewmodel.getWorkoutId();
@@ -85,13 +87,35 @@ public class AddExerciseFragment extends Fragment implements TaskManager.Callbac
                 EditText text;
 
                 text = act.findViewById(R.id.setsValue);
-                we.sets = Integer.parseInt(String.valueOf(text.getText()));
+                if (TextUtils.isEmpty(text.getText())){
+                    text.setError( "Sets is required!" );
+                    error = true;
+                }
+                else {
+                    we.sets = Integer.parseInt(String.valueOf(text.getText()));
+                }
 
                 text = act.findViewById(R.id.repsValue);
-                we.repetitions = Integer.parseInt(String.valueOf(text.getText()));
+                if (TextUtils.isEmpty(text.getText())){
+                    text.setError( "Repetitions is required!" );
+                    error = true;
+                }
+                else {
+                    we.repetitions = Integer.parseInt(String.valueOf(text.getText()));
+                }
 
                 text = act.findViewById(R.id.weightValue);
-                we.weight = Float.parseFloat(String.valueOf(text.getText()));
+                if (TextUtils.isEmpty(text.getText())){
+                    text.setError( "Weight is required!" );
+                    error = true;
+                }
+                else {
+                    we.weight = Float.parseFloat(String.valueOf(text.getText()));
+                }
+
+                if(error){
+                    return;
+                }
 
                 taskManager.executeAddExerciseAsync(viewmodel.getDB(), we);
 
@@ -124,15 +148,27 @@ public class AddExerciseFragment extends Fragment implements TaskManager.Callbac
 
     @Override
     public void onAddExerciseComplete(Workout_Exercise we) {
+
+        getActivity().getSupportFragmentManager().popBackStack();
         getActivity()
                 .getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_container_view, ExerciseListFragment.class, null)
+                .replace(R.id.fragment_container_view, ManuallyWorkoutFragment.class, null)
                 .commit();
     }
 
     @Override
     public void onLoadWorkoutComplete(List<Workout> workouts) {
+
+    }
+
+    @Override
+    public void onLoadWorkoutComplete(Workout workout) {
+
+    }
+
+    @Override
+    public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
 
     }
 

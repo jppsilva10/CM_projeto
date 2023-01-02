@@ -16,6 +16,7 @@ import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.ProfileDao;
 
 import com.example.fitnessadvisor.Database.Workout;
+import com.example.fitnessadvisor.Database.WorkoutAndExercise;
 import com.example.fitnessadvisor.Database.WorkoutDao;
 import com.example.fitnessadvisor.Database.Workout_Exercise;
 import com.example.fitnessadvisor.Database.Workout_ExerciseDao;
@@ -40,6 +41,8 @@ public class TaskManager {
         void onLoadExerciseComplete(Exercise exercise);
         void onAddExerciseComplete(Workout_Exercise we);
         void onLoadWorkoutComplete(List<Workout> workouts);
+        void onLoadWorkoutComplete(Workout workout);
+        void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes);
         void onLoadMealComplete(HashMap<String, List<String>> mealList);
         void onLoadProfileComplete(Profile profile, boolean empty);
         void onProfileUpdateComplete(Profile profile);
@@ -94,6 +97,18 @@ public class TaskManager {
 
             handler.post(() -> {
                 calback.onLoadWorkoutComplete(workouts);
+            });
+        });
+    }
+
+    public void executeLoadWorkoutAsync(AppDatabase db, Long workoutId){
+        executor.execute(() -> {
+
+            WorkoutDao workoutDao = db.workoutDao();
+            Workout workout = workoutDao.loadById(workoutId);
+
+            handler.post(() -> {
+                calback.onLoadWorkoutComplete(workout);
             });
         });
     }
@@ -158,6 +173,31 @@ public class TaskManager {
         });
     }
 
+    public void executeLoadWorkout_ExerciseAsync(AppDatabase db, long workoutId){
+        executor.execute(() -> {
+
+            System.out.println("-------executeLoadWorkout_ExerciseAsync-------");
+
+            Workout_ExerciseDao workout_exerciseDao = db.workout_exerciseDao();
+            List<Workout_Exercise> wes = workout_exerciseDao.loadByWorkout(workoutId);
+
+            ExerciseDao exerciseDao = db.exerciseDao();
+            List<Exercise> exercises = exerciseDao.getAll();
+
+            System.out.println("-------wes-------");
+
+            WorkoutDao workoutDao = db.workoutDao();
+            WorkoutAndExercise workoutAndExercise = workoutDao.getWorkoutWithExercises(workoutId);
+
+            System.out.println("-------workoutAndExercise-------");
+
+
+            handler.post(() -> {
+                calback.onLoadWorkout_ExerciseComplete(workoutAndExercise.exercises, wes);
+            });
+        });
+    }
+
     /*public void executeLoadMealAsync(AppDatabase db){
         executor.execute(() -> {
 
@@ -191,10 +231,10 @@ public class TaskManager {
 
 
             WorkoutDao workoutDao = db.workoutDao();
-            workoutDao.insert(workout);
-            List<Workout> workouts = workoutDao.getAll();
+            workout.id = workoutDao.insert(workout);
+
             handler.post(() -> {
-                calback.onLoadWorkoutComplete(workouts);
+                calback.onLoadWorkoutComplete(workout);
             });
         });
     }

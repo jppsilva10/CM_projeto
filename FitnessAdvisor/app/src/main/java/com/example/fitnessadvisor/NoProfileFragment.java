@@ -38,6 +38,8 @@ public class NoProfileFragment extends Fragment {
                         .getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container_view, UpdateProfileFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("stack")
                         .commit();
             }
         });

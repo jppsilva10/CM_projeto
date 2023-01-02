@@ -88,12 +88,6 @@ public class CreateWorkoutFragment extends Fragment implements TaskManager.Callb
                         Workout workout = new Workout();
                         workout.name = input.getText().toString();
                         taskManager.executeInsertWorkout(viewmodel.getDB(), workout);
-                        viewmodel.setWorkout(workout.name);
-                        getActivity()
-                                .getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.fragment_container_view, ManuallyWorkoutFragment.class, null)
-                                .commit();
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -146,6 +140,21 @@ public class CreateWorkoutFragment extends Fragment implements TaskManager.Callb
     @Override
     public void onLoadWorkoutComplete(List<Workout> workouts) {
         viewmodel.setWorkoutId(workouts.get(workouts.size() -1 ).id);
+    }
+
+    @Override
+    public void onLoadWorkoutComplete(Workout workout) {
+        viewmodel.setWorkoutId(workout.id);
+        getActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container_view, ManuallyWorkoutFragment.class, null)
+                .commit();
+    }
+
+    @Override
+    public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
+
     }
 
     @Override

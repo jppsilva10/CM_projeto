@@ -28,11 +28,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
                     android:text="Exercise Information"
                     android:textColor="#FFFFFF"
                     android:textSize="20dp"
                     android:textStyle="bold"
-                    android:layout_marginLeft="20dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -42,8 +42,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/exerciseName"
@@ -70,61 +70,72 @@
             android:id="@+id/body"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
             android:background="@drawable/exercise_body"
-            android:orientation="vertical"
-            android:layout_marginTop="20dp">
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/row1"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/musclesLable"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Muscle Group(s):"
-                    android:textStyle="bold"/>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/exerciseMuscles"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    android:layout_marginLeft="20dp"/>
+                    <LinearLayout
+                        android:id="@+id/row1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp">
 
-            </LinearLayout>
+                        <TextView
+                            android:id="@+id/musclesLable"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Muscle Group(s):"
+                            android:textStyle="bold" />
 
-            <View style="@style/HorizontalDivider" />
+                        <TextView
+                            android:id="@+id/exerciseMuscles"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:text="TextView" />
 
-            <LinearLayout
-                android:id="@+id/row2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
+                    </LinearLayout>
 
-                <TextView
-                    android:id="@+id/descriptionLable"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Description:"
-                    android:textStyle="bold"/>
+                    <View style="@style/HorizontalDivider" />
 
-                <TextView
-                    android:id="@+id/exerciseDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    android:layout_marginLeft="20dp"/>
+                    <LinearLayout
+                        android:id="@+id/row2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp">
 
-            </LinearLayout>
+                        <TextView
+                            android:id="@+id/descriptionLable"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Description:"
+                            android:textStyle="bold" />
 
-            <View style="@style/HorizontalDivider" />
+                        <TextView
+                            android:id="@+id/exerciseDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:text="TextView" />
+
+                    </LinearLayout>
+
+                    <View style="@style/HorizontalDivider" />
+                </LinearLayout>
+            </ScrollView>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

@@ -78,6 +78,8 @@ public class AccountFragment extends Fragment implements TaskManager.Callback{
                         .getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container_view, UpdateProfileFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("stack")
                         .commit();
             }
         });
@@ -135,6 +137,16 @@ public class AccountFragment extends Fragment implements TaskManager.Callback{
 
     @Override
     public void onLoadWorkoutComplete(List<Workout> workouts){
+
+    }
+
+    @Override
+    public void onLoadWorkoutComplete(Workout workout) {
+
+    }
+
+    @Override
+    public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
 
     }
 

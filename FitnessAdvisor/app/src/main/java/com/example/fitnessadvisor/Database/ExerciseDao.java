@@ -20,7 +20,7 @@ public interface ExerciseDao {
     List<Exercise> loadByName(String name);
 
     @Insert
-    void insert(Exercise exercise);
+    long insert(Exercise exercise);
 
     @Delete
     void delete(Exercise exercise);

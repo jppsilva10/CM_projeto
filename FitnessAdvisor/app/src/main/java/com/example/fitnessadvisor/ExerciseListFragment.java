@@ -109,6 +109,8 @@ public class ExerciseListFragment extends Fragment implements TaskManager.Callba
                         .getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container_view, AddExerciseFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("stack")
                         .commit();
             }
         });
@@ -133,6 +135,16 @@ public class ExerciseListFragment extends Fragment implements TaskManager.Callba
     }
     @Override
     public void onLoadWorkoutComplete(List<Workout> workouts) {
+
+    }
+
+    @Override
+    public void onLoadWorkoutComplete(Workout workout) {
+
+    }
+
+    @Override
+    public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
 
     }
 
