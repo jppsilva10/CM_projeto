@@ -65,7 +65,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutTaskManager.
 
         MainActivity act = (MainActivity)getActivity();
         viewmodel = act.getViewModel();
-        //helper = viewmodel.getHelper();
+
         taskManager.executeLoadWorkoutAsync(viewmodel.getDB());
 
         registerForContextMenu(list);
@@ -170,9 +170,13 @@ public class WorkoutListFragment extends Fragment implements WorkoutTaskManager.
 
     @Override
     public void onLoadWorkoutComplete(List<Workout> workouts) {
-        MyAdapter myAdapter = new MyAdapter(getActivity().getApplicationContext(), workouts);
-        list.setAdapter(myAdapter);
-        setListListener();
+        try {
+            MyAdapter myAdapter = new MyAdapter(getActivity().getApplicationContext(), workouts);
+            list.setAdapter(myAdapter);
+            setListListener();
+        }catch(Exception e){
+
+        }
     }
 
     @Override
@@ -182,6 +186,11 @@ public class WorkoutListFragment extends Fragment implements WorkoutTaskManager.
 
     @Override
     public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
+
+    }
+
+    @Override
+    public void onLoadWorkout_ExerciseComplete(Workout_Exercise we, Exercise exercise) {
 
     }
 

@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Food;
@@ -76,6 +77,28 @@ public class ExerciseListFragment extends Fragment implements WorkoutTaskManager
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        MainActivity act = (MainActivity) getActivity();
+
+        SearchView searchView = (SearchView) act.findViewById(R.id.search);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                taskManager.executeExerciseSearchAsync(viewmodel.getDB(), "%" + newText + "%");
+                return true;
+            }
+        });
+    }
+
+    @Override
     public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
@@ -103,7 +126,7 @@ public class ExerciseListFragment extends Fragment implements WorkoutTaskManager
         list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?>adapter,View v, int position, long id){
-
+                System.out.println("ID: " + id);
                 viewmodel.setExerciseId(id);
 
                 getActivity()
@@ -137,6 +160,11 @@ public class ExerciseListFragment extends Fragment implements WorkoutTaskManager
 
     @Override
     public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
+
+    }
+
+    @Override
+    public void onLoadWorkout_ExerciseComplete(Workout_Exercise we, Exercise exercise) {
 
     }
 

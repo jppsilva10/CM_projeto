@@ -70,6 +70,7 @@ public class ManuallyWorkoutFragment extends Fragment implements WorkoutTaskMana
         butt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                viewmodel.setWorkout_ExerciseId(-1);
                 getActivity()
                         .getSupportFragmentManager()
                         .beginTransaction()
@@ -86,12 +87,14 @@ public class ManuallyWorkoutFragment extends Fragment implements WorkoutTaskMana
             @Override
             public void onItemClick(AdapterView<?>adapter,View v, int position, long id){
 
-                viewmodel.setExerciseId(id);
+                //viewmodel.setExerciseId(id);
+                System.out.println("--------- id: " + id);
+                viewmodel.setWorkout_ExerciseId(id);
 
                 getActivity()
                         .getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container_view, ExerciseFragment.class, null)
+                        .replace(R.id.fragment_container_view, AddExerciseFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack("stack")
                         .commit();
@@ -118,16 +121,29 @@ public class ManuallyWorkoutFragment extends Fragment implements WorkoutTaskMana
         System.out.println("-----workout-----");
         System.out.println(workout);
 
-        TextView text = getActivity().findViewById(R.id.WorkoutName);
-        text.setText(workout.name);
+        try {
+            TextView text = getActivity().findViewById(R.id.WorkoutName);
+            text.setText(workout.name);
+        }catch(Exception e){
+
+        }
 
     }
 
     @Override
     public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
-        MyAdapterExerciseWorkout myAdapter = new MyAdapterExerciseWorkout(getActivity().getApplicationContext(), exercises, wes);
-        list.setAdapter(myAdapter);
-        setListListener();
+        try {
+            MyAdapterExerciseWorkout myAdapter = new MyAdapterExerciseWorkout(getActivity().getApplicationContext(), exercises, wes);
+            list.setAdapter(myAdapter);
+            setListListener();
+        }catch(Exception e){
+
+        }
+    }
+
+    @Override
+    public void onLoadWorkout_ExerciseComplete(Workout_Exercise we, Exercise exercise) {
+
     }
 
     @Override

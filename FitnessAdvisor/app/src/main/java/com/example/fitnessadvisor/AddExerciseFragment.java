@@ -38,6 +38,7 @@ import pl.droidsonroids.gif.GifImageView;
 public class AddExerciseFragment extends Fragment implements WorkoutTaskManager.Callback{
 
     protected SharedViewModel viewmodel;
+    protected Workout_Exercise we = new Workout_Exercise();
 
     protected WorkoutTaskManager taskManager = new WorkoutTaskManager(this);
 
@@ -64,7 +65,12 @@ public class AddExerciseFragment extends Fragment implements WorkoutTaskManager.
         MainActivity act = (MainActivity) getActivity();
         viewmodel = act.getViewModel();
 
-        taskManager.executeLoadExerciseByIdAsync(viewmodel.getDB(), viewmodel.getExerciseId());
+        if(viewmodel.getWorkout_ExerciseId()!=-1){
+            taskManager.executeLoadWorkout_ExerciseByIdAsync(viewmodel.getDB(), viewmodel.getWorkout_ExerciseId());
+        }
+        else{
+            taskManager.executeLoadExerciseByIdAsync(viewmodel.getDB(), viewmodel.getExerciseId());
+        }
 
         return v;
     }
@@ -80,7 +86,7 @@ public class AddExerciseFragment extends Fragment implements WorkoutTaskManager.
             public void onClick(View v) {
                 boolean error = false;
 
-                Workout_Exercise we = new Workout_Exercise();
+                System.out.println("ID: " + viewmodel.getExerciseId());
                 we.workout = viewmodel.getWorkoutId();
                 we.exercise = viewmodel.getExerciseId();
 
@@ -118,7 +124,12 @@ public class AddExerciseFragment extends Fragment implements WorkoutTaskManager.
                     return;
                 }
 
-                taskManager.executeAddExerciseAsync(viewmodel.getDB(), we);
+                if(viewmodel.getWorkout_ExerciseId()!=-1){
+                    taskManager.executeUpdateExerciseAsync(viewmodel.getDB(), we);
+                }
+                else{
+                    taskManager.executeAddExerciseAsync(viewmodel.getDB(), we);
+                }
 
             }
         });
@@ -151,6 +162,7 @@ public class AddExerciseFragment extends Fragment implements WorkoutTaskManager.
     public void onAddExerciseComplete(Workout_Exercise we) {
 
         getActivity().getSupportFragmentManager().popBackStack();
+        getActivity().getSupportFragmentManager().popBackStack();
         getActivity()
                 .getSupportFragmentManager()
                 .beginTransaction()
@@ -170,6 +182,36 @@ public class AddExerciseFragment extends Fragment implements WorkoutTaskManager.
 
     @Override
     public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
+
+    }
+
+    @Override
+    public void onLoadWorkout_ExerciseComplete(Workout_Exercise we, Exercise exercise) {
+        this.we = we;
+
+        MainActivity act = (MainActivity) getActivity();
+
+        TextView name = act.findViewById(R.id.exerciseName);
+        name.setText(exercise.name);
+
+        GifImageView img = act.findViewById(R.id.exerciseImage);
+        img.setImageResource(exercise.image);
+
+        TextView description = act.findViewById(R.id.exerciseDescription);
+        description.setText(exercise.description);
+
+        TextView muscles = act.findViewById(R.id.exerciseMuscles);
+        muscles.setText(exercise.muscle_groups);
+
+        EditText sets = act.findViewById(R.id.setsValue);
+        sets.setText("" + we.sets);
+
+
+        EditText reps = act.findViewById(R.id.repsValue);
+        reps.setText("" + we.repetitions);
+
+        EditText weight = act.findViewById(R.id.weightValue);
+        weight.setText("" + we.weight);
 
     }
 }

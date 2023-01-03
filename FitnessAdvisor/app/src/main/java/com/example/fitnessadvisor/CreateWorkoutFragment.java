@@ -152,6 +152,11 @@ public class CreateWorkoutFragment extends Fragment implements WorkoutTaskManage
     }
 
     @Override
+    public void onLoadWorkout_ExerciseComplete(Workout_Exercise we, Exercise exercise) {
+
+    }
+
+    @Override
     public void onLoadExerciseComplete(List<Exercise> exercises) {
 
     }

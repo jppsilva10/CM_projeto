@@ -32,6 +32,7 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
     protected Workout workout;
     protected SharedViewModel viewmodel;
     protected long selected_id;
+    MyAdapterExerciseWorkout myAdapter;
     protected WorkoutTaskManager taskManager = new WorkoutTaskManager(this);
 
     public WorkoutFragment() {
@@ -69,7 +70,9 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
             @Override
             public void onItemClick(AdapterView<?>adapter,View v, int position, long id){
 
-                viewmodel.setExerciseId(id);
+                Exercise exercise = (Exercise) myAdapter.getItem(position);
+
+                viewmodel.setExerciseId(exercise.id);
 
                 getActivity()
                         .getSupportFragmentManager()
@@ -108,9 +111,14 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
 
     @Override
     public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
-        MyAdapterExerciseWorkout myAdapter = new MyAdapterExerciseWorkout(getActivity().getApplicationContext(), exercises, wes);
+        myAdapter = new MyAdapterExerciseWorkout(getActivity().getApplicationContext(), exercises, wes);
         list.setAdapter(myAdapter);
         setListListener();
+    }
+
+    @Override
+    public void onLoadWorkout_ExerciseComplete(Workout_Exercise we, Exercise exercise) {
+
     }
 
     @Override

@@ -43,6 +43,7 @@ public class WorkoutTaskManager {
         void onLoadWorkoutComplete(List<Workout> workouts);
         void onLoadWorkoutComplete(Workout workout);
         void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes);
+        void onLoadWorkout_ExerciseComplete(Workout_Exercise we, Exercise exercise);
     }
 
     public void executeLoadWorkoutAsync(AppDatabase db){
@@ -129,6 +130,18 @@ public class WorkoutTaskManager {
         });
     }
 
+    public void executeUpdateExerciseAsync(AppDatabase db, Workout_Exercise we){
+        executor.execute(() -> {
+
+            Workout_ExerciseDao workout_exerciseDao = db.workout_exerciseDao();
+            workout_exerciseDao.update(we);
+
+            handler.post(() -> {
+                calback.onAddExerciseComplete(we);
+            });
+        });
+    }
+
     public void executeLoadWorkout_ExerciseAsync(AppDatabase db, long workoutId){
         executor.execute(() -> {
 
@@ -140,16 +153,45 @@ public class WorkoutTaskManager {
             ExerciseDao exerciseDao = db.exerciseDao();
             List<Exercise> exercises = exerciseDao.getAll();
 
+            List<Exercise> exercises2 = new ArrayList<Exercise>();
+
+            for(int i=0; i<wes.size(); i++){
+                long exercise_id = wes.get(i).exercise;
+                for(int j=0; j<exercises.size(); j++){
+                    if(exercise_id==exercises.get(j).id){
+                        exercises2.add(exercises.get(j));
+                    }
+                }
+            }
+
             System.out.println("-------wes-------");
 
+            /*
             WorkoutDao workoutDao = db.workoutDao();
             WorkoutAndExercise workoutAndExercise = workoutDao.getWorkoutWithExercises(workoutId);
 
             System.out.println("-------workoutAndExercise-------");
 
+             */
+
 
             handler.post(() -> {
-                calback.onLoadWorkout_ExerciseComplete(workoutAndExercise.exercises, wes);
+                calback.onLoadWorkout_ExerciseComplete(exercises, wes);
+            });
+        });
+    }
+
+    public void executeLoadWorkout_ExerciseByIdAsync(AppDatabase db, long id){
+        executor.execute(() -> {
+
+            Workout_ExerciseDao workout_exerciseDao = db.workout_exerciseDao();
+            Workout_Exercise we = workout_exerciseDao.loadById(id);
+
+            ExerciseDao exerciseDao = db.exerciseDao();
+            Exercise exercise = exerciseDao.loadById(we.exercise);
+
+            handler.post(() -> {
+                calback.onLoadWorkout_ExerciseComplete(we, exercise);
             });
         });
     }

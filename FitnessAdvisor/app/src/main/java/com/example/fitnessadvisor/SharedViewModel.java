@@ -11,8 +11,10 @@ import com.example.fitnessadvisor.Database.Workout;
 public class SharedViewModel extends ViewModel {
     private AppDatabase db;
     private String workout;
+    private String exercise;
     private long workoutId;
     private long exerciseId;
+    private long workout_exerciseId = -1;
 
     public void setDB(AppDatabase db){
         this.db = db;
@@ -30,6 +32,14 @@ public class SharedViewModel extends ViewModel {
         return workout;
     }
 
+    public void setExercise(String exercise){
+        this.exercise = exercise;
+    }
+
+    public String getExercise(){
+        return exercise;
+    }
+
     public void setWorkoutId(long workout){
         this.workoutId = workout;
     }
@@ -44,6 +54,14 @@ public class SharedViewModel extends ViewModel {
 
     public long getExerciseId(){
         return exerciseId;
+    }
+
+    public void setWorkout_ExerciseId(long workout_exerciseId){
+        this.workout_exerciseId = workout_exerciseId;
+    }
+
+    public long getWorkout_ExerciseId(){
+        return workout_exerciseId;
     }
 
 }

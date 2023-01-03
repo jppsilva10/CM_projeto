@@ -96,4 +96,9 @@ public class ExerciseFragment extends Fragment implements WorkoutTaskManager.Cal
     public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
 
     }
+
+    @Override
+    public void onLoadWorkout_ExerciseComplete(Workout_Exercise we, Exercise exercise) {
+
+    }
 }

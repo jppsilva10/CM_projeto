@@ -36,7 +36,7 @@ public class MyAdapterExerciseWorkout extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return exercises.get(i);
+        return exercises.get((int) (wes.get(i).exercise-1));
     }
 
     @Override
@@ -58,14 +58,9 @@ public class MyAdapterExerciseWorkout extends BaseAdapter {
         TextView exerciseName = (TextView) view.findViewById(R.id.exerciseName);
         long exercise_id = we.exercise;
         System.out.println(exercise_id);
+        System.out.println(exercises.get((int) (exercise_id-1)).id);
         System.out.println(exercises.size());
-        Exercise exercise = null;
-        for(int j=0; j<exercises.size(); j++){
-            if(exercises.get(j).id==exercise_id){
-                exercise = exercises.get(j);
-            }
-        }
-        exerciseName.setText(exercise.name);
+        exerciseName.setText(exercises.get((int) (exercise_id-1)).name);
 
         return view;
     }

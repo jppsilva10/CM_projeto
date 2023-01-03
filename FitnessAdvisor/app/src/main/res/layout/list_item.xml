@@ -15,5 +15,7 @@
         android:elevation="6dp"
         android:layout_margin="5dp"
         android:layout_marginBottom="5dp"
-        android:textColor="@color/black" />
+        android:textStyle="bold"
+        android:textSize="17dp"
+        android:textColor="#666666" />
 </LinearLayout>
