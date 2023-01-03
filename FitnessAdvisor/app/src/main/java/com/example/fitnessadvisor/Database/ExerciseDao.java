@@ -19,6 +19,15 @@ public interface ExerciseDao {
     @Query("SELECT * FROM exercise WHERE name LIKE :name")
     List<Exercise> loadByName(String name);
 
+    @Query("SELECT * FROM exercise WHERE type = :type AND main_muscle = :main_muscle")
+    List<Exercise> loadByFilter(String type,String main_muscle);
+
+    @Query("SELECT * FROM exercise WHERE type = :type")
+    List<Exercise> loadByType(String type);
+
+    @Query("SELECT * FROM exercise WHERE main_muscle = :muscle")
+    List<Exercise> loadByMuscle(String muscle);
+
     @Insert
     long insert(Exercise exercise);
 

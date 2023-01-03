@@ -237,29 +237,29 @@ public class WorkoutTaskManager {
         });
     }
 
-    public void executeExerciseToWorkout(AppDatabase db,long workoutId, long exerciseId){
+    public void executeLoadByFilters(AppDatabase db, String type, String muscle){
         executor.execute(() -> {
+            List<Exercise> exercises;
+            ExerciseDao exerciseDao = db.exerciseDao();
 
-            Workout_ExerciseDao WEDao = db.workout_exerciseDao();
-            Workout_Exercise WE = new Workout_Exercise();
-
-            //WorkoutDao workoutDao = db.workoutDao();
-            //Workout workout = workoutDao.loadById(workoutId);
-
-            WE.workout = workoutId;
-            WE.exercise = exerciseId;
-            WE.sets = 3;
-            WE.repetitions = 12;
-            WEDao.insert(WE);
-
-            for(int i=0;i<WEDao.getAll().size();i++)
-                System.out.println(WEDao.getAll().get(i).repetitions);
+            if(!type.equals("All") && !muscle.equals("All")){
+                exercises = exerciseDao.loadByFilter(type,muscle);
+            }
+            else{
+                if(!type.equals("All")){
+                    exercises = exerciseDao.loadByType(type);
+                }
+                else if(!muscle.equals("All")){
+                    exercises = exerciseDao.loadByMuscle(muscle);
+                }
+                else{
+                    exercises = exerciseDao.getAll();
+                }
+            }
 
             handler.post(() -> {
-
+                calback.onLoadExerciseComplete(exercises);
             });
         });
     }
-
-
 }

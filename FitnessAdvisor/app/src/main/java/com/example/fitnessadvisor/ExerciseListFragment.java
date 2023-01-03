@@ -18,12 +18,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Food;
@@ -132,19 +135,35 @@ public class ExerciseListFragment extends Fragment implements WorkoutTaskManager
         filter.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                AlertDialog mydialog;
 
-                String[] arrayType = new String[] {"Training", "Stretching", "Warm-up"};
                 builder.setTitle("Search filter");
                 final Spinner type = new Spinner(getActivity());
+                final TextView label1 = new TextView(getActivity());
+                label1.setText("Type of exercise:");
+                final TextView label2 = new TextView(getActivity());
+                label2.setText("Main muscle:");
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.type, android.R.layout.simple_spinner_item);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                type.setAdapter(adapter);
+                LinearLayout layout = new LinearLayout(getActivity());
+                layout.setOrientation(LinearLayout.VERTICAL);
+                layout.addView(label1);
+                layout.addView(type);
+
                 final Spinner muscle_group = new Spinner(getActivity());
-                final Spinner main_muscle = new Spinner(getActivity());
+                ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getActivity(), R.array.muscle_group, android.R.layout.simple_spinner_item);
+                adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                muscle_group.setAdapter(adapter2);
+                layout.addView(label2);
+                layout.addView(muscle_group);
 
 
+
+                builder.setView(layout);
                 builder.setPositiveButton("Apply", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        taskManager.executeLoadByFilters(viewmodel.getDB(),type.getSelectedItem().toString(),muscle_group.getSelectedItem().toString());
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -154,8 +173,7 @@ public class ExerciseListFragment extends Fragment implements WorkoutTaskManager
                     }
                 });
 
-                mydialog = builder.create();
-                mydialog.show();
+                builder.create().show();
             }
         });
     }
