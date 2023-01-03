@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Spinner;
 
 import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Food;
@@ -30,6 +31,7 @@ import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
 import com.example.fitnessadvisor.Database.Workout_Exercise;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +42,7 @@ public class ExerciseListFragment extends Fragment implements WorkoutTaskManager
     protected long selected_id;
     protected List exercises = new ArrayList();
     protected ListView list;
+    protected FloatingActionButton filter;
     protected SharedViewModel viewmodel;
     protected WorkoutTaskManager taskManager = new WorkoutTaskManager(this);
     protected ImageButton butt;
@@ -65,8 +68,8 @@ public class ExerciseListFragment extends Fragment implements WorkoutTaskManager
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_exercise_list, container, false);
         list = v.findViewById(R.id.exercise_list);
-
-        registerForContextMenu(list);
+        filter = (FloatingActionButton) v.findViewById(R.id.filter_button);
+        setListener();
 
         MainActivity act = (MainActivity)getActivity();
         viewmodel = act.getViewModel();
@@ -98,29 +101,6 @@ public class ExerciseListFragment extends Fragment implements WorkoutTaskManager
         });
     }
 
-    @Override
-    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-
-        getActivity().getMenuInflater().inflate(R.menu.popup_menu, menu);
-
-    }
-
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        AlertDialog mydialog;
-
-        switch(item.getItemId()) {
-            case R.id.option1:
-                //add exercise to the workout
-                taskManager.executeExerciseToWorkout(viewmodel.getDB(),workoutId,selected_id);
-                return true;
-            default:
-                return super.onContextItemSelected(item);
-        }
-
-    }
 
     public void setListListener() {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -144,6 +124,38 @@ public class ExerciseListFragment extends Fragment implements WorkoutTaskManager
 
                 selected_id = id;
                 return false;
+            }
+        });
+    }
+
+    public void setListener(){
+        filter.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                AlertDialog mydialog;
+
+                String[] arrayType = new String[] {"Training", "Stretching", "Warm-up"};
+                builder.setTitle("Search filter");
+                final Spinner type = new Spinner(getActivity());
+                final Spinner muscle_group = new Spinner(getActivity());
+                final Spinner main_muscle = new Spinner(getActivity());
+
+
+                builder.setPositiveButton("Apply", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+
+                mydialog = builder.create();
+                mydialog.show();
             }
         });
     }
