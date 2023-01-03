@@ -252,6 +252,787 @@ public class WorkoutTaskManager {
         });
     }
 
+    protected float beginner;
+    protected float novice;
+    protected float intermediate;
+    protected float advanced;
+
+    public void executeCreateWorkout(AppDatabase db, Workout workout){
+        executor.execute(() -> {
+
+
+            WorkoutDao workoutDao = db.workoutDao();
+            workout.id = workoutDao.insert(workout);
+
+            ProfileDao profileDao = db.profileDao();
+            Profile profile = profileDao.getAll().get(0);
+
+            Workout_ExerciseDao workout_exerciseDao = db.workout_exerciseDao();
+
+            if(workout.days == 1){
+                //day 1
+
+                //Barbell Bench Press
+                Workout_Exercise we = new Workout_Exercise();
+                we.day = 1;
+                we.workout = workout.id;
+                we.exercise = 1;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.5;
+                    novice = (float) 0.75;
+                    intermediate = (float) 1.25;
+                    advanced = (float) 1.75;
+                }
+                else {
+                    beginner = (float) 0.25;
+                    novice = (float) 0.50;
+                    intermediate = (float) 0.75;
+                    advanced = (float) 1.00;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //Wide-Grip Lat Pull Down
+                we = new Workout_Exercise();
+                we.day = 21;
+                we.workout = workout.id;
+                we.exercise = 1;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.5;
+                    novice = (float) 0.75;
+                    intermediate = (float) 1.00;
+                    advanced = (float) 1.5;
+                }
+                else {
+                    beginner = (float) 0.3;
+                    novice = (float) 0.45;
+                    intermediate = (float) 0.7;
+                    advanced = (float) 0.95;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //Barbell Back Squat
+                we = new Workout_Exercise();
+                we.day = 1;
+                we.workout = workout.id;
+                we.exercise = 25;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.75;
+                    novice = (float) 1.25;
+                    intermediate = (float) 1.50;
+                    advanced = (float) 2.25;
+                }
+                else {
+                    beginner = (float) 0.5;
+                    novice = (float) 0.75;
+                    intermediate = (float) 1.25;
+                    advanced = (float) 1.50;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //Standing Dumbbell Curl
+                we = new Workout_Exercise();
+                we.day = 1;
+                we.workout = workout.id;
+                we.exercise = 42;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.1;
+                    novice = (float) 0.15;
+                    intermediate = (float) 0.3;
+                    advanced = (float) 0.50;
+                }
+                else {
+                    beginner = (float) 0.05;
+                    novice = (float) 0.1;
+                    intermediate = (float) 0.20;
+                    advanced = (float) 0.35;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //Dumbbell Lateral Raise
+                we = new Workout_Exercise();
+                we.day = 1;
+                we.workout = workout.id;
+                we.exercise = 52;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.05;
+                    novice = (float) 0.1;
+                    intermediate = (float) 0.2;
+                    advanced = (float) 0.30;
+                }
+                else {
+                    beginner = (float) 0.05;
+                    novice = (float) 0.1;
+                    intermediate = (float) 0.15;
+                    advanced = (float) 0.20;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+            }
+            else if(workout.days == 2){
+                //day 1
+
+                //Barbell Bench Press
+                Workout_Exercise we = new Workout_Exercise();
+                we.day = 1;
+                we.workout = workout.id;
+                we.exercise = 1;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.5;
+                    novice = (float) 0.75;
+                    intermediate = (float) 1.25;
+                    advanced = (float) 1.75;
+                }
+                else {
+                    beginner = (float) 0.25;
+                    novice = (float) 0.50;
+                    intermediate = (float) 0.75;
+                    advanced = (float) 1.00;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //Incline Barbell Bench Press
+                we = new Workout_Exercise();
+                we.day = 1;
+                we.workout = workout.id;
+                we.exercise = 3;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.5;
+                    novice = (float) 0.75;
+                    intermediate = (float) 1;
+                    advanced = (float) 1.5;
+                }
+                else {
+                    beginner = (float) 0.2;
+                    novice = (float) 0.4;
+                    intermediate = (float) 0.65;
+                    advanced = (float) 1;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //Decline Barbell Bench Press
+                we = new Workout_Exercise();
+                we.day = 1;
+                we.workout = workout.id;
+                we.exercise = 2;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.5;
+                    novice = (float) 1;
+                    intermediate = (float) 1.25;
+                    advanced = (float) 1.75;
+                }
+                else {
+                    beginner = (float) 0.25;
+                    novice = (float) 0.50;
+                    intermediate = (float) 0.75;
+                    advanced = (float) 1.25;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //Wide-Grip Lat Pull Down
+                we = new Workout_Exercise();
+                we.day = 1;
+                we.workout = workout.id;
+                we.exercise = 21;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.5;
+                    novice = (float) 0.75;
+                    intermediate = (float) 1.00;
+                    advanced = (float) 1.5;
+                }
+                else {
+                    beginner = (float) 0.3;
+                    novice = (float) 0.45;
+                    intermediate = (float) 0.7;
+                    advanced = (float) 0.95;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //Bent Over Barbell Row
+                we = new Workout_Exercise();
+                we.day = 1;
+                we.workout = workout.id;
+                we.exercise = 13;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.5;
+                    novice = (float) 0.75;
+                    intermediate = (float) 1;
+                    advanced = (float) 1.5;
+                }
+                else {
+                    beginner = (float) 0.25;
+                    novice = (float) 0.4;
+                    intermediate = (float) 0.65;
+                    advanced = (float) 0.9;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //day 2
+
+                //Barbell Back Squat
+                we = new Workout_Exercise();
+                we.day = 2;
+                we.workout = workout.id;
+                we.exercise = 25;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.75;
+                    novice = (float) 1.25;
+                    intermediate = (float) 1.50;
+                    advanced = (float) 2.25;
+                }
+                else {
+                    beginner = (float) 0.5;
+                    novice = (float) 0.75;
+                    intermediate = (float) 1.25;
+                    advanced = (float) 1.50;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //Standing Dumbbell Curl
+                we = new Workout_Exercise();
+                we.day = 2;
+                we.workout = workout.id;
+                we.exercise = 42;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.1;
+                    novice = (float) 0.15;
+                    intermediate = (float) 0.3;
+                    advanced = (float) 0.50;
+                }
+                else {
+                    beginner = (float) 0.05;
+                    novice = (float) 0.1;
+                    intermediate = (float) 0.20;
+                    advanced = (float) 0.35;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //Cable Rope Pushdown
+                we = new Workout_Exercise();
+                we.day = 2;
+                we.workout = workout.id;
+                we.exercise = 46;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.25;
+                    novice = (float) 0.5;
+                    intermediate = (float) 0.75;
+                    advanced = (float) 1.00;
+                }
+                else {
+                    beginner = (float) 0.15;
+                    novice = (float) 0.25;
+                    intermediate = (float) 0.50;
+                    advanced = (float) 0.75;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //Dumbbell Lateral Raise
+                we = new Workout_Exercise();
+                we.day = 2;
+                we.workout = workout.id;
+                we.exercise = 52;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.05;
+                    novice = (float) 0.1;
+                    intermediate = (float) 0.2;
+                    advanced = (float) 0.30;
+                }
+                else {
+                    beginner = (float) 0.05;
+                    novice = (float) 0.1;
+                    intermediate = (float) 0.15;
+                    advanced = (float) 0.20;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //Rear Delt Pull
+                we = new Workout_Exercise();
+                we.day = 2;
+                we.workout = workout.id;
+                we.exercise = 51;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.15;
+                    novice = (float) 0.35;
+                    intermediate = (float) 0.60;
+                    advanced = (float) 0.90;
+                }
+                else {
+                    beginner = (float) 0.15;
+                    novice = (float) 0.30;
+                    intermediate = (float) 0.5;
+                    advanced = (float) 0.8;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+            }
+            else{
+                //day 1
+
+                //Barbell Bench Press
+                Workout_Exercise we = new Workout_Exercise();
+                we.day = 1;
+                we.workout = workout.id;
+                we.exercise = 1;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.5;
+                    novice = (float) 0.75;
+                    intermediate = (float) 1.25;
+                    advanced = (float) 1.75;
+                }
+                else {
+                    beginner = (float) 0.25;
+                    novice = (float) 0.50;
+                    intermediate = (float) 0.75;
+                    advanced = (float) 1.00;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //Incline Barbell Bench Press
+                we = new Workout_Exercise();
+                we.day = 1;
+                we.workout = workout.id;
+                we.exercise = 3;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.5;
+                    novice = (float) 0.75;
+                    intermediate = (float) 1;
+                    advanced = (float) 1.5;
+                }
+                else {
+                    beginner = (float) 0.2;
+                    novice = (float) 0.4;
+                    intermediate = (float) 0.65;
+                    advanced = (float) 1;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //Decline Barbell Bench Press
+                we = new Workout_Exercise();
+                we.day = 1;
+                we.workout = workout.id;
+                we.exercise = 2;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.5;
+                    novice = (float) 1;
+                    intermediate = (float) 1.25;
+                    advanced = (float) 1.75;
+                }
+                else {
+                    beginner = (float) 0.25;
+                    novice = (float) 0.50;
+                    intermediate = (float) 0.75;
+                    advanced = (float) 1.25;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //Cable Rope Pushdown
+                we = new Workout_Exercise();
+                we.day = 1;
+                we.workout = workout.id;
+                we.exercise = 46;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.25;
+                    novice = (float) 0.5;
+                    intermediate = (float) 0.75;
+                    advanced = (float) 1.00;
+                }
+                else {
+                    beginner = (float) 0.15;
+                    novice = (float) 0.25;
+                    intermediate = (float) 0.50;
+                    advanced = (float) 0.75;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //Lying EZ Bar Triceps Extension
+                we = new Workout_Exercise();
+                we.day = 1;
+                we.workout = workout.id;
+                we.exercise = 45;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.2;
+                    novice = (float) 0.35;
+                    intermediate = (float) 0.55;
+                    advanced = (float) 0.80;
+                }
+                else {
+                    beginner = (float) 0.1;
+                    novice = (float) 0.2;
+                    intermediate = (float) 0.35;
+                    advanced = (float) 0.55;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //day 2
+
+                //Wide-Grip Lat Pull Down
+                we = new Workout_Exercise();
+                we.day = 2;
+                we.workout = workout.id;
+                we.exercise = 21;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.5;
+                    novice = (float) 0.75;
+                    intermediate = (float) 1.00;
+                    advanced = (float) 1.5;
+                }
+                else {
+                    beginner = (float) 0.3;
+                    novice = (float) 0.45;
+                    intermediate = (float) 0.7;
+                    advanced = (float) 0.95;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //Bent Over Barbell Row
+                we = new Workout_Exercise();
+                we.day = 2;
+                we.workout = workout.id;
+                we.exercise = 13;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.5;
+                    novice = (float) 0.75;
+                    intermediate = (float) 1;
+                    advanced = (float) 1.5;
+                }
+                else {
+                    beginner = (float) 0.25;
+                    novice = (float) 0.4;
+                    intermediate = (float) 0.65;
+                    advanced = (float) 0.9;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //Straight Arm Pulldown
+                we = new Workout_Exercise();
+                we.day = 2;
+                we.workout = workout.id;
+                we.exercise = 22;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.25;
+                    novice = (float) 0.5;
+                    intermediate = (float) 0.75;
+                    advanced = (float) 1.0;
+                }
+                else {
+                    beginner = (float) 0.1;
+                    novice = (float) 0.2;
+                    intermediate = (float) 0.4;
+                    advanced = (float) 0.65;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //Standing Dumbbell Curl
+                we = new Workout_Exercise();
+                we.day = 2;
+                we.workout = workout.id;
+                we.exercise = 42;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.1;
+                    novice = (float) 0.15;
+                    intermediate = (float) 0.3;
+                    advanced = (float) 0.50;
+                }
+                else {
+                    beginner = (float) 0.05;
+                    novice = (float) 0.1;
+                    intermediate = (float) 0.20;
+                    advanced = (float) 0.35;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //EZ-Bar Preacher Curl
+                we = new Workout_Exercise();
+                we.day = 2;
+                we.workout = workout.id;
+                we.exercise = 38;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.2;
+                    novice = (float) 0.35;
+                    intermediate = (float) 0.60;
+                    advanced = (float) 0.85;
+                }
+                else {
+                    beginner = (float) 0.1;
+                    novice = (float) 0.2;
+                    intermediate = (float) 0.4;
+                    advanced = (float) 0.6;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //day 3
+
+                //Barbell Back Squat
+                we = new Workout_Exercise();
+                we.day = 3;
+                we.workout = workout.id;
+                we.exercise = 25;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.75;
+                    novice = (float) 1.25;
+                    intermediate = (float) 1.50;
+                    advanced = (float) 2.25;
+                }
+                else {
+                    beginner = (float) 0.5;
+                    novice = (float) 0.75;
+                    intermediate = (float) 1.25;
+                    advanced = (float) 1.50;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //Hamstring Curl
+                we = new Workout_Exercise();
+                we.day = 3;
+                we.workout = workout.id;
+                we.exercise = 35;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.25;
+                    novice = (float) 0.5;
+                    intermediate = (float) 0.75;
+                    advanced = (float) 1.25;
+                }
+                else {
+                    beginner = (float) 0.2;
+                    novice = (float) 0.4;
+                    intermediate = (float) 0.6;
+                    advanced = (float) 0.85;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //Leg Extensions
+                we = new Workout_Exercise();
+                we.day = 3;
+                we.workout = workout.id;
+                we.exercise = 34;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.5;
+                    novice = (float) 0.75;
+                    intermediate = (float) 1.25;
+                    advanced = (float) 1.75;
+                }
+                else {
+                    beginner = (float) 0.25;
+                    novice = (float) 0.5;
+                    intermediate = (float) 1.00;
+                    advanced = (float) 1.25;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //Dumbbell Lateral Raise
+                we = new Workout_Exercise();
+                we.day = 3;
+                we.workout = workout.id;
+                we.exercise = 52;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.05;
+                    novice = (float) 0.1;
+                    intermediate = (float) 0.2;
+                    advanced = (float) 0.30;
+                }
+                else {
+                    beginner = (float) 0.05;
+                    novice = (float) 0.1;
+                    intermediate = (float) 0.15;
+                    advanced = (float) 0.20;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+                //Rear Delt Pull
+                we = new Workout_Exercise();
+                we.day = 3;
+                we.workout = workout.id;
+                we.exercise = 51;
+                we.repetitions = 10;
+                we.sets = 4;
+                we.weight = (float) (profile.weight * 0.03);
+
+                if(profile.gender=="Male") {
+                    beginner = (float) 0.15;
+                    novice = (float) 0.35;
+                    intermediate = (float) 0.60;
+                    advanced = (float) 0.90;
+                }
+                else {
+                    beginner = (float) 0.15;
+                    novice = (float) 0.30;
+                    intermediate = (float) 0.5;
+                    advanced = (float) 0.8;
+                }
+                we.weight *= getBodyweightRatio(profile.life_style);
+                workout_exerciseDao.insert(we);
+
+            }
+
+            handler.post(() -> {
+                calback.onLoadWorkoutComplete(workout);
+            });
+        });
+    }
+
+    protected float getBodyweightRatio(String life_style){
+        float result = 0;
+        switch(life_style){
+            case "Never went to the gym":
+                result = beginner;
+                break;
+            case "1-3 months":
+                result = novice;
+                break;
+            case "4-12 months":
+                result = intermediate;
+                break;
+            case "More than 12 months":
+                result = advanced;
+                break;
+        }
+        return result;
+    }
+
     public void executeDeleteWorkout(AppDatabase db, long id){
         executor.execute(() -> {
 

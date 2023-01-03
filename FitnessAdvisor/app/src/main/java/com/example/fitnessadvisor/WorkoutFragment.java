@@ -145,6 +145,7 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
 
     @Override
     public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
+        System.out.println(wes.size());
         myAdapter = new MyAdapterExerciseWorkout(getActivity().getApplicationContext(), exercises, wes);
         list.setAdapter(myAdapter);
         setListListener();

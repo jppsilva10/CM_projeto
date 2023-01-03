@@ -20,9 +20,9 @@
             android:text="Create Manually" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/genAuto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Generate Training" />
+            android:text="Generate Automatically" />
     </LinearLayout>
 </FrameLayout>

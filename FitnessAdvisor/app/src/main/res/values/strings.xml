@@ -17,8 +17,10 @@
     </string-array>
 
     <string-array name="lifeStyles">
-        <item>Not Active</item>
-        <item>Active</item>
+        <item>Never went to the gym</item>
+        <item>1-3 months</item>
+        <item>4-12 months</item>
+        <item>More than 12 months</item>
     </string-array>
 
     <string-array name="days">
