@@ -7,7 +7,7 @@ import androidx.room.TypeConverters;
 @Database(
         entities = {Workout.class, Exercise.class, Profile.class, Workout_Exercise.class,
                     Meal.class, Food.class, Meal_Food.class},
-        version = 2
+        version = 1
 )
 @TypeConverters(Converters.class)
 public abstract class AppDatabase extends RoomDatabase {

@@ -64,8 +64,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
-                    android:divider="@null"/>
+                    android:divider="@null" />
 
+                    <Button
+                        android:id="@+id/button_start"
+                        android:layout_width="225dp"
+                        android:layout_height="75dp"
+                        android:layout_marginTop="300dp"
+                        android:layout_marginLeft="150dp"
+                        android:src="@drawable/ic_add"
+                        android:text="Start"
+                        app:backgroundTint="#65E8A9" />
 
             </RelativeLayout>
 
