@@ -147,16 +147,17 @@ public class ExerciseListFragment extends Fragment implements WorkoutTaskManager
                 type.setAdapter(adapter);
                 LinearLayout layout = new LinearLayout(getActivity());
                 layout.setOrientation(LinearLayout.VERTICAL);
-                layout.addView(label1);
-                layout.addView(type);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                layoutParams.setMargins(30, 20, 30, 0);
+                layout.addView(label1,layoutParams);
+                layout.addView(type,layoutParams);
 
                 final Spinner muscle_group = new Spinner(getActivity());
                 ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getActivity(), R.array.muscle_group, android.R.layout.simple_spinner_item);
                 adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 muscle_group.setAdapter(adapter2);
-                layout.addView(label2);
-                layout.addView(muscle_group);
-
+                layout.addView(label2,layoutParams);
+                layout.addView(muscle_group,layoutParams);
 
 
                 builder.setView(layout);
