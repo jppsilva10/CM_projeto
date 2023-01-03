@@ -20,10 +20,19 @@
         <item>Not Active</item>
         <item>Active</item>
     </string-array>
-
-    <string-array name="days">
-        <item>1 Day</item>
-        <item>2 Days</item>
-        <item>3 Days</item>
+    <string-array name="type">
+        <item>All</item>
+        <item>Training</item>
+        <item>Stretching</item>
+        <item>Warm-up</item>
+    </string-array>
+    <string-array name="muscle_group">
+        <item>All</item>
+        <item>Chest</item>
+        <item>Biceps</item>
+        <item>Back</item>
+        <item>Triceps</item>
+        <item>Shoulders</item>
+        <item>Legs</item>
     </string-array>
 </resources>

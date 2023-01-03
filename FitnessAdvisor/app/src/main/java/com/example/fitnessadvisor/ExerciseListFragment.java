@@ -18,11 +18,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Food;
@@ -30,6 +34,7 @@ import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
 import com.example.fitnessadvisor.Database.Workout_Exercise;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +45,7 @@ public class ExerciseListFragment extends Fragment implements WorkoutTaskManager
     protected long selected_id;
     protected List exercises = new ArrayList();
     protected ListView list;
+    protected FloatingActionButton filter;
     protected SharedViewModel viewmodel;
     protected WorkoutTaskManager taskManager = new WorkoutTaskManager(this);
     protected ImageButton butt;
@@ -65,8 +71,8 @@ public class ExerciseListFragment extends Fragment implements WorkoutTaskManager
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_exercise_list, container, false);
         list = v.findViewById(R.id.exercise_list);
-
-        registerForContextMenu(list);
+        filter = (FloatingActionButton) v.findViewById(R.id.filter_button);
+        setListener();
 
         MainActivity act = (MainActivity)getActivity();
         viewmodel = act.getViewModel();
@@ -98,29 +104,6 @@ public class ExerciseListFragment extends Fragment implements WorkoutTaskManager
         });
     }
 
-    @Override
-    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-
-        getActivity().getMenuInflater().inflate(R.menu.popup_menu, menu);
-
-    }
-
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        AlertDialog mydialog;
-
-        switch(item.getItemId()) {
-            case R.id.option1:
-                //add exercise to the workout
-                taskManager.executeExerciseToWorkout(viewmodel.getDB(),workoutId,selected_id);
-                return true;
-            default:
-                return super.onContextItemSelected(item);
-        }
-
-    }
 
     public void setListListener() {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -144,6 +127,54 @@ public class ExerciseListFragment extends Fragment implements WorkoutTaskManager
 
                 selected_id = id;
                 return false;
+            }
+        });
+    }
+
+    public void setListener(){
+        filter.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                builder.setTitle("Search filter");
+                final Spinner type = new Spinner(getActivity());
+                final TextView label1 = new TextView(getActivity());
+                label1.setText("Type of exercise:");
+                final TextView label2 = new TextView(getActivity());
+                label2.setText("Main muscle:");
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.type, android.R.layout.simple_spinner_item);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                type.setAdapter(adapter);
+                LinearLayout layout = new LinearLayout(getActivity());
+                layout.setOrientation(LinearLayout.VERTICAL);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                layoutParams.setMargins(30, 20, 30, 0);
+                layout.addView(label1,layoutParams);
+                layout.addView(type,layoutParams);
+
+                final Spinner muscle_group = new Spinner(getActivity());
+                ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getActivity(), R.array.muscle_group, android.R.layout.simple_spinner_item);
+                adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                muscle_group.setAdapter(adapter2);
+                layout.addView(label2,layoutParams);
+                layout.addView(muscle_group,layoutParams);
+
+
+                builder.setView(layout);
+                builder.setPositiveButton("Apply", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        taskManager.executeLoadByFilters(viewmodel.getDB(),type.getSelectedItem().toString(),muscle_group.getSelectedItem().toString());
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+
+                builder.create().show();
             }
         });
     }
