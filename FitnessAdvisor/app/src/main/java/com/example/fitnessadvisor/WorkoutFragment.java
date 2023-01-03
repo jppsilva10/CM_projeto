@@ -58,7 +58,7 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
 
         list = v.findViewById(R.id.workout_list);
 
-        MainActivity act = (MainActivity)getActivity();
+        MainActivity act = (MainActivity) getActivity();
         viewmodel = act.getViewModel();
 
         tabLayout = v.findViewById(R.id.tabs);
@@ -69,9 +69,9 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
     }
 
     public void setListListener() {
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?>adapter,View v, int position, long id){
+            public void onItemClick(AdapterView<?> adapter, View v, int position, long id) {
 
                 Exercise exercise = (Exercise) myAdapter.getItem(position);
 
@@ -96,11 +96,11 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
         });
     }
 
-    public void setTabListner(){
+    public void setTabListner() {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewmodel.setDay(tab.getPosition()+1);
+                viewmodel.setDay(tab.getPosition() + 1);
                 taskManager.executeLoadWorkout_ExerciseByDayAsync(viewmodel.getDB(), viewmodel.getWorkoutId(), viewmodel.getDay());
             }
 
@@ -131,13 +131,13 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
             TextView text = getActivity().findViewById(R.id.WorkoutName);
             text.setText(workout.name);
 
-            for (int i=1; i<=workout.days; i++){
+            for (int i = 1; i <= workout.days; i++) {
                 tabLayout.addTab(tabLayout.newTab().setText("Day " + i));
             }
 
             setTabListner();
 
-        }catch(Exception e){
+        } catch (Exception e) {
 
         }
 

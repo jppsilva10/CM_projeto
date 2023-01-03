@@ -149,13 +149,13 @@ public class ManuallyWorkoutFragment extends Fragment implements WorkoutTaskMana
             TextView text = getActivity().findViewById(R.id.WorkoutName);
             text.setText(workout.name);
 
-            for (int i=1; i<=workout.days; i++){
+            for (int i = 1; i <= workout.days; i++) {
                 tabLayout.addTab(tabLayout.newTab().setText("Day " + i));
             }
 
             setTabListner();
 
-        }catch(Exception e){
+        } catch (Exception e) {
 
         }
 
