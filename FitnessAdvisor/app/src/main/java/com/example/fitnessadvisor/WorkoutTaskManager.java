@@ -229,6 +229,11 @@ public class WorkoutTaskManager {
             Workout workout = workoutDao.loadById(id);
             workoutDao.delete(workout);
 
+            Workout_ExerciseDao ex = db.workout_exerciseDao();
+            List<Workout_Exercise> exercises = ex.loadByWorkout(id);
+            for(int i=0;i<exercises.size();i++){
+                ex.delete(exercises.get(i));
+            }
             List<Workout> workouts = workoutDao.getAll();
 
             handler.post(() -> {
