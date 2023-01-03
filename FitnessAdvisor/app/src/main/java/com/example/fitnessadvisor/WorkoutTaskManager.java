@@ -1079,4 +1079,18 @@ public class WorkoutTaskManager {
             });
         });
     }
+    public void LoadExecutor(AppDatabase db, long id){
+        executor.execute(() -> {
+            Workout_ExerciseDao weDao = db.workout_exerciseDao();
+            List<Workout_Exercise> wes = weDao.loadByWorkout(id);
+
+            ExerciseDao exerciseDao = db.exerciseDao();
+            List<Exercise> exercises = exerciseDao.getAll();
+
+
+            handler.post(() -> {
+                calback.onLoadWorkout_ExerciseComplete(exercises,wes);
+            });
+        });
+    }
 }

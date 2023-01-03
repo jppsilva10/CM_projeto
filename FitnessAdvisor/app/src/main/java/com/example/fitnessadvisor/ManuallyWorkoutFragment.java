@@ -34,6 +34,7 @@ public class ManuallyWorkoutFragment extends Fragment implements WorkoutTaskMana
     protected Workout workout;
     protected SharedViewModel viewmodel;
     protected long selected_id;
+    protected int value = -1;
     protected WorkoutTaskManager taskManager = new WorkoutTaskManager(this);
 
     public ManuallyWorkoutFragment() {
@@ -164,7 +165,7 @@ public class ManuallyWorkoutFragment extends Fragment implements WorkoutTaskMana
     @Override
     public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
         try {
-            MyAdapterExerciseWorkout myAdapter = new MyAdapterExerciseWorkout(getActivity().getApplicationContext(), exercises, wes);
+            MyAdapterExerciseWorkout myAdapter = new MyAdapterExerciseWorkout(getActivity().getApplicationContext(), exercises, wes, value);
             list.setAdapter(myAdapter);
             setListListener();
         }catch(Exception e){
