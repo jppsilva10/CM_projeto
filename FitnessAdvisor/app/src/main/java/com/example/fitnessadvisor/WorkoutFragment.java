@@ -1,7 +1,9 @@
 package com.example.fitnessadvisor;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Food;
@@ -29,6 +32,8 @@ import java.util.List;
 public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Callback {
 
     protected ListView list;
+    protected int value = -1;
+    protected Button butt;
     protected TabLayout tabLayout;
     protected Workout workout;
     protected SharedViewModel viewmodel;
@@ -57,14 +62,14 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
         View v = inflater.inflate(R.layout.fragment_workout, container, false);
 
         list = v.findViewById(R.id.workout_list);
-
+        butt = v.findViewById(R.id.button_start);
         MainActivity act = (MainActivity) getActivity();
         viewmodel = act.getViewModel();
 
         tabLayout = v.findViewById(R.id.tabs);
-
         taskManager.executeLoadWorkoutAsync(viewmodel.getDB(), viewmodel.getWorkoutId());
         taskManager.executeLoadWorkout_ExerciseByDayAsync(viewmodel.getDB(), viewmodel.getWorkoutId(), viewmodel.getDay());
+        setListener();
         return v;
     }
 
@@ -86,12 +91,30 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
                         .commit();
             }
         });
-        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapter, View v, int position, long id) {
+    }
 
-                selected_id = id;
-                return false;
+    public void setListener() {
+        butt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(butt.getText().equals("Finish")){
+                    value=-1;
+                    //alert stating the training is completed and redirect
+                    Toast toast = Toast.makeText(getActivity(), "Today's training is complete", Toast.LENGTH_SHORT);
+                    toast.show();
+                    taskManager.LoadExecutor(viewmodel.getDB(),viewmodel.getWorkoutId());
+                    butt.setText("Start");
+                }
+                else{
+                    value++;
+                    taskManager.LoadExecutor(viewmodel.getDB(),viewmodel.getWorkoutId());
+                    if(value == myAdapter.getCount() - 1){
+                        butt.setText("Finish");
+                    }
+                    else{
+                        butt.setText("Next");
+                    }
+                }
             }
         });
     }
@@ -145,10 +168,15 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
 
     @Override
     public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
-        System.out.println(wes.size());
-        myAdapter = new MyAdapterExerciseWorkout(getActivity().getApplicationContext(), exercises, wes);
+        myAdapter = new MyAdapterExerciseWorkout(getActivity().getApplicationContext(), exercises, wes,value);
         list.setAdapter(myAdapter);
         setListListener();
+        if(value == myAdapter.getCount()-1){
+            butt.setText("Finish");
+        }
+        else if(value > -1){
+            butt.setText("Next");
+        }
     }
 
     @Override
