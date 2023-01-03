@@ -1079,10 +1079,10 @@ public class WorkoutTaskManager {
             });
         });
     }
-    public void LoadExecutor(AppDatabase db, long id){
+    public void LoadExecutor(AppDatabase db, long id,int id2){
         executor.execute(() -> {
             Workout_ExerciseDao weDao = db.workout_exerciseDao();
-            List<Workout_Exercise> wes = weDao.loadByWorkout(id);
+            List<Workout_Exercise> wes = weDao.loadByDay(id,id2);
 
             ExerciseDao exerciseDao = db.exerciseDao();
             List<Exercise> exercises = exerciseDao.getAll();

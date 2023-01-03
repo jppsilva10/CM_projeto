@@ -102,12 +102,12 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
                     //alert stating the training is completed and redirect
                     Toast toast = Toast.makeText(getActivity(), "Today's training is complete", Toast.LENGTH_SHORT);
                     toast.show();
-                    taskManager.LoadExecutor(viewmodel.getDB(),viewmodel.getWorkoutId());
+                    taskManager.LoadExecutor(viewmodel.getDB(),viewmodel.getWorkoutId(),viewmodel.getDay());
                     butt.setText("Start");
                 }
                 else{
                     value++;
-                    taskManager.LoadExecutor(viewmodel.getDB(),viewmodel.getWorkoutId());
+                    taskManager.LoadExecutor(viewmodel.getDB(),viewmodel.getWorkoutId(), viewmodel.getDay());
                     if(value == myAdapter.getCount() - 1){
                         butt.setText("Finish");
                     }

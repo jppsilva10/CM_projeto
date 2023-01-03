@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -55,19 +56,17 @@ public class MyAdapterExerciseWorkout extends BaseAdapter {
         view = inflater.inflate(R.layout.list_item_exercise_workout, null);
         Workout_Exercise we = wes.get(i);
 
+        LinearLayout ll = view.findViewById(R.id.llsetreps);
+
         GradientDrawable gd = new GradientDrawable();
-        gd.setColor(0xFF00FF00); // Changes this drawbale to use a single color instead of a gradient
-        gd.setCornerRadius(5);
-        gd.setStroke(1, 0xFF000000);
+        gd.setColor(0xFFFFFFFF);
+        gd.setCornerRadius(1);
+        gd.setStroke(7, 0xFF000000);
 
         TextView sets = (TextView) view.findViewById(R.id.sets);
         sets.setText("x" + we.sets);
         TextView reps = (TextView) view.findViewById(R.id.reps);
         reps.setText("" + we.repetitions + " reps");
-        if(value == i){
-            sets.setBackground(gd);
-            reps.setBackground(gd);
-        }
 
         TextView exerciseName = (TextView) view.findViewById(R.id.exerciseName);
         long exercise_id = we.exercise;
@@ -76,7 +75,7 @@ public class MyAdapterExerciseWorkout extends BaseAdapter {
         System.out.println(exercises.size());
         exerciseName.setText(exercises.get((int) (exercise_id-1)).name);
         if(value == i){
-            exerciseName.setBackground(gd);
+            ll.setBackground(gd);
         }
 
         return view;
