@@ -254,40 +254,55 @@ public class UpdateProfileFragment extends Fragment implements AccountTaskManage
             EditText text;
             Spinner spinner;
 
-            text = act.findViewById(R.id.nameValue);
-            text.setText(profile.name);
+            try {
+                text = act.findViewById(R.id.nameValue);
+                text.setText(profile.name);
 
-            spinner = act.findViewById(R.id.genderValueSpinner);
-            int gender = 0;
-            if (profile.gender.equals("Female")) {
-                gender = 1;
+                spinner = act.findViewById(R.id.genderValueSpinner);
+                int gender = 0;
+                if (profile.gender.equals("Female")) {
+                    gender = 1;
+                }
+                spinner.setSelection(gender);
+
+                text = act.findViewById(R.id.birthDateValue);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(profile.birth_date);
+                text.setText(new StringBuilder().append(cal.get(Calendar.DAY_OF_MONTH)).append("/").append(cal.get(Calendar.MONTH) + 1).append("/").append(cal.get(Calendar.YEAR)));
+
+                spinner = act.findViewById(R.id.lifeStyleValueSpinner);
+                int lifeStyle = 0;
+                switch (profile.life_style) {
+                    case "Never went to the gym":
+                        lifeStyle = 0;
+                        break;
+                    case "1-3 months":
+                        lifeStyle = 1;
+                        break;
+                    case "4-12 months":
+                        lifeStyle = 2;
+                        break;
+                    case "More than 12 months":
+                        lifeStyle = 3;
+                        break;
+                }
+                spinner.setSelection(lifeStyle);
+
+                text = act.findViewById(R.id.heightValue);
+                text.setText("" + profile.height);
+
+                text = act.findViewById(R.id.weightValue);
+                text.setText("" + profile.weight);
+
+                text = act.findViewById(R.id.targetWeightValue);
+                text.setText("" + profile.target_weight);
+
+                text = act.findViewById(R.id.goalDeadlineValue);
+                cal.setTime(profile.goal_deadline);
+                text.setText(new StringBuilder().append(cal.get(Calendar.DAY_OF_MONTH)).append("/").append(cal.get(Calendar.MONTH) + 1).append("/").append(cal.get(Calendar.YEAR)));
+            }catch(Exception e){
+
             }
-            spinner.setSelection(gender);
-
-            text = act.findViewById(R.id.birthDateValue);
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(profile.birth_date);
-            text.setText(new StringBuilder().append(cal.get(Calendar.DAY_OF_MONTH)).append("/").append(cal.get(Calendar.MONTH)+1).append("/").append(cal.get(Calendar.YEAR)));
-
-            spinner = act.findViewById(R.id.lifeStyleValueSpinner);
-            int lifeStyle = 0;
-            if (profile.gender.equals("Active")) {
-                lifeStyle = 1;
-            }
-            spinner.setSelection(lifeStyle);
-
-            text = act.findViewById(R.id.heightValue);
-            text.setText("" + profile.height);
-
-            text = act.findViewById(R.id.weightValue);
-            text.setText("" + profile.weight);
-
-            text = act.findViewById(R.id.targetWeightValue);
-            text.setText("" + profile.target_weight);
-
-            text = act.findViewById(R.id.goalDeadlineValue);
-            cal.setTime(profile.goal_deadline);
-            text.setText(new StringBuilder().append(cal.get(Calendar.DAY_OF_MONTH)).append("/").append(cal.get(Calendar.MONTH)+1).append("/").append(cal.get(Calendar.YEAR)));
         }
     }
 
@@ -296,19 +311,24 @@ public class UpdateProfileFragment extends Fragment implements AccountTaskManage
         System.out.println("---------updated---------");
         this.profile = profile;
 
-        MainActivity act = (MainActivity) getActivity();
-        int count = act.getSupportFragmentManager().getBackStackEntryCount();
+        try {
 
-        for(int i=0; i<count; i++ ){
-            act.getSupportFragmentManager().popBackStack();
+            MainActivity act = (MainActivity) getActivity();
+            int count = act.getSupportFragmentManager().getBackStackEntryCount();
+
+            for (int i = 0; i < count; i++) {
+                act.getSupportFragmentManager().popBackStack();
+            }
+
+            act
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container_view, AccountFragment.class, null)
+                    .setReorderingAllowed(true)
+                    .addToBackStack("stack")
+                    .commit();
+        }catch (Exception e){
+
         }
-
-        act
-                .getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container_view, AccountFragment.class, null)
-                .setReorderingAllowed(true)
-                .addToBackStack("stack")
-                .commit();
     }
 }

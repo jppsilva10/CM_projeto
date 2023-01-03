@@ -177,7 +177,8 @@
                         android:layout_weight="1"
                         android:ems="10"
                         android:inputType="number"
-                        android:text="" />
+                        android:text=""
+                        android:hint="(in cm)"/>
 
                 </LinearLayout>
 
@@ -210,7 +211,8 @@
                         android:layout_weight="1"
                         android:ems="10"
                         android:inputType="numberDecimal"
-                        android:text="" />
+                        android:text=""
+                        android:hint="(in Kg)"/>
 
                 </LinearLayout>
 
@@ -220,7 +222,7 @@
                     android:id="@+id/row6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:paddingTop="20dp"
                     android:paddingBottom="20dp">
 
@@ -230,15 +232,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="25dp"
-                        android:paddingRight="20dp"
-                        android:text="Life Style:"
+                        android:layout_marginRight="20dp"
+                        android:text="How long have you been going to the gym?"
                         android:textSize="20dp"
                         android:textStyle="bold" />
 
                     <Spinner
                         android:id="@+id/lifeStyleValueSpinner"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
                         android:layout_marginRight="20dp"
                         android:layout_weight="1"
                         android:spinnerMode="dropdown" />
@@ -274,7 +277,8 @@
                         android:layout_weight="1"
                         android:ems="10"
                         android:inputType="numberDecimal"
-                        android:text="" />
+                        android:text=""
+                        android:hint="(in Kg)"/>
 
                 </LinearLayout>
 

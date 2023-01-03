@@ -99,36 +99,40 @@ public class AccountFragment extends Fragment implements AccountTaskManager.Call
         MainActivity act = (MainActivity) getActivity();
 
         this.profile = profile;
-        TextView text;
-        text = act.findViewById(R.id.username);
-        text.setText(profile.name);
-        text = act.findViewById(R.id.genderValue);
-        text.setText(profile.gender);
-        text = act.findViewById(R.id.ageValue);
+        try {
+            TextView text;
+            text = act.findViewById(R.id.username);
+            text.setText(profile.name);
+            text = act.findViewById(R.id.genderValue);
+            text.setText(profile.gender);
+            text = act.findViewById(R.id.ageValue);
 
-        Calendar now = Calendar.getInstance();
-        now.setTime(new Date(System.currentTimeMillis()));
-        Calendar bd = Calendar.getInstance();
-        bd.setTime(profile.birth_date);
-        int age = now.get(Calendar.YEAR) - bd.get(Calendar.YEAR);
-        if (now.get(Calendar.MONTH) < bd.get(Calendar.MONTH) || now.get(Calendar.MONTH) == bd.get(Calendar.MONTH) && now.get(Calendar.DAY_OF_MONTH) < bd.get(Calendar.DAY_OF_MONTH)) {
-            age--;
+            Calendar now = Calendar.getInstance();
+            now.setTime(new Date(System.currentTimeMillis()));
+            Calendar bd = Calendar.getInstance();
+            bd.setTime(profile.birth_date);
+            int age = now.get(Calendar.YEAR) - bd.get(Calendar.YEAR);
+            if (now.get(Calendar.MONTH) < bd.get(Calendar.MONTH) || now.get(Calendar.MONTH) == bd.get(Calendar.MONTH) && now.get(Calendar.DAY_OF_MONTH) < bd.get(Calendar.DAY_OF_MONTH)) {
+                age--;
+            }
+
+            text.setText("" + age);
+
+            text = act.findViewById(R.id.lifeStyleValue);
+            text.setText(profile.life_style);
+
+            text = act.findViewById(R.id.heightValue);
+            text.setText("" + profile.height + " cm");
+
+            text = act.findViewById(R.id.weightValue);
+            text.setText("" + profile.weight + " Kg");
+
+            text = act.findViewById(R.id.bmiValue);
+            float bmi = (float) (profile.weight / (Math.pow(profile.height / 100, 2)));
+            text.setText(String.format("%.2f", bmi));
+        }catch (Exception e){
+
         }
-
-        text.setText("" + age);
-
-        text = act.findViewById(R.id.lifeStyleValue);
-        text.setText(profile.life_style);
-
-        text = act.findViewById(R.id.heightValue);
-        text.setText(""+profile.height + " cm");
-
-        text = act.findViewById(R.id.weightValue);
-        text.setText(""+profile.weight + " Kg");
-
-        text = act.findViewById(R.id.bmiValue);
-        float bmi = (float) (profile.weight /(Math.pow(profile.height/100, 2)));
-        text.setText(String.format("%.2f", bmi));
     }
 
     @Override

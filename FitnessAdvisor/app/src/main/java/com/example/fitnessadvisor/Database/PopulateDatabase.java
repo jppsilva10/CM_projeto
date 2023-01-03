@@ -98,7 +98,7 @@ public class PopulateDatabase {
         taskManager.executeExerciseInsertionAsync(db,exercise);
 
         exercise = new Exercise();
-        exercise.name = "Low Standing Cable Fly\n";
+        exercise.name = "Low Standing Cable Fly";
         exercise.description = "You will need two cable machines for this exercise. Set the cable setting to the lowest setting on the cable machine. Hold both handles with an inverted (palms facing each other) grip. Push the cables out in front of you at chest height and take one step forward. Have one foot forward and one foot back. With your arms stretched out in front of your chest bring your arms back and down and bend your elbows so that you are making a large half circle with your hands. Bring your hands back to hip level then press the cables up to chest level again in front of you.";
         exercise.type = "Training";
         exercise.image = R.drawable.low_standing_cable_fly;
@@ -444,6 +444,63 @@ public class PopulateDatabase {
         exercise.image = R.drawable.single_arm_cable_pushdown;
         exercise.main_muscle = "Triceps";
         exercise.muscle_groups  = "Triceps";
+        taskManager.executeExerciseInsertionAsync(db,exercise);
+
+        //   -------------------------------   Shoulders  --------------------------------   //
+
+
+        exercise = new Exercise();
+        exercise.name = "Dumbbell Seated Shoulder Press";
+        exercise.description = "Sit on a bench that has a back support, holding a dumbbell in each hand with an overhand grip. Raise the dumbbells to shoulder level, your palms should be facing away from you. Push the dumbbells up and over your head by extending your arms until the dumbbells touch at the top of the movement. Slowly return to the start position inhaling as you do so. Only complete this exercise if you have good overhead shoulder flexibility.";
+        exercise.type = "Training";
+        exercise.image = R.drawable.dumbbell_seated_shoulder_press;
+        exercise.main_muscle = "Shoulders";
+        exercise.muscle_groups  = "Shoulders & Triceps";
+        taskManager.executeExerciseInsertionAsync(db,exercise);
+
+        exercise = new Exercise();
+        exercise.name = "Machine Shoulder Press";
+        exercise.description = "Sit on the machine shoulder press seat. Make sure your feet are firmly touching the ground and the handles are at shoulder height. Hold the handles and press above your head. Return to the starting position.";
+        exercise.type = "Training";
+        exercise.image = R.drawable.machine_shoulder_press;
+        exercise.main_muscle = "Shoulders";
+        exercise.muscle_groups  = "Shoulders & Triceps";
+        taskManager.executeExerciseInsertionAsync(db,exercise);
+
+        exercise = new Exercise();
+        exercise.name = "Bent Over Rear Delt Raise";
+        exercise.description = "For this exercise you will need two cable machines and two handles. Position the pulleys at the lowest level. Hold the let cable in your right hand and right cable in your left hand. Bend over with a straight back and retract your arms back and out so that your arms are pointing out to your sides. Lower your arms back to the starting position.";
+        exercise.type = "Training";
+        exercise.image = R.drawable.bent_over_rear_delt_raise;
+        exercise.main_muscle = "Shoulders";
+        exercise.muscle_groups  = "Rear Delts and Upper Back";
+        taskManager.executeExerciseInsertionAsync(db,exercise);
+
+        exercise = new Exercise();
+        exercise.name = "Rear Delt Pull";
+        exercise.description = "Stand tall facing a pulley that has been adjusted to higher than head-height. Attach a rope or dual handles to the pulley and grab hold of each end with your palms facing your head. Engage your abs and pull the weight towards your face. Separate your hands as you pull. Try to keep your arms parallel to the floor.";
+        exercise.type = "Training";
+        exercise.image = R.drawable.rear_delt_pull;
+        exercise.main_muscle = "Shoulders";
+        exercise.muscle_groups  = "Rear Delts, Biceps, Traps";
+        taskManager.executeExerciseInsertionAsync(db,exercise);
+
+        exercise = new Exercise();
+        exercise.name = "Dumbbell Lateral Raise";
+        exercise.description = "Stand with your back straight, feet shoulder width apart, while holding a dumbbell in each hand with your palms facing inwards. Keep your elbows close to your sides. Keeping your arms fully extended and your torso stationary, lift the dumbbells out to your sides and up until they are at shoulder level. Return to the start position. Don’t swing the weights up with your body or let them fall back to your side.";
+        exercise.type = "Training";
+        exercise.image = R.drawable.dumbbell_lateral_raise;
+        exercise.main_muscle = "Shoulders";
+        exercise.muscle_groups  = "Medial Delts";
+        taskManager.executeExerciseInsertionAsync(db,exercise);
+
+        exercise = new Exercise();
+        exercise.name = "Cable Lateral Raise";
+        exercise.description = "For this exercise you will need one cable machine. Adjust the pulley to the lowest setting. Stand side on to the cable machine and hold the cable with your opposite hand. With a straight arm pull the cable diagonally across your body and up so that your arm is straight out to the side at shoulder height. Return to the starting position.";
+        exercise.type = "Training";
+        exercise.image = R.drawable.cable_lateral_raise;
+        exercise.main_muscle = "Shoulders";
+        exercise.muscle_groups  = "Medial Delts";
         taskManager.executeExerciseInsertionAsync(db,exercise);
     }
 }

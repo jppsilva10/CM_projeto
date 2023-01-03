@@ -37,6 +37,8 @@ public class CreateWorkoutFragment extends Fragment implements WorkoutTaskManage
     protected Button butt;
     protected SharedViewModel viewmodel;
     protected WorkoutTaskManager taskManager = new WorkoutTaskManager(this);
+    protected Button genAuto;
+    protected boolean auto = false;
 
     public CreateWorkoutFragment() {
 
@@ -70,6 +72,7 @@ public class CreateWorkoutFragment extends Fragment implements WorkoutTaskManage
         MainActivity act = (MainActivity) getActivity();
 
         butt = act.findViewById(R.id.button2);
+        genAuto = act.findViewById(R.id.genAuto);
         setListener();
     }
 
@@ -77,6 +80,7 @@ public class CreateWorkoutFragment extends Fragment implements WorkoutTaskManage
         butt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                auto = false;
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 LayoutInflater inflater = requireActivity().getLayoutInflater();
@@ -146,6 +150,81 @@ public class CreateWorkoutFragment extends Fragment implements WorkoutTaskManage
 
             }
         });
+
+        genAuto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                auto = true;
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                LayoutInflater inflater = requireActivity().getLayoutInflater();
+                AlertDialog mydialog;
+
+                builder.setTitle("New Workout Plan");
+                final EditText input = new EditText(getActivity());
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+
+                View v = inflater.inflate(R.layout.dialog_create_workout, null);
+
+                builder.setView(v)
+                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Workout workout = new Workout();
+                                EditText name = v.findViewById(R.id.nameValue);
+                                workout.name = name.getText().toString();
+                                Spinner spinner = v.findViewById(R.id.daysValue);
+                                workout.days = spinner.getSelectedItemPosition()+1;
+                                viewmodel.setDay(1);
+                                taskManager.executeCreateWorkout(viewmodel.getDB(), workout);
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+
+                mydialog = builder.create();
+                mydialog.show();
+
+                EditText name = v.findViewById(R.id.nameValue);
+
+                ((AlertDialog) mydialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+                name.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before,
+                                              int count) {
+                    }
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count,
+                                                  int after) {
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                        if (TextUtils.isEmpty(s)) {
+                            ((AlertDialog) mydialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+
+                        } else {
+                            ((AlertDialog) mydialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                        }
+
+                    }
+                });
+
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.days, android.R.layout.simple_spinner_item);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                Spinner spinner = v.findViewById(R.id.daysValue);
+                spinner.setAdapter(adapter);
+
+            }
+        });
     }
 
     @Override
@@ -156,11 +235,21 @@ public class CreateWorkoutFragment extends Fragment implements WorkoutTaskManage
     @Override
     public void onLoadWorkoutComplete(Workout workout) {
         viewmodel.setWorkoutId(workout.id);
-        getActivity()
-                .getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container_view, ManuallyWorkoutFragment.class, null)
-                .commit();
+
+        if(auto){
+            getActivity()
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container_view, WorkoutFragment.class, null)
+                    .commit();
+        }
+        else {
+            getActivity()
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container_view, ManuallyWorkoutFragment.class, null)
+                    .commit();
+        }
     }
 
     @Override
