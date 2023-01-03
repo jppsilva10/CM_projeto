@@ -125,6 +125,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutTaskManager.
             public void onItemClick(AdapterView<?>adapter,View v, int position, long id){
 
                 viewmodel.setWorkoutId(id);
+                viewmodel.setDay(1);
 
                 getActivity()
                         .getSupportFragmentManager()

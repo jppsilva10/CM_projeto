@@ -12,4 +12,7 @@ public class Workout {
     @ColumnInfo(name = "name")
     public String name;
 
+    @ColumnInfo(name = "days")
+    public int days;
+
 }

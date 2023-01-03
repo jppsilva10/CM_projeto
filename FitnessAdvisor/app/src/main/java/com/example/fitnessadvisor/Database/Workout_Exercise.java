@@ -35,4 +35,7 @@ public class Workout_Exercise {
 
     @ColumnInfo(name = "weight")
     public float weight;
+
+    @ColumnInfo(name = "day")
+    public int day;
 }

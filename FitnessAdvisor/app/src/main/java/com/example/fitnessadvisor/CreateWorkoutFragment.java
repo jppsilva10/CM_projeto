@@ -15,8 +15,10 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Food;
@@ -77,21 +79,30 @@ public class CreateWorkoutFragment extends Fragment implements WorkoutTaskManage
             public void onClick(View view) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                LayoutInflater inflater = requireActivity().getLayoutInflater();
                 AlertDialog mydialog;
 
-                builder.setTitle("Workout Name:");
+                builder.setTitle("New Workout Plan");
                 final EditText input = new EditText(getActivity());
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
                 builder.setView(input);
-                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+
+                View v = inflater.inflate(R.layout.dialog_create_workout, null);
+
+                builder.setView(v)
+                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Workout workout = new Workout();
-                        workout.name = input.getText().toString();
+                        EditText name = v.findViewById(R.id.nameValue);
+                        workout.name = name.getText().toString();
+                        Spinner spinner = v.findViewById(R.id.daysValue);
+                        workout.days = spinner.getSelectedItemPosition()+1;
+                        viewmodel.setDay(1);
                         taskManager.executeInsertWorkout(viewmodel.getDB(), workout);
                     }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.cancel();
@@ -101,8 +112,10 @@ public class CreateWorkoutFragment extends Fragment implements WorkoutTaskManage
                 mydialog = builder.create();
                 mydialog.show();
 
+                EditText name = v.findViewById(R.id.nameValue);
+
                 ((AlertDialog) mydialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
-                input.addTextChangedListener(new TextWatcher() {
+                name.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before,
                                               int count) {
@@ -126,6 +139,10 @@ public class CreateWorkoutFragment extends Fragment implements WorkoutTaskManage
                     }
                 });
 
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.days, android.R.layout.simple_spinner_item);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                Spinner spinner = v.findViewById(R.id.daysValue);
+                spinner.setAdapter(adapter);
 
             }
         });

@@ -153,6 +153,7 @@ public class WorkoutTaskManager {
             ExerciseDao exerciseDao = db.exerciseDao();
             List<Exercise> exercises = exerciseDao.getAll();
 
+            /*
             List<Exercise> exercises2 = new ArrayList<Exercise>();
 
             for(int i=0; i<wes.size(); i++){
@@ -163,6 +164,36 @@ public class WorkoutTaskManager {
                     }
                 }
             }
+
+             */
+
+            System.out.println("-------wes-------");
+
+            /*
+            WorkoutDao workoutDao = db.workoutDao();
+            WorkoutAndExercise workoutAndExercise = workoutDao.getWorkoutWithExercises(workoutId);
+
+            System.out.println("-------workoutAndExercise-------");
+
+             */
+
+
+            handler.post(() -> {
+                calback.onLoadWorkout_ExerciseComplete(exercises, wes);
+            });
+        });
+    }
+
+    public void executeLoadWorkout_ExerciseByDayAsync(AppDatabase db, long workoutId, int day){
+        executor.execute(() -> {
+
+            System.out.println("-------executeLoadWorkout_ExerciseAsync-------");
+
+            Workout_ExerciseDao workout_exerciseDao = db.workout_exerciseDao();
+            List<Workout_Exercise> wes = workout_exerciseDao.loadByDay(workoutId, day);
+
+            ExerciseDao exerciseDao = db.exerciseDao();
+            List<Exercise> exercises = exerciseDao.getAll();
 
             System.out.println("-------wes-------");
 

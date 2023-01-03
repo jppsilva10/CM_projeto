@@ -17,9 +17,11 @@ public interface Workout_ExerciseDao {
     @Query("SELECT * FROM workout_exercise WHERE id = :id")
     Workout_Exercise loadById(long id);
 
-    @Transaction
     @Query("SELECT * FROM workout_exercise WHERE workout = :workout")
     List<Workout_Exercise> loadByWorkout(long workout);
+
+    @Query("SELECT * FROM workout_exercise WHERE workout = :workout AND day = :day")
+    List<Workout_Exercise> loadByDay(long workout, int day);
 
     @Insert
     long insert(Workout_Exercise workout_exercise);

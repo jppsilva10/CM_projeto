@@ -20,6 +20,7 @@ import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
 import com.example.fitnessadvisor.Database.Workout_Exercise;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +29,7 @@ import java.util.List;
 public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Callback {
 
     protected ListView list;
-    protected FloatingActionButton butt;
+    protected TabLayout tabLayout;
     protected Workout workout;
     protected SharedViewModel viewmodel;
     protected long selected_id;
@@ -60,8 +61,10 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
         MainActivity act = (MainActivity)getActivity();
         viewmodel = act.getViewModel();
 
+        tabLayout = v.findViewById(R.id.tabs);
+
         taskManager.executeLoadWorkoutAsync(viewmodel.getDB(), viewmodel.getWorkoutId());
-        taskManager.executeLoadWorkout_ExerciseAsync(viewmodel.getDB(), viewmodel.getWorkoutId());
+        taskManager.executeLoadWorkout_ExerciseByDayAsync(viewmodel.getDB(), viewmodel.getWorkoutId(), viewmodel.getDay());
         return v;
     }
 
@@ -93,6 +96,26 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
         });
     }
 
+    public void setTabListner(){
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewmodel.setDay(tab.getPosition()+1);
+                taskManager.executeLoadWorkout_ExerciseByDayAsync(viewmodel.getDB(), viewmodel.getWorkoutId(), viewmodel.getDay());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
+
     @Override
     public void onLoadWorkoutComplete(List<Workout> workouts) {
 
@@ -104,8 +127,19 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
         System.out.println("-----workout-----");
         System.out.println(workout);
 
-        TextView text = getActivity().findViewById(R.id.WorkoutName);
-        text.setText(workout.name);
+        try {
+            TextView text = getActivity().findViewById(R.id.WorkoutName);
+            text.setText(workout.name);
+
+            for (int i=1; i<=workout.days; i++){
+                tabLayout.addTab(tabLayout.newTab().setText("Day " + i));
+            }
+
+            setTabListner();
+
+        }catch(Exception e){
+
+        }
 
     }
 

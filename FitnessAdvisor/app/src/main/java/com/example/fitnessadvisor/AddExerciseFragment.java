@@ -89,6 +89,7 @@ public class AddExerciseFragment extends Fragment implements WorkoutTaskManager.
                 System.out.println("ID: " + viewmodel.getExerciseId());
                 we.workout = viewmodel.getWorkoutId();
                 we.exercise = viewmodel.getExerciseId();
+                we.day = viewmodel.getDay();
 
                 MainActivity act = (MainActivity) getActivity();
                 EditText text;
