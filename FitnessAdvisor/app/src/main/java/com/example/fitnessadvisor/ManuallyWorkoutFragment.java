@@ -200,7 +200,6 @@ public class ManuallyWorkoutFragment extends Fragment implements WorkoutTaskMana
         } catch (Exception e) {
 
         }
-    public void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals) {
 
     }
 
@@ -222,10 +221,7 @@ public class ManuallyWorkoutFragment extends Fragment implements WorkoutTaskMana
 
     }
 
-    @Override
-    public void onLoadFoodFromMeal(Meal meal, List<Food> foodList) {
 
-    }
 
     @Override
     public void onLoadExerciseComplete(List<Exercise> exercises) {

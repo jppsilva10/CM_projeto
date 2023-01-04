@@ -166,7 +166,6 @@ public class MealListFragment extends Fragment implements TaskManager.Callback{
     }
 
     @Override
-    public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
     public void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals) {
         meal_list = meals;
         expandableListDetail = mealList;

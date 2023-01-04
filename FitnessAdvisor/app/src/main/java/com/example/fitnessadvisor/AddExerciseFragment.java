@@ -178,7 +178,6 @@ public class AddExerciseFragment extends Fragment implements WorkoutTaskManager.
 
     @Override
     public void onLoadWorkoutComplete(Workout workout) {
-    public void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals) {
 
     }
 
@@ -195,13 +194,6 @@ public class AddExerciseFragment extends Fragment implements WorkoutTaskManager.
 
         TextView name = act.findViewById(R.id.exerciseName);
         name.setText(exercise.name);
-    @Override
-    public void onLoadFoodFromMeal(Meal meal, List<Food> foodList) {
-
-    }
-
-    @Override
-    public void onLoadProfileComplete(Profile profile, boolean empty) {
 
         GifImageView img = act.findViewById(R.id.exerciseImage);
         img.setImageResource(exercise.image);

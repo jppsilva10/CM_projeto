@@ -250,8 +250,6 @@ public class CreateWorkoutFragment extends Fragment implements WorkoutTaskManage
                     .replace(R.id.fragment_container_view, ManuallyWorkoutFragment.class, null)
                     .commit();
         }
-    public void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals) {
-
     }
 
     @Override
@@ -261,11 +259,6 @@ public class CreateWorkoutFragment extends Fragment implements WorkoutTaskManage
 
     @Override
     public void onLoadWorkout_ExerciseComplete(Workout_Exercise we, Exercise exercise) {
-
-    }
-
-    @Override
-    public void onLoadFoodFromMeal(Meal meal, List<Food> foodList) {
 
     }
 

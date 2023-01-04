@@ -67,11 +67,14 @@ public class SharedViewModel extends ViewModel {
     }
 
     public void setDay(int day){
+
         this.day = day;
     }
 
-    public int getDay(){
+    public int getDay() {
         return day;
+    }
+
     public void setMealId(long mealId){
         this.mealId = mealId;
     }
@@ -79,5 +82,6 @@ public class SharedViewModel extends ViewModel {
     public long getMealId(){
         return mealId;
     }
+
 
 }

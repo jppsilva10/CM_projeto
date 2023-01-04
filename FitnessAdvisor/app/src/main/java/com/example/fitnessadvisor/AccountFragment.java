@@ -140,44 +140,7 @@ public class AccountFragment extends Fragment implements AccountTaskManager.Call
         this.profile = profile;
     }
 
-    @Override
-    public void onLoadWorkoutComplete(List<Workout> workouts){
 
-    }
 
-    @Override
-    public void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals) {
 
-    }
-
-    ;
-    @Override
-    public void onLoadExerciseComplete(List<Exercise> exercises) {
-
-    }
-
-    @Override
-    public void onLoadExerciseComplete(Exercise exercise) {
-
-    }
-
-    @Override
-    public void onAddExerciseComplete(Workout_Exercise we) {
-
-    }
-
-    @Override
-    public void onLoadFoodComplete(List<Food> food) {
-
-    }
-
-    @Override
-    public void onInsertMealComplete(long mealId) {
-
-    }
-
-    @Override
-    public void onLoadFoodFromMeal(Meal meal, List<Food> foodList) {
-
-    }
 }

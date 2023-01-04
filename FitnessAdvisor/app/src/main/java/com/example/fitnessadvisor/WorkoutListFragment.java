@@ -203,35 +203,6 @@ public class WorkoutListFragment extends Fragment implements WorkoutTaskManager.
     }
 
     @Override
-    public void onLoadWorkoutComplete(List<Workout> workouts) {
-        try {
-            MyAdapter myAdapter = new MyAdapter(getActivity().getApplicationContext(), workouts);
-            state = list.onSaveInstanceState();
-            list.setAdapter(myAdapter);
-            setListListener();
-            list.onRestoreInstanceState(state);
-        }catch(Exception e){
-
-        }
-    }
-
-    @Override
-    public void onLoadWorkoutComplete(Workout workout) {
-    public void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals) {
-
-    }
-
-    @Override
-    public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
-
-    }
-
-    @Override
-    public void onLoadWorkout_ExerciseComplete(Workout_Exercise we, Exercise exercise) {
-
-    }
-
-    @Override
     public void onLoadExerciseComplete(List<Exercise> exercises) {
 
     }
@@ -247,7 +218,29 @@ public class WorkoutListFragment extends Fragment implements WorkoutTaskManager.
     }
 
     @Override
-    public void onLoadFoodFromMeal(Meal meal, List<Food> foodList) {
+    public void onLoadWorkoutComplete(List<Workout> workouts) {
+        try {
+            MyAdapter myAdapter = new MyAdapter(getActivity().getApplicationContext(), workouts);
+            state = list.onSaveInstanceState();
+            list.setAdapter(myAdapter);
+            setListListener();
+            list.onRestoreInstanceState(state);
+        }catch(Exception e){
+
+        }
+    }
+
+    @Override
+    public void onLoadWorkoutComplete(Workout workout) {
+    }
+
+    @Override
+    public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
+
+    }
+
+    @Override
+    public void onLoadWorkout_ExerciseComplete(Workout_Exercise we, Exercise exercise) {
 
     }
 }

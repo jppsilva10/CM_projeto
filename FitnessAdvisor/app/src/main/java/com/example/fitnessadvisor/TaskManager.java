@@ -44,7 +44,6 @@ public class TaskManager {
         void onLoadWorkoutComplete(List<Workout> workouts);
         void onLoadWorkoutComplete(Workout workout);
         void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes);
-        void onLoadMealComplete(HashMap<String, List<String>> mealList);
         void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals);
         void onLoadFoodComplete(List<Food> food);
         void onInsertMealComplete(long mealId);
