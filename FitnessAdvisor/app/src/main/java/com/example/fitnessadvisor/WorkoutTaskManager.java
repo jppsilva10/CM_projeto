@@ -269,6 +269,8 @@ public class WorkoutTaskManager {
 
             Workout_ExerciseDao workout_exerciseDao = db.workout_exerciseDao();
 
+            float percent = 0.7f;
+
             if(workout.days == 1){
                 //day 1
 
@@ -279,7 +281,7 @@ public class WorkoutTaskManager {
                 we.exercise = 1;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.5;
@@ -303,7 +305,7 @@ public class WorkoutTaskManager {
                 we.exercise = 1;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.5;
@@ -327,7 +329,7 @@ public class WorkoutTaskManager {
                 we.exercise = 25;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.75;
@@ -351,7 +353,7 @@ public class WorkoutTaskManager {
                 we.exercise = 42;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.1;
@@ -375,7 +377,7 @@ public class WorkoutTaskManager {
                 we.exercise = 52;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.05;
@@ -403,7 +405,7 @@ public class WorkoutTaskManager {
                 we.exercise = 1;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.5;
@@ -427,7 +429,7 @@ public class WorkoutTaskManager {
                 we.exercise = 3;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.5;
@@ -451,7 +453,7 @@ public class WorkoutTaskManager {
                 we.exercise = 2;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.5;
@@ -475,7 +477,7 @@ public class WorkoutTaskManager {
                 we.exercise = 21;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.5;
@@ -499,7 +501,7 @@ public class WorkoutTaskManager {
                 we.exercise = 13;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.5;
@@ -525,7 +527,7 @@ public class WorkoutTaskManager {
                 we.exercise = 25;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.75;
@@ -549,7 +551,7 @@ public class WorkoutTaskManager {
                 we.exercise = 42;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.1;
@@ -573,7 +575,7 @@ public class WorkoutTaskManager {
                 we.exercise = 46;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.25;
@@ -597,7 +599,7 @@ public class WorkoutTaskManager {
                 we.exercise = 52;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.05;
@@ -621,7 +623,7 @@ public class WorkoutTaskManager {
                 we.exercise = 51;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.15;
@@ -649,7 +651,7 @@ public class WorkoutTaskManager {
                 we.exercise = 1;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.5;
@@ -673,7 +675,7 @@ public class WorkoutTaskManager {
                 we.exercise = 3;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.5;
@@ -697,7 +699,7 @@ public class WorkoutTaskManager {
                 we.exercise = 2;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.5;
@@ -721,7 +723,7 @@ public class WorkoutTaskManager {
                 we.exercise = 46;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.25;
@@ -745,7 +747,7 @@ public class WorkoutTaskManager {
                 we.exercise = 45;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.2;
@@ -771,7 +773,7 @@ public class WorkoutTaskManager {
                 we.exercise = 21;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.5;
@@ -795,7 +797,7 @@ public class WorkoutTaskManager {
                 we.exercise = 13;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.5;
@@ -819,7 +821,7 @@ public class WorkoutTaskManager {
                 we.exercise = 22;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.25;
@@ -843,7 +845,7 @@ public class WorkoutTaskManager {
                 we.exercise = 42;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.1;
@@ -867,7 +869,7 @@ public class WorkoutTaskManager {
                 we.exercise = 38;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.2;
@@ -893,7 +895,7 @@ public class WorkoutTaskManager {
                 we.exercise = 25;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.75;
@@ -917,7 +919,7 @@ public class WorkoutTaskManager {
                 we.exercise = 35;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.25;
@@ -941,7 +943,7 @@ public class WorkoutTaskManager {
                 we.exercise = 34;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.5;
@@ -965,7 +967,7 @@ public class WorkoutTaskManager {
                 we.exercise = 52;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.05;
@@ -989,7 +991,7 @@ public class WorkoutTaskManager {
                 we.exercise = 51;
                 we.repetitions = 10;
                 we.sets = 4;
-                we.weight = (float) (profile.weight * 0.03);
+                we.weight = (float) (profile.weight * percent);
 
                 if(profile.gender=="Male") {
                     beginner = (float) 0.15;

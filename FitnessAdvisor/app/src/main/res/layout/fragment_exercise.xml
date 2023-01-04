@@ -24,7 +24,7 @@
                 android:layout_marginTop="10dp">
 
                 <TextView
-                    android:id="@+id/title"
+                    android:id="@+id/exerciseName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -44,16 +44,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/exerciseName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Title"
-                    android:textColor="#FFFFFF"
-                    android:textSize="30dp"
-                    android:textStyle="bold" />
 
                 <pl.droidsonroids.gif.GifImageView
                     android:id="@+id/exerciseImage"

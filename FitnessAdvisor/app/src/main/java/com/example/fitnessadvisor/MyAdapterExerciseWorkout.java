@@ -53,30 +53,27 @@ public class MyAdapterExerciseWorkout extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = inflater.inflate(R.layout.list_item_exercise_workout, null);
+        View v;
+
+        if (value == i){
+            view = inflater.inflate(R.layout.list_item_exercise_selected, null);
+        }
+        else{
+            view = inflater.inflate(R.layout.list_item_exercise_workout, null);
+        }
+
         Workout_Exercise we = wes.get(i);
-
-        LinearLayout ll = view.findViewById(R.id.llsetreps);
-
-        GradientDrawable gd = new GradientDrawable();
-        gd.setColor(0xFFFFFFFF);
-        gd.setCornerRadius(1);
-        gd.setStroke(7, 0xFF000000);
 
         TextView sets = (TextView) view.findViewById(R.id.sets);
         sets.setText("x" + we.sets);
         TextView reps = (TextView) view.findViewById(R.id.reps);
         reps.setText("" + we.repetitions + " reps");
+        TextView weight = (TextView) view.findViewById(R.id.weight);
+        weight.setText(String.format("%.2f", we.weight) + "Kg");
 
         TextView exerciseName = (TextView) view.findViewById(R.id.exerciseName);
         long exercise_id = we.exercise;
-        System.out.println(exercise_id);
-        System.out.println(exercises.get((int) (exercise_id-1)).id);
-        System.out.println(exercises.size());
         exerciseName.setText(exercises.get((int) (exercise_id-1)).name);
-        if(value == i){
-            ll.setBackground(gd);
-        }
 
         return view;
     }

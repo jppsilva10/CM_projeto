@@ -46,7 +46,7 @@ public class MyAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = inflater.inflate(R.layout.list_item, null);
         TextView title = (TextView) view.findViewById(R.id.textView);
-        title.setText(workouts.get(i).name);
+        title.setText("    " + workouts.get(i).name);
         return view;
     }
 }

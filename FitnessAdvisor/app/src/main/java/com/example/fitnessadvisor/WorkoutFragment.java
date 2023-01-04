@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,14 +33,16 @@ import java.util.List;
 public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Callback {
 
     protected ListView list;
-    protected int value = -1;
+    protected int[] value = {-1, -1, -1};
     protected Button butt;
+    protected Button edit;
     protected TabLayout tabLayout;
     protected Workout workout;
     protected SharedViewModel viewmodel;
     protected long selected_id;
     MyAdapterExerciseWorkout myAdapter;
     protected WorkoutTaskManager taskManager = new WorkoutTaskManager(this);
+    protected Parcelable state;
 
     public WorkoutFragment() {
 
@@ -65,6 +68,19 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
         butt = v.findViewById(R.id.button_start);
         MainActivity act = (MainActivity) getActivity();
         viewmodel = act.getViewModel();
+
+        edit = v.findViewById(R.id.editWorkout);
+        edit.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                act
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container_view, ManuallyWorkoutFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("stack")
+                        .commit();
+            }
+        });
 
         tabLayout = v.findViewById(R.id.tabs);
         taskManager.executeLoadWorkoutAsync(viewmodel.getDB(), viewmodel.getWorkoutId());
@@ -98,7 +114,9 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
             @Override
             public void onClick(View view) {
                 if(butt.getText().equals("Finish")){
-                    value=-1;
+                    edit.setVisibility(View.VISIBLE);
+                    tabLayout.setVisibility(View.VISIBLE);
+                    value[viewmodel.getDay()-1]=-1;
                     //alert stating the training is completed and redirect
                     Toast toast = Toast.makeText(getActivity(), "Today's training is complete", Toast.LENGTH_SHORT);
                     toast.show();
@@ -106,9 +124,15 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
                     butt.setText("Start");
                 }
                 else{
-                    value++;
+                    edit.setVisibility(View.INVISIBLE);
+                    tabLayout.setVisibility(View.INVISIBLE);
+                    value[viewmodel.getDay()-1]++;
+                    if(value[viewmodel.getDay()-1]+1>list.getLastVisiblePosition() || value[viewmodel.getDay()-1]-1<list.getFirstVisiblePosition()){
+                        list.smoothScrollToPosition(value[viewmodel.getDay()-1]);
+                    }
+
                     taskManager.LoadExecutor(viewmodel.getDB(),viewmodel.getWorkoutId(), viewmodel.getDay());
-                    if(value == myAdapter.getCount() - 1){
+                    if(value[viewmodel.getDay()-1] == myAdapter.getCount() - 1){
                         butt.setText("Finish");
                     }
                     else{
@@ -123,7 +147,21 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                if(value[viewmodel.getDay()-1]!=-1){
+                    tabLayout.getTabAt(viewmodel.getDay()-1).select();
+                    return;
+                }
+
                 viewmodel.setDay(tab.getPosition() + 1);
+                if(value[viewmodel.getDay()-1] == myAdapter.getCount() - 1){
+                    butt.setText("Finish");
+                }
+                else if (value[viewmodel.getDay()-1]!=-1){
+                    butt.setText("Next");
+                }
+                else{
+                    butt.setText("Start");
+                }
                 taskManager.executeLoadWorkout_ExerciseByDayAsync(viewmodel.getDB(), viewmodel.getWorkoutId(), viewmodel.getDay());
             }
 
@@ -158,6 +196,8 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
                 tabLayout.addTab(tabLayout.newTab().setText("Day " + i));
             }
 
+            tabLayout.getTabAt(viewmodel.getDay()-1).select();
+
             setTabListner();
 
         } catch (Exception e) {
@@ -168,15 +208,11 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
 
     @Override
     public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
-        myAdapter = new MyAdapterExerciseWorkout(getActivity().getApplicationContext(), exercises, wes,value);
+        myAdapter = new MyAdapterExerciseWorkout(getActivity().getApplicationContext(), exercises, wes, value[viewmodel.getDay()-1]);
+        state = list.onSaveInstanceState();
         list.setAdapter(myAdapter);
         setListListener();
-        if(value == myAdapter.getCount()-1){
-            butt.setText("Finish");
-        }
-        else if(value > -1){
-            butt.setText("Next");
-        }
+        list.onRestoreInstanceState(state);
     }
 
     @Override

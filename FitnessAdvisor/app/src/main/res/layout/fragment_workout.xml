@@ -38,7 +38,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/editProfile"
+                    android:id="@+id/editWorkout"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="right"
@@ -68,26 +68,29 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clipToPadding="false">
+                android:clipToPadding="false"
+                android:layout_gravity="center">
 
                 <ListView
                     android:id="@+id/workout_list"
-                    android:layout_width="358dp"
-                    android:layout_height="328dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="90dp"
                     android:layout_marginTop="10dp"
                     android:divider="@null" />
 
-            </RelativeLayout>
+                <Button
+                    android:id="@+id/button_start"
+                    android:layout_width="225dp"
+                    android:layout_height="55dp"
+                    android:layout_marginLeft="75dp"
+                    android:layout_marginTop="400dp"
+                    android:layout_marginBottom="20dp"
+                    android:src="@drawable/ic_add"
+                    android:text="Start"
+                    app:backgroundTint="#65E8A9" />
 
-            <Button
-                android:id="@+id/button_start"
-                android:layout_width="225dp"
-                android:layout_height="55dp"
-                android:layout_marginLeft="75dp"
-                android:layout_marginTop="15dp"
-                android:src="@drawable/ic_add"
-                android:text="Start"
-                app:backgroundTint="#65E8A9" />
+            </RelativeLayout>
 
 
         </LinearLayout>

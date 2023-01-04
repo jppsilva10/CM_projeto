@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ public class ManuallyWorkoutFragment extends Fragment implements WorkoutTaskMana
     protected long selected_id;
     protected int value = -1;
     protected WorkoutTaskManager taskManager = new WorkoutTaskManager(this);
+    protected Parcelable state;
 
     public ManuallyWorkoutFragment() {
 
@@ -63,6 +65,20 @@ public class ManuallyWorkoutFragment extends Fragment implements WorkoutTaskMana
         viewmodel = act.getViewModel();
 
         butt = v.findViewById(R.id.add_button);
+
+        Button b = v.findViewById(R.id.saveWorkout);
+        b.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                act.getSupportFragmentManager().popBackStack();
+
+                act
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container_view, WorkoutFragment.class, null)
+                        .commit();
+            }
+        });
 
         tabLayout = v.findViewById(R.id.tabs);
 
@@ -119,6 +135,7 @@ public class ManuallyWorkoutFragment extends Fragment implements WorkoutTaskMana
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                System.out.println("Tab: " + tab.getPosition()+1);
                 viewmodel.setDay(tab.getPosition()+1);
                 taskManager.executeLoadWorkout_ExerciseByDayAsync(viewmodel.getDB(), viewmodel.getWorkoutId(), viewmodel.getDay());
             }
@@ -154,6 +171,11 @@ public class ManuallyWorkoutFragment extends Fragment implements WorkoutTaskMana
                 tabLayout.addTab(tabLayout.newTab().setText("Day " + i));
             }
 
+            System.out.println("Day: " + viewmodel.getDay());
+            tabLayout.getTabAt(viewmodel.getDay()-1).select();
+
+            System.out.println("Day: " + tabLayout.getSelectedTabPosition());
+
             setTabListner();
 
         } catch (Exception e) {
@@ -166,8 +188,10 @@ public class ManuallyWorkoutFragment extends Fragment implements WorkoutTaskMana
     public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
         try {
             MyAdapterExerciseWorkout myAdapter = new MyAdapterExerciseWorkout(getActivity().getApplicationContext(), exercises, wes, value);
+            state = list.onSaveInstanceState();
             list.setAdapter(myAdapter);
             setListListener();
+            list.onRestoreInstanceState(state);
         }catch(Exception e){
 
         }

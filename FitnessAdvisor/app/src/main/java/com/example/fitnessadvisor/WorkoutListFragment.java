@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcelable;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -39,6 +40,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutTaskManager.
     protected FloatingActionButton butt;
     protected long selected_id;
     protected FloatingActionButton help; //This is just a button to add exercises preemptively
+    protected Parcelable state;
 
 
     public WorkoutListFragment() {
@@ -173,8 +175,10 @@ public class WorkoutListFragment extends Fragment implements WorkoutTaskManager.
     public void onLoadWorkoutComplete(List<Workout> workouts) {
         try {
             MyAdapter myAdapter = new MyAdapter(getActivity().getApplicationContext(), workouts);
+            state = list.onSaveInstanceState();
             list.setAdapter(myAdapter);
             setListListener();
+            list.onRestoreInstanceState(state);
         }catch(Exception e){
 
         }

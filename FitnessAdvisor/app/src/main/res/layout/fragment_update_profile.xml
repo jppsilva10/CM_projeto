@@ -324,7 +324,9 @@
                     android:layout_marginRight="20dp"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:text="Save" />
+                    android:text="Save"
+                    android:textColor="#777777"
+                    android:textStyle="bold"/>
 
 
             </LinearLayout>
