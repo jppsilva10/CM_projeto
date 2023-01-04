@@ -124,19 +124,25 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
                     butt.setText("Start");
                 }
                 else{
-                    edit.setVisibility(View.INVISIBLE);
-                    tabLayout.setVisibility(View.INVISIBLE);
-                    value[viewmodel.getDay()-1]++;
-                    if(value[viewmodel.getDay()-1]+1>list.getLastVisiblePosition() || value[viewmodel.getDay()-1]-1<list.getFirstVisiblePosition()){
-                        list.smoothScrollToPosition(value[viewmodel.getDay()-1]);
-                    }
-
-                    taskManager.LoadExecutor(viewmodel.getDB(),viewmodel.getWorkoutId(), viewmodel.getDay());
-                    if(value[viewmodel.getDay()-1] == myAdapter.getCount() - 1){
-                        butt.setText("Finish");
+                    if(butt.getText().equals("Start") && myAdapter.getCount() == 0){
+                        Toast toast = Toast.makeText(getActivity(), "You need to have atleast 1 exercise to start the training!", Toast.LENGTH_SHORT);
+                        toast.show();
                     }
                     else{
-                        butt.setText("Next");
+                        edit.setVisibility(View.INVISIBLE);
+                        tabLayout.setVisibility(View.INVISIBLE);
+                        value[viewmodel.getDay()-1]++;
+                        if(value[viewmodel.getDay()-1]+1>list.getLastVisiblePosition() || value[viewmodel.getDay()-1]-1<list.getFirstVisiblePosition()){
+                            list.smoothScrollToPosition(value[viewmodel.getDay()-1]);
+                        }
+
+                        taskManager.LoadExecutor(viewmodel.getDB(),viewmodel.getWorkoutId(), viewmodel.getDay());
+                        if(value[viewmodel.getDay()-1] == myAdapter.getCount() - 1){
+                            butt.setText("Finish");
+                        }
+                        else{
+                            butt.setText("Next");
+                        }
                     }
                 }
             }
@@ -153,10 +159,7 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
                 }
 
                 viewmodel.setDay(tab.getPosition() + 1);
-                if(value[viewmodel.getDay()-1] == myAdapter.getCount() - 1){
-                    butt.setText("Finish");
-                }
-                else if (value[viewmodel.getDay()-1]!=-1){
+                if (value[viewmodel.getDay()-1]!=-1){
                     butt.setText("Next");
                 }
                 else{
