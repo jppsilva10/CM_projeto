@@ -7,7 +7,7 @@
     <string name="action_back">go back</string>
     <string name="action_add">Add this Exercise</string>
     <string name="action_delete">Delete this Workout</string>
-    <string name="action_edit_workout">Edit this Workout</string>
+    <string name="action_edit_workout">Rename this Workout</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

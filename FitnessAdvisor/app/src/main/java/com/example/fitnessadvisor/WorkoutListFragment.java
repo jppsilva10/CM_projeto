@@ -1,6 +1,7 @@
 package com.example.fitnessadvisor;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.Parcelable;
+import android.text.InputType;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -15,9 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Spinner;
 
 import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Food;
@@ -157,13 +161,40 @@ public class WorkoutListFragment extends Fragment implements WorkoutTaskManager.
     }
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        AlertDialog mydialog;
 
         switch(item.getItemId()) {
             case R.id.option1:
-                //add exercise to the workout
                 taskManager.executeDeleteWorkout(viewmodel.getDB(),selected_id);
+                return true;
+
+            case R.id.option2:
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                LayoutInflater inflater = requireActivity().getLayoutInflater();
+                AlertDialog mydialog;
+
+                builder.setTitle("New name for this workout:");
+                final EditText input = new EditText(getActivity());
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+
+
+                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                taskManager.executeChangeName(viewmodel.getDB(),input.getText().toString(),selected_id);
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+
+                mydialog = builder.create();
+                mydialog.show();
+
                 return true;
             default:
                 return super.onContextItemSelected(item);

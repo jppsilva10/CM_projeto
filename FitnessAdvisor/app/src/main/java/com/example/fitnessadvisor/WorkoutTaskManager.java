@@ -252,6 +252,24 @@ public class WorkoutTaskManager {
         });
     }
 
+    public void executeChangeName(AppDatabase db, String name, long id){
+        executor.execute(() -> {
+
+
+            WorkoutDao workoutDao = db.workoutDao();
+            workoutDao.updateName(name,id);
+
+            List<Workout> workouts = workoutDao.getAll();
+            for(int i=0;i<workouts.size();i++){
+                System.out.println(workouts.get(i).name);
+            }
+
+            handler.post(() -> {
+                calback.onLoadWorkoutComplete(workouts);
+            });
+        });
+    }
+
     protected float beginner;
     protected float novice;
     protected float intermediate;
