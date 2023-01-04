@@ -1,5 +1,7 @@
 package com.example.fitnessadvisor;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,9 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.fitnessadvisor.Database.Exercise;
@@ -107,18 +112,32 @@ public class ManuallyWorkoutFragment extends Fragment implements WorkoutTaskMana
         list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?>adapter,View v, int position, long id){
-
-                //viewmodel.setExerciseId(id);
-                System.out.println("--------- id: " + id);
                 viewmodel.setWorkout_ExerciseId(id);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-                getActivity()
-                        .getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container_view, AddExerciseFragment.class, null)
-                        .setReorderingAllowed(true)
-                        .addToBackStack("stack")
-                        .commit();
+                builder.setTitle("What you want to do with this exercise?");
+
+                builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        getActivity()
+                                .getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragment_container_view, AddExerciseFragment.class, null)
+                                .setReorderingAllowed(true)
+                                .addToBackStack("stack")
+                                .commit();
+                    }
+                });
+                builder.setNegativeButton("Remove", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        taskManager.executeDeleteWE(viewmodel.getDB(),id,viewmodel.getDay(), viewmodel.getWorkoutId());
+                    }
+                });
+
+                builder.create().show();
+
             }
         });
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

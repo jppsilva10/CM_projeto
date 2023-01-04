@@ -252,6 +252,22 @@ public class WorkoutTaskManager {
         });
     }
 
+    public void executeDeleteWE(AppDatabase db, long id, int day,long workoutId){
+        executor.execute(() -> {
+
+
+            Workout_ExerciseDao workoutDao = db.workout_exerciseDao();
+            Workout_Exercise we = workoutDao.loadById(id);
+            workoutDao.delete(we);
+            ExerciseDao exerciseDao = db.exerciseDao();
+            List<Exercise> exercises = exerciseDao.getAll();
+            List<Workout_Exercise> wes = workoutDao.loadByDay(workoutId,day);
+            handler.post(() -> {
+                calback.onLoadWorkout_ExerciseComplete(exercises,wes);
+            });
+        });
+    }
+
     public void executeChangeName(AppDatabase db, String name, long id){
         executor.execute(() -> {
 
@@ -260,9 +276,6 @@ public class WorkoutTaskManager {
             workoutDao.updateName(name,id);
 
             List<Workout> workouts = workoutDao.getAll();
-            for(int i=0;i<workouts.size();i++){
-                System.out.println(workouts.get(i).name);
-            }
 
             handler.post(() -> {
                 calback.onLoadWorkoutComplete(workouts);

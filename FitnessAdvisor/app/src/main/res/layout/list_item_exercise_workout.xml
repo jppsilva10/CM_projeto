@@ -28,9 +28,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="10Kg"
-                android:textStyle="bold"
+                android:textColor="#50af8d"
                 android:textSize="17dp"
-                android:textColor="#50af8d" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/reps"
@@ -54,6 +54,7 @@
 
         </LinearLayout>
 
+
         <TextView
             android:id="@+id/exerciseName"
             android:layout_width="match_parent"
@@ -68,6 +69,7 @@
             android:elevation="3dp"
             android:padding="10dp"
             android:textColor="#50af8d" />
+
     </LinearLayout>
 
 </LinearLayout>
