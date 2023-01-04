@@ -36,13 +36,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class MealListFragment extends Fragment implements TaskManager.Callback{
+public class MealListFragment extends Fragment implements NutritionTaskManager.Callback{
 
     ExpandableListView expandableListView;
     ExpandableListAdapter expandableListAdapter;
     List<String> expandableListTitle;
     HashMap<String, List<String>> expandableListDetail = new HashMap<String, List<String>>();
-    TaskManager taskManager = new TaskManager(this);
+    NutritionTaskManager taskManager = new NutritionTaskManager(this);
     SharedViewModel viewmodel;
 
     final Calendar myCalendar= Calendar.getInstance();
@@ -135,35 +135,8 @@ public class MealListFragment extends Fragment implements TaskManager.Callback{
         }
     }
 
-    @Override
-    public void onLoadExerciseComplete(List<Exercise> exercises) {
 
-    }
 
-    @Override
-    public void onLoadExerciseComplete(Exercise exercise) {
-        
-    }
-
-    @Override
-    public void onAddExerciseComplete(Workout_Exercise we) {
-
-    }
-
-    @Override
-    public void onLoadWorkoutComplete(List<Workout> workouts) {
-
-    }
-
-    @Override
-    public void onLoadWorkoutComplete(Workout workout) {
-
-    }
-
-    @Override
-    public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
-
-    }
 
     @Override
     public void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals) {
@@ -184,16 +157,6 @@ public class MealListFragment extends Fragment implements TaskManager.Callback{
 
     @Override
     public void onLoadFoodFromMeal(Meal meal, List<Food> foodList) {
-
-    }
-
-    @Override
-    public void onLoadProfileComplete(Profile profile, boolean empty) {
-
-    }
-
-    @Override
-    public void onProfileUpdateComplete(Profile profile) {
 
     }
 

@@ -203,21 +203,6 @@ public class WorkoutListFragment extends Fragment implements WorkoutTaskManager.
     }
 
     @Override
-    public void onLoadExerciseComplete(List<Exercise> exercises) {
-
-    }
-
-    @Override
-    public void onLoadExerciseComplete(Exercise exercise) {
-
-    }
-
-    @Override
-    public void onAddExerciseComplete(Workout_Exercise we) {
-
-    }
-
-    @Override
     public void onLoadWorkoutComplete(List<Workout> workouts) {
         try {
             MyAdapter myAdapter = new MyAdapter(getActivity().getApplicationContext(), workouts);
@@ -232,6 +217,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutTaskManager.
 
     @Override
     public void onLoadWorkoutComplete(Workout workout) {
+
     }
 
     @Override
@@ -241,6 +227,21 @@ public class WorkoutListFragment extends Fragment implements WorkoutTaskManager.
 
     @Override
     public void onLoadWorkout_ExerciseComplete(Workout_Exercise we, Exercise exercise) {
+
+    }
+
+    @Override
+    public void onLoadExerciseComplete(List<Exercise> exercises) {
+
+    }
+
+    @Override
+    public void onLoadExerciseComplete(Exercise exercise) {
+
+    }
+
+    @Override
+    public void onAddExerciseComplete(Workout_Exercise we) {
 
     }
 }

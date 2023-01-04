@@ -140,7 +140,4 @@ public class AccountFragment extends Fragment implements AccountTaskManager.Call
         this.profile = profile;
     }
 
-
-
-
 }

@@ -95,23 +95,23 @@ public class CreateWorkoutFragment extends Fragment implements WorkoutTaskManage
 
                 builder.setView(v)
                         .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Workout workout = new Workout();
-                        EditText name = v.findViewById(R.id.nameValue);
-                        workout.name = name.getText().toString();
-                        Spinner spinner = v.findViewById(R.id.daysValue);
-                        workout.days = spinner.getSelectedItemPosition()+1;
-                        viewmodel.setDay(1);
-                        taskManager.executeInsertWorkout(viewmodel.getDB(), workout);
-                    }
-                })
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Workout workout = new Workout();
+                                EditText name = v.findViewById(R.id.nameValue);
+                                workout.name = name.getText().toString();
+                                Spinner spinner = v.findViewById(R.id.daysValue);
+                                workout.days = spinner.getSelectedItemPosition()+1;
+                                viewmodel.setDay(1);
+                                taskManager.executeInsertWorkout(viewmodel.getDB(), workout);
+                            }
+                        })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
 
                 mydialog = builder.create();
                 mydialog.show();

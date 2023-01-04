@@ -22,9 +22,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class NutritionFragment extends Fragment implements TaskManager.Callback{
+public class NutritionFragment extends Fragment implements NutritionTaskManager.Callback{
 
-    TaskManager taskManager = new TaskManager(this);
+    NutritionTaskManager taskManager = new NutritionTaskManager(this);
     SharedViewModel viewmodel;
 
     public NutritionFragment() {
@@ -163,35 +163,6 @@ public class NutritionFragment extends Fragment implements TaskManager.Callback{
 
     }
 
-    @Override
-    public void onLoadExerciseComplete(List<Exercise> exercises) {
-
-    }
-
-    @Override
-    public void onLoadExerciseComplete(Exercise exercise) {
-
-    }
-
-    @Override
-    public void onAddExerciseComplete(Workout_Exercise we) {
-
-    }
-
-    @Override
-    public void onLoadWorkoutComplete(List<Workout> workouts) {
-
-    }
-
-    @Override
-    public void onLoadWorkoutComplete(Workout workout) {
-
-    }
-
-    @Override
-    public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
-
-    }
 
     @Override
     public void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals) {
@@ -214,13 +185,4 @@ public class NutritionFragment extends Fragment implements TaskManager.Callback{
 
     }
 
-    @Override
-    public void onLoadProfileComplete(Profile profile, boolean empty) {
-
-    }
-
-    @Override
-    public void onProfileUpdateComplete(Profile profile) {
-
-    }
 }

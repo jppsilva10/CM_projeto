@@ -221,8 +221,6 @@ public class ManuallyWorkoutFragment extends Fragment implements WorkoutTaskMana
 
     }
 
-
-
     @Override
     public void onLoadExerciseComplete(List<Exercise> exercises) {
 

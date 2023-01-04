@@ -23,10 +23,10 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 
-public class ViewMealFragment extends Fragment implements TaskManager.Callback{
+public class ViewMealFragment extends Fragment implements NutritionTaskManager.Callback{
 
     protected SharedViewModel viewmodel;
-    protected TaskManager taskManager = new TaskManager(this);
+    protected NutritionTaskManager taskManager = new NutritionTaskManager(this);
     TableLayout table;
     TextView mealTitle;
     TextView mealDay;
@@ -77,35 +77,6 @@ public class ViewMealFragment extends Fragment implements TaskManager.Callback{
         return tv;
     }
 
-    @Override
-    public void onLoadExerciseComplete(List<Exercise> exercises) {
-
-    }
-
-    @Override
-    public void onLoadExerciseComplete(Exercise exercise) {
-
-    }
-
-    @Override
-    public void onAddExerciseComplete(Workout_Exercise we) {
-
-    }
-
-    @Override
-    public void onLoadWorkoutComplete(List<Workout> workouts) {
-
-    }
-
-    @Override
-    public void onLoadWorkoutComplete(Workout workout) {
-
-    }
-
-    @Override
-    public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
-
-    }
 
     @Override
     public void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals) {
@@ -172,13 +143,5 @@ public class ViewMealFragment extends Fragment implements TaskManager.Callback{
         table.addView(row);
     }
 
-    @Override
-    public void onLoadProfileComplete(Profile profile, boolean empty) {
 
-    }
-
-    @Override
-    public void onProfileUpdateComplete(Profile profile) {
-
-    }
 }
