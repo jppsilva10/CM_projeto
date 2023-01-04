@@ -89,6 +89,7 @@ public class ExerciseFragment extends Fragment implements WorkoutTaskManager.Cal
 
     @Override
     public void onLoadWorkoutComplete(Workout workout) {
+    public void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals) {
 
     }
 
@@ -99,6 +100,22 @@ public class ExerciseFragment extends Fragment implements WorkoutTaskManager.Cal
 
     @Override
     public void onLoadWorkout_ExerciseComplete(Workout_Exercise we, Exercise exercise) {
+    public void onInsertMealComplete(long mealId) {
+
+    }
+
+    @Override
+    public void onLoadFoodFromMeal(Meal meal, List<Food> foodList) {
+
+    }
+
+    @Override
+    public void onLoadProfileComplete(Profile profile, boolean empty) {
+
+    }
+
+    @Override
+    public void onProfileUpdateComplete(Profile profile) {
 
     }
 }

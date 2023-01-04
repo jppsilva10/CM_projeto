@@ -49,6 +49,7 @@ public class MealListFragment extends Fragment implements TaskManager.Callback{
     EditText editText;
     Button addBtn;
     Button removeBtn;
+    List<Meal> meal_list;
 
     public MealListFragment() {
         // Required empty public constructor
@@ -166,6 +167,8 @@ public class MealListFragment extends Fragment implements TaskManager.Callback{
 
     @Override
     public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
+    public void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals) {
+        meal_list = meals;
         expandableListDetail = mealList;
         fillTheScreen();
     }
@@ -177,6 +180,11 @@ public class MealListFragment extends Fragment implements TaskManager.Callback{
 
     @Override
     public void onInsertMealComplete(long mealId) {
+
+    }
+
+    @Override
+    public void onLoadFoodFromMeal(Meal meal, List<Food> foodList) {
 
     }
 
@@ -194,6 +202,7 @@ public class MealListFragment extends Fragment implements TaskManager.Callback{
         MainActivity act = (MainActivity)getActivity();
         viewmodel = act.getViewModel();
 
+
         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
         expandableListAdapter = new CustomExpandableListAdapter(act.getApplicationContext(), expandableListTitle, expandableListDetail);
         expandableListView.setAdapter(expandableListAdapter);
@@ -205,6 +214,7 @@ public class MealListFragment extends Fragment implements TaskManager.Callback{
                         Toast.LENGTH_SHORT).show();
             }
         });
+
 
         expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
 
@@ -229,6 +239,18 @@ public class MealListFragment extends Fragment implements TaskManager.Callback{
                                 expandableListTitle.get(groupPosition)).get(
                                 childPosition), Toast.LENGTH_SHORT
                 ).show();
+
+                Meal selectedMeal = meal_list.get(groupPosition);
+                viewmodel.setMealId(selectedMeal.id);
+
+                getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container_view, ViewMealFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("stack")
+                        .commit();
+
                 return false;
             }
         });

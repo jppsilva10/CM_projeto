@@ -196,6 +196,7 @@ public class ExerciseListFragment extends Fragment implements WorkoutTaskManager
 
     @Override
     public void onLoadWorkout_ExerciseComplete(Workout_Exercise we, Exercise exercise) {
+    public void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals) {
 
     }
 
@@ -213,6 +214,21 @@ public class ExerciseListFragment extends Fragment implements WorkoutTaskManager
 
     @Override
     public void onAddExerciseComplete(Workout_Exercise we) {
+
+    }
+
+    @Override
+    public void onLoadFoodComplete(List<Food> food) {
+
+    }
+
+    @Override
+    public void onInsertMealComplete(long mealId) {
+
+    }
+
+    @Override
+    public void onLoadFoodFromMeal(Meal meal, List<Food> foodList) {
 
     }
 

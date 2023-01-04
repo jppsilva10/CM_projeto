@@ -78,7 +78,7 @@ public class AddMealFragment extends Fragment implements TaskManager.Callback{
                 Meal meal = new Meal();
                 meal.title = editTitle.getText().toString();
                 meal.day = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-                meal.time = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+                meal.time = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
 
                 taskManager.executeInsertMeal(viewmodel.getDB(), meal);
 
@@ -176,6 +176,7 @@ public class AddMealFragment extends Fragment implements TaskManager.Callback{
 
     @Override
     public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
+    public void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals) {
 
     }
 
@@ -200,6 +201,11 @@ public class AddMealFragment extends Fragment implements TaskManager.Callback{
                 .beginTransaction()
                 .replace(R.id.fragment_container_view, MealListFragment.class, null)
                 .commit();
+    }
+
+    @Override
+    public void onLoadFoodFromMeal(Meal meal, List<Food> foodList) {
+
     }
 
     @Override

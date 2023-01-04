@@ -310,6 +310,35 @@ public class UpdateProfileFragment extends Fragment implements AccountTaskManage
     public void onProfileUpdateComplete(Profile profile) {
         System.out.println("---------updated---------");
         this.profile = profile;
+        getActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container_view, AccountFragment.class, null)
+                .commit();
+    }
+    @Override
+    public void onLoadWorkoutComplete(List<Workout> workouts){
+
+    }
+
+    @Override
+    public void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals) {
+
+    }
+
+    ;
+    @Override
+    public void onLoadExerciseComplete(List<Exercise> exercises) {
+
+    }
+
+    @Override
+    public void onLoadExerciseComplete(Exercise exercise) {
+
+    }
+
+    @Override
+    public void onAddExerciseComplete(Workout_Exercise we) {
 
         try {
 
@@ -330,5 +359,10 @@ public class UpdateProfileFragment extends Fragment implements AccountTaskManage
         }catch (Exception e){
 
         }
+    }
+
+    @Override
+    public void onLoadFoodFromMeal(Meal meal, List<Food> foodList) {
+
     }
 }

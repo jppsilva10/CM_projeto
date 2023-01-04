@@ -5,4 +5,166 @@
     android:layout_height="match_parent"
     tools:context=".ViewMealFragment">
 
+    <TextView
+        android:id="@+id/mealTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Visualizar Refeição"
+        android:layout_gravity="top|center"
+        android:layout_marginTop="10dp"
+        android:textSize="25dp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/mealDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dia"
+        android:layout_gravity="top|left"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="130dp"
+        android:textSize="15dp"/>
+
+    <TextView
+        android:id="@+id/mealTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hora"
+        android:layout_gravity="top|right"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="130dp"
+        android:textSize="15dp"/>
+
+    <TableLayout
+        android:id="@+id/foodTable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:layout_gravity="top"
+        android:layout_marginTop="100dp">
+
+
+        <TableRow
+            android:background="@color/teal_200">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alimento"
+                android:textSize="14sp"
+                android:gravity="center_horizontal"
+                android:layout_weight="2"
+                android:textColor="@android:color/white">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Calorias"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:gravity="center_horizontal"
+                android:textColor="@android:color/white">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Carbohidratos"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:gravity="center_horizontal"
+                android:textColor="@android:color/white">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Proteínas"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:gravity="center_horizontal"
+                android:textColor="@android:color/white">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lípidos"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:gravity="center_horizontal"
+                android:textColor="@android:color/white">
+
+            </TextView>
+
+        </TableRow>
+
+        <TableRow
+            android:background="@color/teal_200">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" "
+                android:textSize="14sp"
+                android:gravity="center_horizontal"
+                android:layout_weight="2"
+                android:textColor="@android:color/white">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(kcal)"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:gravity="center_horizontal"
+                android:textColor="@android:color/white">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(g)"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:gravity="center_horizontal"
+                android:textColor="@android:color/white">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(g)"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:gravity="center_horizontal"
+                android:textColor="@android:color/white">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(g)"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:gravity="center_horizontal"
+                android:textColor="@android:color/white">
+
+            </TextView>
+
+        </TableRow>
+
+    </TableLayout>
+
+
 </FrameLayout>

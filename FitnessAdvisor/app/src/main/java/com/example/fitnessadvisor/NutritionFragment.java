@@ -68,13 +68,14 @@ public class NutritionFragment extends Fragment implements TaskManager.Callback{
         return v;
     }
 
+
     private void PutMealsIntoDatabase()
     {
         MainActivity act = (MainActivity)getActivity();
         viewmodel = act.getViewModel();
 
         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-        String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+        String currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
         Meal meal = new Meal();
         meal.title = "Pequeno Almoço";
         meal.day = currentDate;
@@ -85,7 +86,7 @@ public class NutritionFragment extends Fragment implements TaskManager.Callback{
         taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 1, 5);
 
         currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-        currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+        currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
         meal = new Meal();
         meal.title = "Almoço";
         meal.day = currentDate;
@@ -96,7 +97,7 @@ public class NutritionFragment extends Fragment implements TaskManager.Callback{
         taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 2, 6);
 
         currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-        currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+        currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
         meal = new Meal();
         meal.title = "Jantar";
         meal.day = currentDate;
@@ -194,6 +195,7 @@ public class NutritionFragment extends Fragment implements TaskManager.Callback{
 
     @Override
     public void onLoadMealComplete(HashMap<String, List<String>> mealList) {
+    public void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals) {
 
     }
 
@@ -204,6 +206,11 @@ public class NutritionFragment extends Fragment implements TaskManager.Callback{
 
     @Override
     public void onInsertMealComplete(long mealId) {
+
+    }
+
+    @Override
+    public void onLoadFoodFromMeal(Meal meal, List<Food> foodList) {
 
     }
 

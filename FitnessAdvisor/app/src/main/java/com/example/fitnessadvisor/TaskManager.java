@@ -23,6 +23,7 @@ import com.example.fitnessadvisor.Database.Workout_ExerciseDao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -44,8 +45,10 @@ public class TaskManager {
         void onLoadWorkoutComplete(Workout workout);
         void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes);
         void onLoadMealComplete(HashMap<String, List<String>> mealList);
+        void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals);
         void onLoadFoodComplete(List<Food> food);
         void onInsertMealComplete(long mealId);
+        void onLoadFoodFromMeal(Meal meal, List<Food> foodList);
         void onLoadProfileComplete(Profile profile, boolean empty);
         void onProfileUpdateComplete(Profile profile);
     }
@@ -127,6 +130,28 @@ public class TaskManager {
         });
     }
 
+    public void executeLoadFoodFromMealAsync(AppDatabase db, long mealId){
+        executor.execute(() -> {
+
+            Meal_FoodDao meal_foodDao = db.meal_foodDao();
+            List<Meal_Food> meal_food = meal_foodDao.loadByMeal(mealId);
+
+            List<Food> food_list = new ArrayList<Food>();
+            FoodDao foodDao = db.foodDao();
+            for(int i = 0; i < meal_food.size(); i++){
+                Food food = foodDao.loadById(meal_food.get(i).food);
+                food_list.add(food);
+            }
+
+            MealDao mealDao = db.mealDao();
+            Meal meal = mealDao.loadById(mealId);
+
+            handler.post(() -> {
+                calback.onLoadFoodFromMeal(meal, food_list);
+            });
+        });
+    }
+
     /*public void executeLoadMealAsync(AppDatabase db){
         executor.execute(() -> {
 
@@ -147,7 +172,7 @@ public class TaskManager {
             Meal_FoodDao meal_foodDao = db.meal_foodDao();
             FoodDao foodDao = db.foodDao();
 
-            HashMap<String, List<String>> mealList = new HashMap<String, List<String>>();
+            LinkedHashMap<String, List<String>> mealList = new LinkedHashMap<String, List<String>>();
             for(int i = 0; i < meals.size(); i++){
                 List<Meal_Food> meal_food_list = meal_foodDao.loadByMeal(meals.get(i).id);
                 List<String> one_meal = new ArrayList<String>();
@@ -159,7 +184,7 @@ public class TaskManager {
             }
 
             handler.post(() -> {
-                calback.onLoadMealComplete(mealList);
+                calback.onLoadMealComplete(mealList, meals);
             });
         });
     }
