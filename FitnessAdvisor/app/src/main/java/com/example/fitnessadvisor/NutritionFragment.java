@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
+import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Pie;
 import com.example.fitnessadvisor.Database.Exercise;
@@ -39,6 +40,9 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
     NutritionTaskManager taskManager = new NutritionTaskManager(this);
     SharedViewModel viewmodel;
     private float kcal = 0.0f;
+    private float proteins = 0.0f;
+    private float carbohydrates = 0.0f;
+    private float fat = 0.0f;
     private ProgressBar progress;
     private TextView text;
     private TextView text2;
@@ -74,11 +78,12 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
 
         String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         taskManager.executeLoadFoodFromdayAsync(viewmodel.getDB(), today);
+
         progress = v.findViewById(R.id.progress);
         text = v.findViewById(R.id.kcal_num);
         text2 = v.findViewById(R.id.calories);
+
         anyChartView = v.findViewById(R.id.pieChartMarcronutrients);
-        setUpChartView();
 
         Button b = v.findViewById(R.id.goToMealList);
         b.setOnClickListener(new View.OnClickListener() {
@@ -118,10 +123,14 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
 
     private void setUpChartView(){
         Pie pie = AnyChart.pie();
-        /*List<com.anychart.DataEntry> dataEntries = new ArrayList<com.anychart.data.View>();
-        dataEntries.add(new ValueDataEntry("a",2));
+        List<DataEntry> dataEntries = new ArrayList<DataEntry>();
 
-        pie.data(dataEntries);*/
+        dataEntries.add(new ValueDataEntry("Lípidos",fat));
+        dataEntries.add(new ValueDataEntry("Proteínas",proteins));
+        dataEntries.add(new ValueDataEntry("Carbohidratos",carbohydrates));
+
+        pie.data(dataEntries);
+        anyChartView.setChart(pie);
     }
 
     private void PutMealsIntoDatabase()
@@ -234,12 +243,17 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
             kcal = 0.0f;
             for(int i=0;i<foods.size();i++){
                 kcal = kcal + foods.get(i).calories;
+                carbohydrates = carbohydrates + foods.get(i).calories;
+                proteins = proteins + foods.get(i).proteins;
+                fat = fat + foods.get(i).fat;
             }
             int value = 100*((int) kcal)/2000;
             progress.setProgress(value);
             text.setText(String.valueOf((int)kcal));
             text2.setText("kcal");
         }
+
+        setUpChartView();
     }
 
     @Override
