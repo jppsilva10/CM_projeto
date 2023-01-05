@@ -157,11 +157,19 @@
                         style="@style/LableNutrition"
                         android:text="macronutrients" />
 
+                    <com.anychart.AnyChartView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/pieChartMarcronutrients">
+
+                    </com.anychart.AnyChartView>
+
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
+
 
         <Button
             android:id="@+id/goToMealList"

@@ -14,6 +14,11 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+
+import com.anychart.AnyChart;
+import com.anychart.AnyChartView;
+import com.anychart.chart.common.dataentry.ValueDataEntry;
+import com.anychart.charts.Pie;
 import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Food;
 import com.example.fitnessadvisor.Database.Hydration;
@@ -23,6 +28,7 @@ import com.example.fitnessadvisor.Database.Workout;
 import com.example.fitnessadvisor.Database.Workout_Exercise;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +42,7 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
     private ProgressBar progress;
     private TextView text;
     private TextView text2;
+    AnyChartView anyChartView;
 
     public NutritionFragment() {
         // Required empty public constructor
@@ -70,6 +77,9 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         progress = v.findViewById(R.id.progress);
         text = v.findViewById(R.id.kcal_num);
         text2 = v.findViewById(R.id.calories);
+        anyChartView = v.findViewById(R.id.pieChartMarcronutrients);
+        setUpChartView();
+
         Button b = v.findViewById(R.id.goToMealList);
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -106,6 +116,13 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         return v;
     }
 
+    private void setUpChartView(){
+        Pie pie = AnyChart.pie();
+        /*List<com.anychart.DataEntry> dataEntries = new ArrayList<com.anychart.data.View>();
+        dataEntries.add(new ValueDataEntry("a",2));
+
+        pie.data(dataEntries);*/
+    }
 
     private void PutMealsIntoDatabase()
     {
