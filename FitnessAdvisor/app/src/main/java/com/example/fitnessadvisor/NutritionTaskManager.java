@@ -25,7 +25,11 @@ import com.example.fitnessadvisor.Database.WorkoutDao;
 import com.example.fitnessadvisor.Database.Workout_Exercise;
 import com.example.fitnessadvisor.Database.Workout_ExerciseDao;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -49,6 +53,7 @@ public class NutritionTaskManager {
         void onLoadHydrationComplete(List<Hydration> hydration);
         void onUpdateHydrationComplete();
         void onLoadFoodFromMeal(Meal meal, List<Food> foodList);
+        void onLoadBMR(float bmr);
     }
 
     public void executeLoadFoodAsync(AppDatabase db){
@@ -186,6 +191,27 @@ public class NutritionTaskManager {
 
             handler.post(() -> {
                 calback.onDeleteMealComplete();
+            });
+        });
+    }
+
+    public void executeGetBMR(AppDatabase db){
+        executor.execute(() -> {
+            ProfileDao profiledao = db.profileDao();
+            Profile profile = profiledao.getAll().get(0);
+            Calendar cal = Calendar.getInstance();
+            Date today = cal.getTime();
+            int age = today.getYear() - profile.birth_date.getYear();
+            float value;
+            if(profile.gender.equals("Male")) {
+                value = 88.362f + (13.397f * profile.weight) + (4.799f * profile.height) - (5.677f * age);
+            }
+            else{
+                value = 447.593f + (9.247f * profile.weight) + (3.098f * profile.height) - (4.330f * age);
+            }
+
+            handler.post(() -> {
+                calback.onLoadBMR(value);
             });
         });
     }

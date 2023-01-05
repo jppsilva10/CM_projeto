@@ -169,6 +169,11 @@ public class AddMealFragment extends Fragment implements NutritionTaskManager.Ca
     }
 
     @Override
+    public void onLoadBMR(float BMR) {
+
+    }
+
+    @Override
     public void onDeleteMealComplete() {
 
     }
