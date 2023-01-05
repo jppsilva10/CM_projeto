@@ -89,11 +89,23 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintHorizontal_bias="0.507"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="100 kcal" />
+                        app:layout_constraintVertical_bias="0.44"
+                        tools:text="100" />
+
+                    <TextView
+                        android:id="@+id/calories"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.64"
+                        tools:text="kcal" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

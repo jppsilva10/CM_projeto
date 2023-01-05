@@ -205,6 +205,32 @@ public class NutritionTaskManager {
         return hydration.id;
     }
 
+    public void executeLoadFoodFromdayAsync(AppDatabase db,String day){
+        executor.execute(() -> {
+
+            MealDao meaDao = db.mealDao();
+            List<Meal> meal = meaDao.loadByDate(day);
+
+            Meal_FoodDao mealDao = db.meal_foodDao();
+            FoodDao foodDao = db.foodDao();
+            List<Meal_Food> meals;
+            List<Food> foods = new ArrayList<>();
+
+            for(int i=0;i<meal.size();i++){
+                meals = mealDao.loadByMeal(meal.get(i).id);
+                for(int j=0;j<meals.size();j++){
+                    Food food = foodDao.loadById(meals.get(j).food);
+                    foods.add(food);
+                }
+            }
+
+
+            handler.post(() -> {
+                calback.onLoadFoodComplete(foods);
+            });
+        });
+    }
+
     public void executeUpdateHydration(AppDatabase db, String day, float objective, float quantity){
         executor.execute(() -> {
 

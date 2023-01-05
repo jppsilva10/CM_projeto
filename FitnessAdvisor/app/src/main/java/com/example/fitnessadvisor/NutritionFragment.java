@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Food;
@@ -31,8 +32,10 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
 
     NutritionTaskManager taskManager = new NutritionTaskManager(this);
     SharedViewModel viewmodel;
-    private int kcal;
+    private float kcal = 0.0f;
     private ProgressBar progress;
+    private TextView text;
+    private TextView text2;
 
     public NutritionFragment() {
         // Required empty public constructor
@@ -63,10 +66,10 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         //PutMealsIntoDatabase();
 
         String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-        taskManager.executeLoadMealAsync(viewmodel.getDB(), today);
+        taskManager.executeLoadFoodFromdayAsync(viewmodel.getDB(), today);
         progress = v.findViewById(R.id.progress);
-        progress.setProgress(10);
-
+        text = v.findViewById(R.id.kcal_num);
+        text2 = v.findViewById(R.id.calories);
         Button b = v.findViewById(R.id.goToMealList);
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -201,13 +204,25 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
 
     @Override
     public void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals) {
-        
 
     }
 
     @Override
     public void onLoadFoodComplete(List<Food> food) {
-
+        List<Food> foods = food;
+        if(foods.size() == 0){
+            progress.setProgress(0);
+        }
+        else{
+            kcal = 0.0f;
+            for(int i=0;i<foods.size();i++){
+                kcal = kcal + foods.get(i).calories;
+            }
+            int value = 100*((int) kcal)/2000;
+            progress.setProgress(value);
+            text.setText(String.valueOf((int)kcal));
+            text2.setText("kcal");
+        }
     }
 
     @Override
@@ -233,7 +248,6 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
 
     @Override
     public void onLoadFoodFromMeal(Meal meal, List<Food> foodList) {
-
     }
 
 }
