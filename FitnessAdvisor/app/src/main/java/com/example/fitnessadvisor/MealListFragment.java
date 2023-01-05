@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Food;
 import com.example.fitnessadvisor.Database.FoodDao;
+import com.example.fitnessadvisor.Database.Hydration;
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.MealDao;
 import com.example.fitnessadvisor.Database.Meal_Food;
@@ -180,6 +181,16 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
         else{
             taskManager.executeLoadMealAsync(viewmodel.getDB(), viewmodel.getSetDate());
         }
+    }
+
+    @Override
+    public void onLoadHydrationComplete(List<Hydration> hydration) {
+
+    }
+
+    @Override
+    public void onUpdateHydrationComplete() {
+
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Food;
+import com.example.fitnessadvisor.Database.Hydration;
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
@@ -44,6 +45,9 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        MainActivity act = (MainActivity)getActivity();
+        viewmodel = act.getViewModel();
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_nutrition, container, false);
 
@@ -59,6 +63,26 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
                         .getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container_view, MealListFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("stack")
+                        .commit();
+            }
+        });
+
+        Button h = v.findViewById(R.id.goToHydration);
+        h.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+                Hydration hydrationToday = new Hydration();
+                hydrationToday.quantity = 0;
+                hydrationToday.objective = (float)3.0;
+                hydrationToday.day = today;
+                taskManager.executeInsertHydration(viewmodel.getDB(), hydrationToday);
+
+                getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container_view, HydrationFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack("stack")
                         .commit();
@@ -182,6 +206,17 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
 
     @Override
     public void onDeleteMealComplete() {
+
+    }
+
+    @Override
+    public void onLoadHydrationComplete(List<Hydration> hydration) {
+
+    }
+
+
+    @Override
+    public void onUpdateHydrationComplete() {
 
     }
 

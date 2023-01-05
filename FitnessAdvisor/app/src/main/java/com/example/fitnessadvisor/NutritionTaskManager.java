@@ -3,11 +3,15 @@ package com.example.fitnessadvisor;
 import android.os.Handler;
 import android.os.Looper;
 
+import androidx.annotation.Nullable;
+
 import com.example.fitnessadvisor.Database.AppDatabase;
 import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.ExerciseDao;
 import com.example.fitnessadvisor.Database.Food;
 import com.example.fitnessadvisor.Database.FoodDao;
+import com.example.fitnessadvisor.Database.Hydration;
+import com.example.fitnessadvisor.Database.HydrationDao;
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.MealDao;
 import com.example.fitnessadvisor.Database.Meal_Food;
@@ -42,8 +46,11 @@ public class NutritionTaskManager {
         void onLoadFoodComplete(List<Food> food);
         void onInsertMealComplete(long mealId);
         void onDeleteMealComplete();
+        void onLoadHydrationComplete(List<Hydration> hydration);
+        void onUpdateHydrationComplete();
         void onLoadFoodFromMeal(Meal meal, List<Food> foodList);
     }
+
     public void executeLoadFoodAsync(AppDatabase db){
         executor.execute(() -> {
 
@@ -78,17 +85,6 @@ public class NutritionTaskManager {
         });
     }
 
-    /*public void executeLoadMealAsync(AppDatabase db){
-        executor.execute(() -> {
-
-            MealDao mealDao = db.mealDao();
-            List<Meal> meals = mealDao.getAll();
-
-            handler.post(() -> {
-                calback.onLoadMealComplete(meals);
-            });
-        });
-    }*/
 
     public void executeLoadMealAsync(AppDatabase db, String day){
         executor.execute(() -> {
@@ -190,6 +186,50 @@ public class NutritionTaskManager {
 
             handler.post(() -> {
                 calback.onDeleteMealComplete();
+            });
+        });
+    }
+
+    public long executeInsertHydration(AppDatabase db, Hydration hydration){
+        executor.execute(() -> {
+
+
+            HydrationDao hydrationDao = db.hydrationDao();
+            List<Hydration> hydrationList = hydrationDao.loadByDay(hydration.day);
+            if(hydrationList.size() == 0) hydrationDao.insert(hydration);
+
+            handler.post(() -> {
+
+            });
+        });
+        return hydration.id;
+    }
+
+    public void executeUpdateHydration(AppDatabase db, String day, float objective, float quantity){
+        executor.execute(() -> {
+
+            HydrationDao hydrationDao = db.hydrationDao();
+            List<Hydration> hydration = hydrationDao.loadByDay(day);
+
+            hydration.get(0).objective = objective;
+            hydration.get(0).quantity = quantity;
+
+            hydrationDao.update(hydration.get(0));
+
+            handler.post(() -> {
+                calback.onUpdateHydrationComplete();
+            });
+        });
+    }
+
+    public void executeLoadHydrationAsync(AppDatabase db, String day){
+        executor.execute(() -> {
+
+            HydrationDao hydrationDao = db.hydrationDao();
+            List<Hydration> hydration = hydrationDao.loadByDay(day);
+
+            handler.post(() -> {
+                calback.onLoadHydrationComplete(hydration);
             });
         });
     }

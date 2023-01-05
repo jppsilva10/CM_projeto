@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HydrationFragment">
+
+    <EditText
+        android:id="@+id/hydrationDate"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="Testing"
+        android:textSize="50dp"
+        android:layout_gravity="top|center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/waterGoalLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Objetivo diário (L):"
+        android:layout_gravity="top|center"
+        android:layout_marginTop="120dp"
+        android:textSize="20dp"/>
+
+    <EditText
+        android:id="@+id/waterGoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
+        android:layout_marginTop="135dp"
+        android:inputType="numberDecimal"
+        android:text="3.0"
+        android:textSize="40dp" />
+
+    <TextView
+        android:id="@+id/waterGoalPast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
+        android:layout_marginTop="135dp"
+        android:text="3.0"
+        android:textSize="40dp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/waterDrankLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Água já bebida (L):"
+        android:layout_gravity="top|center"
+        android:layout_marginTop="225dp"
+        android:textSize="20dp"/>
+
+    <EditText
+        android:id="@+id/waterDrank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
+        android:layout_marginTop="240dp"
+        android:inputType="numberDecimal"
+        android:text="1.1"
+        android:textSize="40dp" />
+
+    <TextView
+        android:id="@+id/waterDrankPast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
+        android:layout_marginTop="240dp"
+        android:text="1.1"
+        android:textSize="40dp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/waterLeftLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quantidade de água que falta beber (L):"
+        android:layout_gravity="top|center"
+        android:layout_marginTop="325dp"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/waterLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1.90"
+        android:layout_gravity="top|center"
+        android:layout_marginTop="350dp"
+        android:textSize="40dp"/>
+
+    <Button
+        android:id="@+id/updateBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Atualizar"
+        android:layout_gravity="top|center"
+        android:layout_marginTop="420dp"/>
+
+
+</FrameLayout>

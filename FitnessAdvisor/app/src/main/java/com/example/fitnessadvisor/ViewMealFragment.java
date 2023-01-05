@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Food;
+import com.example.fitnessadvisor.Database.Hydration;
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
@@ -95,6 +96,16 @@ public class ViewMealFragment extends Fragment implements NutritionTaskManager.C
 
     @Override
     public void onDeleteMealComplete() {
+
+    }
+
+    @Override
+    public void onLoadHydrationComplete(List<Hydration> hydration) {
+
+    }
+
+    @Override
+    public void onUpdateHydrationComplete() {
 
     }
 
