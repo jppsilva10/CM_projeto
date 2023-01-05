@@ -30,17 +30,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Adicionar Refeição"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginTop="75dp"
+        android:layout_gravity="top|center"/>
 
-    <Button
-        android:id="@+id/removeMeal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Remover Refeição"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="right"
-        android:layout_marginRight="20dp"/>
 
     <EditText
         android:id="@+id/pageTitle"

@@ -3,21 +3,30 @@ package com.example.fitnessadvisor;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Food;
 import com.example.fitnessadvisor.Database.FoodDao;
+import com.example.fitnessadvisor.Database.Hydration;
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.MealDao;
 import com.example.fitnessadvisor.Database.Meal_Food;
@@ -48,8 +57,8 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
     final Calendar myCalendar= Calendar.getInstance();
     EditText editText;
     Button addBtn;
-    Button removeBtn;
     List<Meal> meal_list;
+
 
     public MealListFragment() {
         // Required empty public constructor
@@ -73,17 +82,25 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
         viewmodel = act.getViewModel();
 
         String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-        taskManager.executeLoadMealAsync(viewmodel.getDB(), today);
 
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_meal_list, container, false);
 
         expandableListView = (ExpandableListView) v.findViewById(R.id.expandableListView);
 
+        addBtn = (Button) v.findViewById(R.id.addMeal);
+
         editText=(EditText) v.findViewById(R.id.pageTitle);
         editText.setText("Refeições do dia " + today);
-        addBtn = (Button) v.findViewById(R.id.addMeal);
-        removeBtn = (Button) v.findViewById(R.id.removeMeal);
+
+        if(viewmodel.getSetDate().equals("")){
+            taskManager.executeLoadMealAsync(viewmodel.getDB(), today);
+            viewmodel.setSetDate(today);
+        }
+        else{
+            taskManager.executeLoadMealAsync(viewmodel.getDB(), viewmodel.getSetDate());
+        }
+
 
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -123,15 +140,14 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
         String myFormat="dd-MM-yyyy";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.getDefault());
         editText.setText("Refeições do dia " + dateFormat.format(myCalendar.getTime()));
+        viewmodel.setSetDate(dateFormat.format(myCalendar.getTime()));
         taskManager.executeLoadMealAsync(viewmodel.getDB(), dateFormat.format(myCalendar.getTime()));
         
         if(today.equals(dateFormat.format(myCalendar.getTime()))){
             addBtn.setVisibility(View.VISIBLE);
-            removeBtn.setVisibility(View.VISIBLE);
         }
         else{
             addBtn.setVisibility(View.GONE);
-            removeBtn.setVisibility(View.GONE);
         }
     }
 
@@ -156,9 +172,32 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
     }
 
     @Override
+    public void onDeleteMealComplete() {
+        String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+
+        if(viewmodel.getSetDate().equals("")){
+            taskManager.executeLoadMealAsync(viewmodel.getDB(), today);
+        }
+        else{
+            taskManager.executeLoadMealAsync(viewmodel.getDB(), viewmodel.getSetDate());
+        }
+    }
+
+    @Override
+    public void onLoadHydrationComplete(List<Hydration> hydration) {
+
+    }
+
+    @Override
+    public void onUpdateHydrationComplete() {
+
+    }
+
+    @Override
     public void onLoadFoodFromMeal(Meal meal, List<Food> foodList) {
 
     }
+
 
     public void fillTheScreen(){
         MainActivity act = (MainActivity)getActivity();
@@ -171,9 +210,7 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int groupPosition) {
-                Toast.makeText(act.getApplicationContext(),
-                        expandableListTitle.get(groupPosition) + " List Expanded.",
-                        Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -182,10 +219,30 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
 
             @Override
             public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(act.getApplicationContext(),
-                        expandableListTitle.get(groupPosition) + " List Collapsed.",
-                        Toast.LENGTH_SHORT).show();
 
+            }
+        });
+
+        expandableListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapter, View v, int position, long id) {
+                String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+                if(viewmodel.getSetDate().equals(today)) {
+                    PopupMenu popup = new PopupMenu(act, expandableListView);
+                    popup.getMenuInflater().inflate(R.menu.remove_meal_popup, popup.getMenu());
+
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item) {
+                            if (item.getTitle().equals("Remover Refeição")) {
+                                taskManager.executeDeleteMeal(viewmodel.getDB(), meal_list.get(position).id);
+                            }
+                            return true;
+                        }
+                    });
+
+                    popup.show();//showing popup menu
+                }
+                return false;
             }
         });
 
@@ -193,14 +250,7 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-                Toast.makeText(
-                        act.getApplicationContext(),
-                        expandableListTitle.get(groupPosition)
-                                + " -> "
-                                + expandableListDetail.get(
-                                expandableListTitle.get(groupPosition)).get(
-                                childPosition), Toast.LENGTH_SHORT
-                ).show();
+
 
                 Meal selectedMeal = meal_list.get(groupPosition);
                 viewmodel.setMealId(selectedMeal.id);
@@ -216,6 +266,7 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
                 return false;
             }
         });
+
     }
 
 }
