@@ -56,7 +56,6 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
     final Calendar myCalendar= Calendar.getInstance();
     EditText editText;
     Button addBtn;
-    Button removeBtn;
     List<Meal> meal_list;
 
 
@@ -89,13 +88,13 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
         expandableListView = (ExpandableListView) v.findViewById(R.id.expandableListView);
 
         addBtn = (Button) v.findViewById(R.id.addMeal);
-        removeBtn = (Button) v.findViewById(R.id.removeMeal);
 
         editText=(EditText) v.findViewById(R.id.pageTitle);
         editText.setText("Refeições do dia " + today);
 
         if(viewmodel.getSetDate().equals("")){
             taskManager.executeLoadMealAsync(viewmodel.getDB(), today);
+            viewmodel.setSetDate(today);
         }
         else{
             taskManager.executeLoadMealAsync(viewmodel.getDB(), viewmodel.getSetDate());
@@ -145,11 +144,9 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
         
         if(today.equals(dateFormat.format(myCalendar.getTime()))){
             addBtn.setVisibility(View.VISIBLE);
-            removeBtn.setVisibility(View.VISIBLE);
         }
         else{
             addBtn.setVisibility(View.GONE);
-            removeBtn.setVisibility(View.GONE);
         }
     }
 
@@ -202,9 +199,7 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int groupPosition) {
-                Toast.makeText(act.getApplicationContext(),
-                        expandableListTitle.get(groupPosition) + " List Expanded.",
-                        Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -213,9 +208,6 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
 
             @Override
             public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(act.getApplicationContext(),
-                        expandableListTitle.get(groupPosition) + " List Collapsed.",
-                        Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -223,19 +215,22 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
         expandableListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapter, View v, int position, long id) {
-                PopupMenu popup = new PopupMenu(act, expandableListView);
-                popup.getMenuInflater().inflate(R.menu.remove_meal_popup, popup.getMenu());
+                String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+                if(viewmodel.getSetDate().equals(today)) {
+                    PopupMenu popup = new PopupMenu(act, expandableListView);
+                    popup.getMenuInflater().inflate(R.menu.remove_meal_popup, popup.getMenu());
 
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        if(item.getTitle().equals("Remover Refeição")){
-                            taskManager.executeDeleteMeal(viewmodel.getDB(), meal_list.get(position).id);
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item) {
+                            if (item.getTitle().equals("Remover Refeição")) {
+                                taskManager.executeDeleteMeal(viewmodel.getDB(), meal_list.get(position).id);
+                            }
+                            return true;
                         }
-                        return true;
-                    }
-                });
+                    });
 
-                popup.show();//showing popup menu
+                    popup.show();//showing popup menu
+                }
                 return false;
             }
         });
@@ -244,14 +239,7 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-                Toast.makeText(
-                        act.getApplicationContext(),
-                        expandableListTitle.get(groupPosition)
-                                + " -> "
-                                + expandableListDetail.get(
-                                expandableListTitle.get(groupPosition)).get(
-                                childPosition), Toast.LENGTH_SHORT
-                ).show();
+
 
                 Meal selectedMeal = meal_list.get(groupPosition);
                 viewmodel.setMealId(selectedMeal.id);
