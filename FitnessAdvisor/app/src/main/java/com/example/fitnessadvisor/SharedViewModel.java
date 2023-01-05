@@ -17,6 +17,7 @@ public class SharedViewModel extends ViewModel {
     private long workout_exerciseId = -1;
     private int day = 1;
     private long mealId;
+    private String setDate = "";
 
     public void setDB(AppDatabase db){
         this.db = db;
@@ -82,6 +83,10 @@ public class SharedViewModel extends ViewModel {
     public long getMealId(){
         return mealId;
     }
+
+    public String getSetDate(){return setDate;}
+
+    public void setSetDate(String setDate){ this.setDate = setDate;}
 
 
 }

@@ -181,6 +181,11 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
     }
 
     @Override
+    public void onDeleteMealComplete() {
+
+    }
+
+    @Override
     public void onLoadFoodFromMeal(Meal meal, List<Food> foodList) {
 
     }

@@ -94,6 +94,11 @@ public class ViewMealFragment extends Fragment implements NutritionTaskManager.C
     }
 
     @Override
+    public void onDeleteMealComplete() {
+
+    }
+
+    @Override
     public void onLoadFoodFromMeal(Meal meal, List<Food> foodList) {
         MainActivity act = (MainActivity)getActivity();
         viewmodel = act.getViewModel();

@@ -123,7 +123,7 @@
             android:id="@+id/goToMealList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Gerar Refeições"
+            android:text="Gerir Refeições"
             android:layout_marginTop="70dp"
             android:layout_marginLeft="80dp"
             android:textSize="25sp" />

@@ -122,13 +122,7 @@ public class AddMealFragment extends Fragment implements NutritionTaskManager.Ca
                 setAddItemListListener();
             }
         });
-        food_list_view.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapter, View v, int position, long id) {
 
-                return false;
-            }
-        });
     }
 
     public void setAddItemListListener(){
@@ -171,6 +165,11 @@ public class AddMealFragment extends Fragment implements NutritionTaskManager.Ca
                 .beginTransaction()
                 .replace(R.id.fragment_container_view, MealListFragment.class, null)
                 .commit();
+    }
+
+    @Override
+    public void onDeleteMealComplete() {
+
     }
 
     @Override

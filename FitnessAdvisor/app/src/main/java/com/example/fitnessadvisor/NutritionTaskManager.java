@@ -41,6 +41,7 @@ public class NutritionTaskManager {
         void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals);
         void onLoadFoodComplete(List<Food> food);
         void onInsertMealComplete(long mealId);
+        void onDeleteMealComplete();
         void onLoadFoodFromMeal(Meal meal, List<Food> foodList);
     }
     public void executeLoadFoodAsync(AppDatabase db){
@@ -168,6 +169,27 @@ public class NutritionTaskManager {
 
             handler.post(() -> {
 
+            });
+        });
+    }
+
+    public void executeDeleteMeal(AppDatabase db, long mealId){
+        executor.execute(() -> {
+
+            MealDao mealDao = db.mealDao();
+            Meal meal = mealDao.loadById(mealId);
+
+            Meal_FoodDao meal_foodDao = db.meal_foodDao();
+            List<Meal_Food> meal_food = meal_foodDao.loadByMeal(mealId);
+
+            for(int i = 0; i < meal_food.size(); i++){
+                meal_foodDao.delete(meal_food.get(i));
+            }
+
+            mealDao.delete(meal);
+
+            handler.post(() -> {
+                calback.onDeleteMealComplete();
             });
         });
     }
