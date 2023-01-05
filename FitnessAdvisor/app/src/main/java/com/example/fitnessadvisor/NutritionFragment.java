@@ -1,5 +1,8 @@
 package com.example.fitnessadvisor;
 
+import java.text.SimpleDateFormat;
+
+import java.time.LocalDateTime;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Food;
@@ -27,6 +31,8 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
 
     NutritionTaskManager taskManager = new NutritionTaskManager(this);
     SharedViewModel viewmodel;
+    private int kcal;
+    private ProgressBar progress;
 
     public NutritionFragment() {
         // Required empty public constructor
@@ -55,6 +61,11 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         //in the next iterations, new food is gonna be generated for the same meal ids and it's a problem
         //PutFoodIntoDatabase();
         //PutMealsIntoDatabase();
+
+        String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        taskManager.executeLoadMealAsync(viewmodel.getDB(), today);
+        progress = v.findViewById(R.id.progress);
+        progress.setProgress(10);
 
         Button b = v.findViewById(R.id.goToMealList);
         b.setOnClickListener(new View.OnClickListener() {
@@ -190,7 +201,7 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
 
     @Override
     public void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals) {
-
+        
 
     }
 

@@ -48,7 +48,7 @@
                 android:padding="50dp"
                 android:clipToPadding="false">
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/view"
                     android:layout_width="150dp"
                     android:layout_height="180dp"
@@ -62,9 +62,41 @@
                     <TextView
                         android:id="@+id/caloriesLabel"
                         style="@style/LableNutrition"
-                        android:text="Consumed Calories" />
+                        android:text="Consumed Calories"
+                        app:layout_constraintBottom_toTopOf="@+id/progress"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                </LinearLayout>
+                    <ProgressBar
+                        android:id="@+id/progress"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:indeterminateOnly="false"
+                        android:progressDrawable="@drawable/circle"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.733"
+                        tools:progress="10" />
+
+                    <TextView
+                        android:id="@+id/kcal_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="0.507"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="100 kcal" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
                     android:id="@+id/view2"

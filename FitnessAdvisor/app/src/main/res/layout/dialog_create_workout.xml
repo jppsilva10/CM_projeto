@@ -73,10 +73,11 @@
             android:text="Pre-made Workout "
             android:textSize="17dp"/>
 
-        <CheckBox android:id="@+id/checkbox_cheese"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <CheckBox
+                android:id="@+id/checkbox_cheese"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-    </LinearLayout>
+        </LinearLayout>
 
 </LinearLayout>
