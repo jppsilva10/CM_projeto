@@ -28,6 +28,8 @@ import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
 import com.example.fitnessadvisor.Database.Workout_Exercise;
 
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,7 +48,11 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
     private ProgressBar progress;
     private TextView text;
     private TextView text2;
+
     AnyChartView anyChartView;
+
+    private TextView bmr;
+    private TextView bmr2;
 
     public NutritionFragment() {
         // Required empty public constructor
@@ -79,11 +85,19 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         taskManager.executeLoadFoodFromdayAsync(viewmodel.getDB(), today);
 
+
         progress = v.findViewById(R.id.progress);
         text = v.findViewById(R.id.kcal_num);
         text2 = v.findViewById(R.id.calories);
 
         anyChartView = v.findViewById(R.id.pieChartMarcronutrients);
+
+        taskManager.executeGetBMR(viewmodel.getDB());
+        progress = v.findViewById(R.id.progress);
+        text = v.findViewById(R.id.kcal_num);
+        text2 = v.findViewById(R.id.calories);
+        bmr = v.findViewById(R.id.bmr);
+        bmr2 = v.findViewById(R.id.caloriesday);
 
         Button b = v.findViewById(R.id.goToMealList);
         b.setOnClickListener(new View.OnClickListener() {
@@ -227,6 +241,11 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
 
     }
 
+    @Override
+    public void onLoadBMR(float BMR) {
+        bmr.setText(String.valueOf((int)BMR));
+        bmr2.setText("Calories/Day");
+    }
 
     @Override
     public void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals) {

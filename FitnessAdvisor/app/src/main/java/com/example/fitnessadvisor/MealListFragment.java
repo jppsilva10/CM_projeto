@@ -197,6 +197,10 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
     public void onLoadFoodFromMeal(Meal meal, List<Food> foodList) {
 
     }
+    @Override
+    public void onLoadBMR(float BMR) {
+
+    }
 
 
     public void fillTheScreen(){

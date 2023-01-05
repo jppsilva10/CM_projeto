@@ -116,6 +116,11 @@ public class HydrationFragment extends Fragment implements NutritionTaskManager.
     }
 
     @Override
+    public void onLoadBMR(float BMR) {
+
+    }
+
+    @Override
     public void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals) {
 
     }
