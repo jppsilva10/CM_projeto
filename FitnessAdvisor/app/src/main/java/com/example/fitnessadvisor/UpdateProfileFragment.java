@@ -37,6 +37,7 @@ public class UpdateProfileFragment extends Fragment implements AccountTaskManage
 
     protected View v;
 
+
     protected SharedViewModel viewmodel;
     protected Profile profile = null;
 
@@ -241,7 +242,7 @@ public class UpdateProfileFragment extends Fragment implements AccountTaskManage
             }
         });
 
-        EditText date2 = (EditText) act.findViewById(R.id.goalDeadlineValue);
+        TextView date2 = act.findViewById(R.id.goalDeadlineValue);
         date2.setInputType(InputType.TYPE_NULL);
         date2.setOnClickListener(new View.OnClickListener() {
             @Override
