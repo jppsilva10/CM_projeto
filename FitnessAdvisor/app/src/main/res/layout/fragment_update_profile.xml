@@ -336,7 +336,7 @@
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/goalDeadlineValue"
+                        android:id="@+id/goalDeadlineValueUpdate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"

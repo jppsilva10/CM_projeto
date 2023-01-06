@@ -171,7 +171,7 @@ public class UpdateProfileFragment extends Fragment implements AccountTaskManage
                     p.target_weight = Float.parseFloat(text.getText().toString());
                 }
 
-                text = act.findViewById(R.id.goalDeadlineValue);
+                text = act.findViewById(R.id.goalDeadlineValueUpdate);
                 if (TextUtils.isEmpty(text.getText())){
                     text.setError( "Goal Deadline is required!" );
                     error = true;
@@ -242,7 +242,7 @@ public class UpdateProfileFragment extends Fragment implements AccountTaskManage
             }
         });
 
-        TextView date2 = act.findViewById(R.id.goalDeadlineValue);
+        EditText date2 = act.findViewById(R.id.goalDeadlineValueUpdate);
         date2.setInputType(InputType.TYPE_NULL);
         date2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -345,7 +345,7 @@ public class UpdateProfileFragment extends Fragment implements AccountTaskManage
                 text = act.findViewById(R.id.targetWeightValue);
                 text.setText("" + profile.target_weight);
 
-                text = act.findViewById(R.id.goalDeadlineValue);
+                text = act.findViewById(R.id.goalDeadlineValueUpdate);
                 cal.setTime(profile.goal_deadline);
                 text.setText(new StringBuilder().append(cal.get(Calendar.DAY_OF_MONTH)).append("/").append(cal.get(Calendar.MONTH) + 1).append("/").append(cal.get(Calendar.YEAR)));
             }catch(Exception e){
