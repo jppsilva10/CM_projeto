@@ -106,12 +106,14 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
         title= v.findViewById(R.id.date);
         title.setText("" + today);
 
+        System.out.println(viewmodel.getSetDate());
         if(viewmodel.getSetDate().equals("")){
             taskManager.executeLoadMealAsync(viewmodel.getDB(), today);
             viewmodel.setSetDate(today);
         }
         else{
             taskManager.executeLoadMealAsync(viewmodel.getDB(), viewmodel.getSetDate());
+            updateLabelWithSetDate(viewmodel.getSetDate());
         }
 
 
@@ -211,6 +213,24 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
         }
     }
 
+    private void updateLabelWithSetDate(String day){
+        String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+
+        title.setText("" + day);
+
+        String[] arr_day = day.split("-", -2);
+        myCalendar.set(Calendar.YEAR, Integer.valueOf(arr_day[2]));
+        myCalendar.set(Calendar.MONTH,Integer.valueOf(arr_day[1])-1);
+        myCalendar.set(Calendar.DAY_OF_MONTH,Integer.valueOf(arr_day[0]));
+
+        if(day.equals(today)){
+            addBtn.setVisibility(View.VISIBLE);
+        }
+        else{
+            addBtn.setVisibility(View.GONE);
+        }
+    }
+
 
     @Override
     public void onLoadProfileComplete(Profile profile, boolean empty) {
@@ -225,8 +245,8 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
             meal_list = meals;
             expandableListDetail = mealList;
             fillTheScreen();
-        }catch(Exception e){
-            System.out.println("here");
+       }catch(Exception e){
+            System.out.println("Exception caught in onLoadMealComplete()");
         }
     }
 
@@ -288,8 +308,8 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
         viewmodel = act.getViewModel();
 
         expandableListAdapter = new CustomExpandableListAdapter(act, act.getApplicationContext(), meal_list, expandableListDetail, foods_list);
-        System.out.println("COUNT1: " + expandableListAdapter.getGroupCount());
-        System.out.println("COUNT: " + expandableListAdapter.getChildrenCount(0));
+        //System.out.println("COUNT1: " + expandableListAdapter.getGroupCount());
+        //System.out.println("COUNT: " + expandableListAdapter.getChildrenCount(0));
 
         state = expandableListView.onSaveInstanceState();
         expandableListView.setAdapter(expandableListAdapter);
