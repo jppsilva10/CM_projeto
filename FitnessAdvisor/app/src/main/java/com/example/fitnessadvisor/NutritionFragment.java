@@ -250,11 +250,11 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
     @Override
     public void onLoadProfileComplete(Profile profile, boolean empty) {
         no_profile = empty;
-        System.out.println(no_profile);
         if(no_profile){
             bmr2.setVisibility(View.INVISIBLE);
         }
 
+        if(!no_profile) myProfile = profile;
     }
 
     @Override
