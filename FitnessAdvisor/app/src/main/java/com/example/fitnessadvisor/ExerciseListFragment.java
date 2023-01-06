@@ -200,6 +200,11 @@ public class ExerciseListFragment extends Fragment implements WorkoutTaskManager
     }
 
     @Override
+    public void onLoadProfileComplete(Profile profile, boolean empty) {
+
+    }
+
+    @Override
     public void onLoadExerciseComplete(List<Exercise> exercises) {
         MyAdapterExercise myAdapter = new MyAdapterExercise(getActivity().getApplicationContext(), exercises);
         list.setAdapter(myAdapter);

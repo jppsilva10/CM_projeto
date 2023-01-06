@@ -138,6 +138,11 @@ public class AddExerciseFragment extends Fragment implements WorkoutTaskManager.
     }
 
     @Override
+    public void onLoadProfileComplete(Profile profile, boolean empty) {
+
+    }
+
+    @Override
     public void onLoadExerciseComplete(List<Exercise> exercises) {
 
     }

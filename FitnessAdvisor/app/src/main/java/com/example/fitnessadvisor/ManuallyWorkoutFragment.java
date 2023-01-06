@@ -222,6 +222,11 @@ public class ManuallyWorkoutFragment extends Fragment implements WorkoutTaskMana
     }
 
     @Override
+    public void onLoadProfileComplete(Profile profile, boolean empty) {
+
+    }
+
+    @Override
     public void onLoadExerciseComplete(List<Exercise> exercises) {
 
     }

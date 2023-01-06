@@ -41,7 +41,7 @@
             style="@style/LableNutrition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="16dp"
             android:layout_marginLeft="25dp"
             android:layout_marginBottom="16dp"
             android:text="Divided By: "
@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="16dp"
             android:layout_marginRight="25dp"
             android:layout_marginBottom="16dp"
             android:textSize="17dp"/>
@@ -64,19 +64,30 @@
             android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/nameLabel1"
+            android:id="@+id/autoLabel"
             style="@style/LableNutrition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="25dp"
-            android:text="Pre-made Workout "
+            android:text="Auto-Generated: "
+            android:layout_marginBottom="5dp"
             android:textSize="17dp"/>
 
             <CheckBox
                 android:id="@+id/checkbox_cheese"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"/>
+
+            <TextView
+                android:id="@+id/autoMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="(only available with a profile)"
+                android:layout_marginBottom="5dp"
+                android:textSize="15dp"/>
 
         </LinearLayout>
 

@@ -224,6 +224,11 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
     }
 
     @Override
+    public void onLoadProfileComplete(Profile profile, boolean empty) {
+
+    }
+
+    @Override
     public void onLoadExerciseComplete(List<Exercise> exercises) {
 
     }

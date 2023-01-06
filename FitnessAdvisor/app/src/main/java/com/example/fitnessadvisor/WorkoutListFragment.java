@@ -27,6 +27,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Food;
@@ -50,7 +51,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutTaskManager.
     protected long selected_id;
     protected Parcelable state;
     protected boolean auto = false;
-
+    protected boolean no_profile = false;
 
     public WorkoutListFragment() {
         // Required empty public constructor
@@ -78,6 +79,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutTaskManager.
         viewmodel = act.getViewModel();
 
         taskManager.executeLoadWorkoutAsync(viewmodel.getDB());
+        taskManager.executeLoadProfileAsync(viewmodel.getDB());
 
         //PopulateDatabase.populateExercises(viewmodel.getDB(), taskManager);
 
@@ -125,6 +127,14 @@ public class WorkoutListFragment extends Fragment implements WorkoutTaskManager.
                 builder.setView(input);
 
                 View v = inflater.inflate(R.layout.dialog_create_workout, null);
+                if(no_profile){
+                    CheckBox check = v.findViewById(R.id.checkbox_cheese);
+                    check.setVisibility(View.GONE);
+                }
+                else{
+                    TextView text = v.findViewById(R.id.autoMessage);
+                    text.setVisibility(View.GONE);
+                }
                 builder.setView(v)
                         .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                             @Override
@@ -313,6 +323,11 @@ public class WorkoutListFragment extends Fragment implements WorkoutTaskManager.
     @Override
     public void onLoadWorkout_ExerciseComplete(Workout_Exercise we, Exercise exercise) {
 
+    }
+
+    @Override
+    public void onLoadProfileComplete(Profile profile, boolean empty) {
+        no_profile = empty;
     }
 
     @Override

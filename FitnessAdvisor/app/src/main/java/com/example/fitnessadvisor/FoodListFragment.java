@@ -215,7 +215,7 @@ public class FoodListFragment extends Fragment implements NutritionTaskManager.C
 
     @Override
     public void onLoadBMR(float bmr) {
-        
+
     }
 
 
