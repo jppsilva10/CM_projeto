@@ -132,6 +132,25 @@ public class AccountFragment extends Fragment implements AccountTaskManager.Call
             float bmi = (float) (profile.weight / (Math.pow(profile.height / 100, 2)));
             text.setText(String.format("%.2f", bmi));
 
+            text = act.findViewById(R.id.activityLevelValueAccount);
+            String activityLevel = "";
+            if(profile.activity_level == 1.2f) {
+                activityLevel = "1 - Minimal";
+            }
+            else if(profile.activity_level == 1.375f){
+                activityLevel = "2 - Light";
+            }
+            else if(profile.activity_level == 1.55f){
+                activityLevel = "3 - Moderate";
+            }
+            else if(profile.activity_level == 1.725f){
+                activityLevel = "4 - Hard";
+            }
+            else if(profile.activity_level == 1.9f){
+                activityLevel = "5 - Rigorous";
+            }
+            text.setText(activityLevel);
+
             text = act.findViewById(R.id.targetWeightValue);
             text.setText(String.format("%.2f", profile.target_weight) + " Kg");
 
