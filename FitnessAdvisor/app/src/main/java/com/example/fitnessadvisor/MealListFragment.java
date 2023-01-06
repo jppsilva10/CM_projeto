@@ -106,7 +106,6 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
         title= v.findViewById(R.id.date);
         title.setText("" + today);
 
-        System.out.println(viewmodel.getSetDate());
         if(viewmodel.getSetDate().equals("")){
             taskManager.executeLoadMealAsync(viewmodel.getDB(), today);
             viewmodel.setSetDate(today);
