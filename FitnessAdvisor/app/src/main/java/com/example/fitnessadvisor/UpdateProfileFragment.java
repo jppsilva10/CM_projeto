@@ -90,6 +90,7 @@ public class UpdateProfileFragment extends Fragment implements AccountTaskManage
                 MainActivity act = (MainActivity) getActivity();
                 EditText text;
                 Spinner spinner;
+                Spinner activityLevelSpinner;
 
                 text = act.findViewById(R.id.nameValue);
                 if (TextUtils.isEmpty(text.getText())){
@@ -119,6 +120,28 @@ public class UpdateProfileFragment extends Fragment implements AccountTaskManage
 
                 spinner = act.findViewById(R.id.lifeStyleValueSpinner);
                 p.life_style = spinner.getSelectedItem().toString();
+
+                activityLevelSpinner = act.findViewById(R.id.activityLevelSpinner);
+                int spinnerPos = activityLevelSpinner.getSelectedItemPosition();
+                if(spinnerPos == 0){
+                    p.activity_level = 1.2f;
+                }
+                else if(spinnerPos == 1){
+                    p.activity_level = 1.375f;
+                }
+                else if(spinnerPos == 2){
+                    p.activity_level = 1.55f;
+                }
+                else if(spinnerPos == 3){
+                    p.activity_level = 1.725f;
+                }
+                else if(spinnerPos == 4){
+                    p.activity_level = 1.9f;
+                }
+                else{
+                    text.setError( "It's required to select an option for how often you exercise!" );
+                    error = true;
+                }
 
                 text = act.findViewById(R.id.heightValue);
                 if (TextUtils.isEmpty(text.getText())){
@@ -180,6 +203,11 @@ public class UpdateProfileFragment extends Fragment implements AccountTaskManage
 
         spinner = act.findViewById(R.id.lifeStyleValueSpinner);
         adapter = ArrayAdapter.createFromResource(act, R.array.lifeStyles, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spinner.setAdapter(adapter);
+
+        spinner = act.findViewById(R.id.activityLevelSpinner);
+        adapter = ArrayAdapter.createFromResource(act, R.array.activityLevels, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
 
@@ -287,6 +315,25 @@ public class UpdateProfileFragment extends Fragment implements AccountTaskManage
                         break;
                 }
                 spinner.setSelection(lifeStyle);
+
+                spinner = act.findViewById(R.id.activityLevelSpinner);
+                int activityLevel = 0;
+                if(profile.activity_level == 1.2f) {
+                    activityLevel = 0;
+                }
+                else if(profile.activity_level == 1.375f){
+                    activityLevel = 1;
+                }
+                else if(profile.activity_level == 1.55f){
+                    activityLevel = 2;
+                }
+                else if(profile.activity_level == 1.725f){
+                    activityLevel = 3;
+                }
+                else if(profile.activity_level == 1.9f){
+                    activityLevel = 4;
+                }
+                spinner.setSelection(activityLevel);
 
                 text = act.findViewById(R.id.heightValue);
                 text.setText("" + profile.height);

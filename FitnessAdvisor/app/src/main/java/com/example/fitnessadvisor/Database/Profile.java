@@ -35,6 +35,10 @@ public class Profile {
     @ColumnInfo(name = "life_style")
     public String life_style;
 
+    @ColumnInfo(name = "activity_level")
+    public float activity_level;
+
+
 
 
 }

@@ -23,6 +23,14 @@
         <item>More than 12 months</item>
     </string-array>
 
+    <string-array name="activityLevels">
+        <item>Little to no exercise</item>
+        <item>Light exercises at least 1-3 times per week</item>
+        <item>Moderate amount of exercises 3-5 times per week</item>
+        <item>Hard exercises 6-7 times per week</item>
+        <item>Rigorous exercise or physical training</item>
+    </string-array>
+
     <string-array name="days">
         <item>1 Day</item>
         <item>2 Days</item>

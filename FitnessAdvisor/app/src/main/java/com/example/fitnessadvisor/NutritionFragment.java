@@ -41,6 +41,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class NutritionFragment extends Fragment implements NutritionTaskManager.Callback{
 
@@ -65,6 +66,8 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
     protected boolean no_profile = false;
 
     final Calendar myCalendar= Calendar.getInstance();
+
+    Profile myProfile;
 
     public NutritionFragment() {
         // Required empty public constructor
@@ -109,8 +112,6 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
 
         chart = v.findViewById(R.id.pieChartMarcronutrients);
 
-        taskManager.executeGetBMR(viewmodel.getDB());
-
         bmr = v.findViewById(R.id.bmr);
         bmr2 = v.findViewById(R.id.bmrLabel);
         hydra = v.findViewById(R.id.hydrationNumber);
@@ -119,6 +120,8 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         taskManager.executeLoadProfileAsync(viewmodel.getDB());
         taskManager.executeLoadMealAsync(viewmodel.getDB(), viewmodel.getSetDate());
         taskManager.executeLoadHydrationAsync(viewmodel.getDB(), viewmodel.getSetDate());
+
+        taskManager.executeGetBMR(viewmodel.getDB());
 
         Button b = v.findViewById(R.id.goToMealList);
         b.setOnClickListener(new View.OnClickListener() {
@@ -199,13 +202,41 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
 
     @Override
     public void onLoadBMR(float BMR) {
-        dailyCal = BMR+400;
         if(no_profile){
-            System.out.println("entrou");
+            dailyCal = BMR + 400;
             bmr.setText("Only available with a profile");
             bmr2.setVisibility(View.GONE);
         }
         else{
+            Date today = new Date();
+            Date goal = myProfile.goal_deadline;
+
+            long diffInMillies = Math.abs(today.getTime() - goal.getTime());
+            long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+
+            DecimalFormat df = new DecimalFormat("#.0");
+
+            /*float weeks;
+            weeks = Float.valueOf(df.format(diff/7));*/
+
+            dailyCal = 0;
+            float sustainWeightCals = BMR * myProfile.activity_level;
+
+            if(myProfile.weight > myProfile.target_weight){
+                //lose weight
+                float losingWeightCals = (myProfile.weight - myProfile.target_weight) * (1100 / diff);
+                dailyCal = Float.valueOf(df.format(sustainWeightCals - losingWeightCals));
+            }
+            else if(myProfile.weight < myProfile.target_weight){
+                //gain weight
+                float gainingWeightCals = (myProfile.target_weight - myProfile.weight) * (1100 / diff);
+                dailyCal = Float.valueOf(df.format(sustainWeightCals + gainingWeightCals));
+            }
+            else{
+                //maintain weight
+                dailyCal = Float.valueOf(df.format(sustainWeightCals));
+            }
+
             bmr.setText(String.valueOf((int)BMR));
             bmr2.setText("Calories/Day");
         }
@@ -223,6 +254,7 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         if(no_profile){
             bmr2.setVisibility(View.INVISIBLE);
         }
+
     }
 
     @Override
