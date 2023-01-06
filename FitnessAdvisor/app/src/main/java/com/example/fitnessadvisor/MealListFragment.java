@@ -96,6 +96,10 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
 
         String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
+        if(viewmodel.getSetDate().equals("")){
+            viewmodel.setSetDate(today);
+        }
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_meal_list, container, false);
 
@@ -107,14 +111,8 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
         title= v.findViewById(R.id.date);
         title.setText("" + today);
 
-        if(viewmodel.getSetDate().equals("")){
-            taskManager.executeLoadMealAsync(viewmodel.getDB(), today);
-            viewmodel.setSetDate(today);
-        }
-        else{
-            taskManager.executeLoadMealAsync(viewmodel.getDB(), viewmodel.getSetDate());
-            updateLabelWithSetDate(viewmodel.getSetDate());
-        }
+        taskManager.executeLoadMealAsync(viewmodel.getDB(), viewmodel.getSetDate());
+        updateLabelWithSetDate(viewmodel.getSetDate());
 
 
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -149,7 +147,8 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Meal meal = new Meal();
                                 meal.title = input.getText().toString();
-                                meal.day = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+                                //meal.day = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+                                meal.day = viewmodel.getSetDate();
                                 meal.time = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
 
                                 taskManager.executeInsertMeal(viewmodel.getDB(), meal, viewmodel.getSetDate());
@@ -203,7 +202,7 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.getDefault());
         title.setText("" + dateFormat.format(myCalendar.getTime()));
         viewmodel.setSetDate(dateFormat.format(myCalendar.getTime()));
-        taskManager.executeLoadMealAsync(viewmodel.getDB(), dateFormat.format(myCalendar.getTime()));
+        taskManager.executeLoadMealAsync(viewmodel.getDB(), viewmodel.getSetDate());
         
         if(today.equals(dateFormat.format(myCalendar.getTime()))){
             addBtn.setVisibility(View.VISIBLE);
@@ -271,19 +270,15 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
 
     @Override
     public void onDeleteMealComplete() {
-        String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         try {
-            if (viewmodel.getSetDate().equals("")) {
-                taskManager.executeLoadMealAsync(viewmodel.getDB(), today);
-            } else {
-                taskManager.executeLoadMealAsync(viewmodel.getDB(), viewmodel.getSetDate());
-            }
+            taskManager.executeLoadMealAsync(viewmodel.getDB(), viewmodel.getSetDate());
+
         }catch(Exception e){
         }
     }
 
     @Override
-    public void onLoadHydrationComplete(List<Hydration> hydration) {
+    public void onLoadHydrationComplete(List<Hydration> hydration, float waterGoal) {
 
     }
 
@@ -298,6 +293,11 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
     }
     @Override
     public void onLoadBMR(float BMR) {
+
+    }
+
+    @Override
+    public void onLoadWaterGoal(float waterGoal) {
 
     }
 

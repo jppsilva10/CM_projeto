@@ -9,8 +9,10 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -24,6 +26,8 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.fitnessadvisor.Database.Food;
@@ -55,7 +59,7 @@ public class HydrationFragment extends Fragment implements NutritionTaskManager.
     protected ListView list;
     protected Parcelable state;
     protected long selected_id;
-    protected float waterQuantityGoal = 3;
+    protected float waterQuantityGoal = 2.5f;
 
     public HydrationFragment() {
         // Required empty public constructor
@@ -80,6 +84,9 @@ public class HydrationFragment extends Fragment implements NutritionTaskManager.
         viewmodel = act.getViewModel();
 
         String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        if(viewmodel.getSetDate().equals("")){
+            viewmodel.setSetDate(today);
+        }
 
         waterGoal = v.findViewById(R.id.waterGoal);
         waterDrank = v.findViewById(R.id.waterDrank);
@@ -87,7 +94,7 @@ public class HydrationFragment extends Fragment implements NutritionTaskManager.
         list = v.findViewById(R.id.hydration_list);
         progress = v.findViewById(R.id.progress);
 
-        taskManager.executeLoadHydrationAsync(viewmodel.getDB(), today);
+        taskManager.executeLoadHydrationAsync(viewmodel.getDB(), viewmodel.getSetDate());
 
         hydrationDate = v.findViewById(R.id.date);
         hydrationDate.setText(today);
@@ -184,20 +191,48 @@ public class HydrationFragment extends Fragment implements NutritionTaskManager.
         });
     }
 
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        getActivity().getMenuInflater().inflate(R.menu.popup_menu_hydration, menu);
+
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+
+        switch(item.getItemId()) {
+            case R.id.option1:
+                taskManager.executeDeleteHydration(viewmodel.getDB(),selected_id);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+
+    }
+
     private void updateLabel(){
         String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
         String myFormat="dd-MM-yyyy";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.getDefault());
         hydrationDate.setText(dateFormat.format(myCalendar.getTime()));
+        viewmodel.setSetDate(dateFormat.format(myCalendar.getTime()));
 
-        taskManager.executeLoadHydrationAsync(viewmodel.getDB(), dateFormat.format(myCalendar.getTime()));
+        taskManager.executeLoadHydrationAsync(viewmodel.getDB(), viewmodel.getSetDate());
 
     }
 
     @Override
     public void onLoadBMR(float BMR) {
 
+    }
+
+    @Override
+    public void onLoadWaterGoal(float waterGoal) {
+        waterQuantityGoal = waterGoal/1000;
+        this.waterGoal.setText("/" + String.format("%.2f", waterQuantityGoal)+"L");
     }
 
     @Override
@@ -226,8 +261,11 @@ public class HydrationFragment extends Fragment implements NutritionTaskManager.
     }
 
     @Override
-    public void onLoadHydrationComplete(List<Hydration> hydration) {
+    public void onLoadHydrationComplete(List<Hydration> hydration, float waterGoal) {
         try {
+            waterQuantityGoal = waterGoal/1000;
+            this.waterGoal.setText("/" + String.format("%.2f", waterQuantityGoal)+"L");
+
             MyAdapterHydration myAdapterHydration = new MyAdapterHydration(getActivity().getApplicationContext(), hydration);
             state = list.onSaveInstanceState();
             list.setAdapter(myAdapterHydration);
@@ -243,8 +281,8 @@ public class HydrationFragment extends Fragment implements NutritionTaskManager.
 
     @Override
     public void onUpdateHydrationComplete() {
-        String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-        taskManager.executeLoadHydrationAsync(viewmodel.getDB(), today);
+
+        taskManager.executeLoadHydrationAsync(viewmodel.getDB(), viewmodel.getSetDate());
     }
 
     @Override

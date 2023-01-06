@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.fitnessadvisor.Database.Food;
@@ -48,9 +50,12 @@ public class MyAdapterHydration extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         Hydration h = hydration.get(i);
 
-        view = inflater.inflate(R.layout.list_item_food, null);
+        view = inflater.inflate(R.layout.list_item_hydration, null);
 
-        TextView cal = (TextView) view.findViewById(R.id.foodCal);
+        //ImageView img = view.findViewById(R.id.image);
+        //img.setFocusable(false);
+
+        TextView cal = (TextView) view.findViewById(R.id.quantity);
         cal.setText(String.format("%.2f", h.quantity) + "ml");
 
         return view;

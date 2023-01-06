@@ -51,10 +51,11 @@ public class NutritionTaskManager {
         void onLoadFoodComplete(List<Food> food);
         void onInsertMealComplete(long mealId);
         void onDeleteMealComplete();
-        void onLoadHydrationComplete(List<Hydration> hydration);
+        void onLoadHydrationComplete(List<Hydration> hydration, float waterGoal);
         void onUpdateHydrationComplete();
         void onLoadFoodFromMeal(Meal meal, List<Food> foodList);
         void onLoadBMR(float bmr);
+        void onLoadWaterGoal(float waterGoal);
     }
 
     public void executeLoadProfileAsync(AppDatabase db){
@@ -287,11 +288,55 @@ public class NutritionTaskManager {
             hydrationDao.insert(hydration);
             List<Hydration> hydrationList = hydrationDao.loadByDay(hydration.day);
 
+            ProfileDao profileDao = db.profileDao();
+            List<Profile> profiles = profileDao.getAll();
+
+            float waterGoal = 2.5f;
+
+            if(profiles.size()>0){
+                float ounces_to_ml = 29.5735296f;
+                float kg_to_pounds = 2.20462262f;
+                float weight = profiles.get(0).weight * kg_to_pounds;
+                waterGoal = weight/2 + (12 * 1);
+                waterGoal = waterGoal * ounces_to_ml;
+            }
+
+            float finalWaterGoal = waterGoal;
+
             handler.post(() -> {
-                calback.onLoadHydrationComplete(hydrationList);
+                calback.onLoadHydrationComplete(hydrationList, finalWaterGoal);
             });
         });
         return hydration.id;
+    }
+
+    public void executeDeleteHydration(AppDatabase db, long id){
+        executor.execute(() -> {
+
+            HydrationDao hydrationDao = db.hydrationDao();
+            Hydration hydration = hydrationDao.loadById(id);
+            hydrationDao.delete(hydration);
+            List<Hydration> hydrationList = hydrationDao.loadByDay(hydration.day);
+
+            ProfileDao profileDao = db.profileDao();
+            List<Profile> profiles = profileDao.getAll();
+
+            float waterGoal = 2.5f;
+
+            if(profiles.size()>0){
+                float ounces_to_ml = 29.5735296f;
+                float kg_to_pounds = 2.20462262f;
+                float weight = profiles.get(0).weight * kg_to_pounds;
+                waterGoal = weight/2 + (12 * 1);
+                waterGoal = waterGoal * ounces_to_ml;
+            }
+
+            float finalWaterGoal = waterGoal;
+
+            handler.post(() -> {
+                calback.onLoadHydrationComplete(hydrationList, finalWaterGoal);
+            });
+        });
     }
 
     public void executeLoadFoodFromdayAsync(AppDatabase db,String day){
@@ -343,8 +388,46 @@ public class NutritionTaskManager {
             HydrationDao hydrationDao = db.hydrationDao();
             List<Hydration> hydration = hydrationDao.loadByDay(day);
 
+            ProfileDao profileDao = db.profileDao();
+            List<Profile> profiles = profileDao.getAll();
+
+            float waterGoal = 2.5f;
+
+            if(profiles.size()>0){
+                float ounces_to_ml = 29.5735296f;
+                float kg_to_pounds = 2.20462262f;
+                float weight = profiles.get(0).weight * kg_to_pounds;
+                waterGoal = weight/2 + (12 * 1);
+                waterGoal = waterGoal * ounces_to_ml;
+            }
+
+            float finalWaterGoal = waterGoal;
+
             handler.post(() -> {
-                calback.onLoadHydrationComplete(hydration);
+                calback.onLoadHydrationComplete(hydration, finalWaterGoal);
+            });
+        });
+    }
+
+    public void executeGetWaterGoalAsync(AppDatabase db){
+        executor.execute(() -> {
+
+            ProfileDao profileDao = db.profileDao();
+            List<Profile> profiles = profileDao.getAll();
+
+            float waterGoal = 2.5f;
+
+            if(profiles.size()>0){
+                float ounces_to_ml = 29.5735296f;
+                float kg_to_pounds = 2.20462262f;
+                float weight = profiles.get(0).weight * kg_to_pounds;
+                waterGoal = weight/2 + (12 * 1);
+                waterGoal = waterGoal * ounces_to_ml;
+            }
+
+            float finalWaterGoal = waterGoal;
+            handler.post(() -> {
+                calback.onLoadWaterGoal(finalWaterGoal);
             });
         });
     }

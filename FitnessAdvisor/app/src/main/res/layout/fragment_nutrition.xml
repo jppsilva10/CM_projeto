@@ -41,7 +41,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/dateNutrition"
+                    android:id="@+id/date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
@@ -96,7 +96,7 @@
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.733"
-                        tools:progress="10" />
+                        tools:progress="0" />
 
                     <TextView
                         android:id="@+id/kcal_num"
@@ -107,7 +107,7 @@
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.50"
-                        tools:text="100"
+                        tools:text="0"
                         android:textStyle="bold"
                         android:textSize="25dp"/>
 

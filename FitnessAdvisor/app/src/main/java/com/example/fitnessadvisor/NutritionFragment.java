@@ -97,7 +97,10 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         //PopulateDatabase.populateFoods(viewmodel.getDB(), taskManager);
 
         String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-        taskManager.executeLoadMealAsync(viewmodel.getDB(), today);
+
+        if(viewmodel.getSetDate().equals("")){
+            viewmodel.setSetDate(today);
+        }
 
 
         progress = v.findViewById(R.id.progress);
@@ -111,9 +114,10 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         bmr = v.findViewById(R.id.bmr);
         bmr2 = v.findViewById(R.id.caloriesday);
         hydra = v.findViewById(R.id.hydrationNumber);
-        date = v.findViewById(R.id.dateNutrition);
+        date = v.findViewById(R.id.date);
 
-        taskManager.executeLoadHydrationAsync(viewmodel.getDB(), today);
+        taskManager.executeLoadMealAsync(viewmodel.getDB(), viewmodel.getSetDate());
+        taskManager.executeLoadHydrationAsync(viewmodel.getDB(), viewmodel.getSetDate());
         taskManager.executeLoadProfileAsync(viewmodel.getDB());
 
         Button b = v.findViewById(R.id.goToMealList);
@@ -178,8 +182,9 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         carbohydrates = 0.0f;
         fat = 0.0f;
 
-        taskManager.executeLoadMealAsync(viewmodel.getDB(), dateFormat.format(myCalendar.getTime()));
-        taskManager.executeLoadHydrationAsync(viewmodel.getDB(), dateFormat.format(myCalendar.getTime()));
+        viewmodel.setSetDate(dateFormat.format(myCalendar.getTime()));
+        taskManager.executeLoadMealAsync(viewmodel.getDB(), viewmodel.getSetDate());
+        taskManager.executeLoadHydrationAsync(viewmodel.getDB(), viewmodel.getSetDate());
     }
 
     private void setUpChartView(){
@@ -204,6 +209,11 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
             bmr.setText(String.valueOf((int)BMR));
             bmr2.setText("Calories/Day");
         }
+    }
+
+    @Override
+    public void onLoadWaterGoal(float waterGoal) {
+
     }
 
     @Override
@@ -289,15 +299,20 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
     }
 
     @Override
-    public void onLoadHydrationComplete(List<Hydration> hydration) {
-        if(hydration.size() == 0) return;
+    public void onLoadHydrationComplete(List<Hydration> hydration, float waterGoal) {
 
-        DecimalFormat df = new DecimalFormat("#.00");
-        float waterLeftNumber = Float.valueOf(df.format(hydration.get(0).objective - hydration.get(0).quantity));
-        if (waterLeftNumber < 0) {
-            waterLeftNumber = 0;
+        try {
+            MyAdapterHydration myAdapterHydration = new MyAdapterHydration(getActivity().getApplicationContext(), hydration);
+            float total_quantity = myAdapterHydration.getTotalHydration();
+            waterGoal = waterGoal/1000;
+            float waterLeftNumber = waterGoal-total_quantity;
+            if (waterLeftNumber < 0) {
+                waterLeftNumber = 0;
+            }
+            hydra.setText(String.format("%.2f", waterLeftNumber));
+        }catch(Exception e){
+            System.out.println("erro");
         }
-        hydra.setText(Float.toString(waterLeftNumber));
     }
 
 

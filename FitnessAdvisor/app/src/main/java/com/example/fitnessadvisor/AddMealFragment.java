@@ -182,12 +182,17 @@ public class AddMealFragment extends Fragment implements NutritionTaskManager.Ca
     }
 
     @Override
+    public void onLoadWaterGoal(float waterGoal) {
+
+    }
+
+    @Override
     public void onDeleteMealComplete() {
 
     }
 
     @Override
-    public void onLoadHydrationComplete(List<Hydration> hydration) {
+    public void onLoadHydrationComplete(List<Hydration> hydration, float waterGoal) {
 
     }
 

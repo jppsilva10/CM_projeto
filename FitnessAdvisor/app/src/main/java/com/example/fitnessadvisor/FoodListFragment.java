@@ -202,7 +202,7 @@ public class FoodListFragment extends Fragment implements NutritionTaskManager.C
     }
 
     @Override
-    public void onLoadHydrationComplete(List<Hydration> hydration) {
+    public void onLoadHydrationComplete(List<Hydration> hydration, float waterGoal) {
 
     }
 
@@ -220,6 +220,11 @@ public class FoodListFragment extends Fragment implements NutritionTaskManager.C
 
     @Override
     public void onLoadBMR(float bmr) {
+
+    }
+
+    @Override
+    public void onLoadWaterGoal(float waterGoal) {
 
     }
 
