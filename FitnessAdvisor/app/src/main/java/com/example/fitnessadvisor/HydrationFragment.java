@@ -116,7 +116,7 @@ public class HydrationFragment extends Fragment implements NutritionTaskManager.
         });
 
         setListener();
-
+        registerForContextMenu(list);
         return v;
     }
 
