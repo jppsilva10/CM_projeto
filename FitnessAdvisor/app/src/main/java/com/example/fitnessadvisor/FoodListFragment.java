@@ -1,7 +1,12 @@
 package com.example.fitnessadvisor;
 
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,26 +36,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class AddMealFragment extends Fragment implements NutritionTaskManager.Callback{
+public class FoodListFragment extends Fragment implements NutritionTaskManager.Callback{
 
     protected SearchView searchFood;
-    protected ListView added_food_list_view;
     protected ListView food_list_view;
+    protected EditText edit;
     SharedViewModel viewmodel;
     protected NutritionTaskManager taskManager = new NutritionTaskManager(this);
-    Meal meal;
     List<Food> food_list;
     List<Food> listItemsToAdd = new ArrayList<Food>();
     Button submitBtn;
-    EditText editTitle;
-    long id;
+    long selected_food = -1;
+    protected Parcelable state;
+    Meal meal;
+    float quantity = 100;
 
-    public AddMealFragment() {
+    public FoodListFragment() {
         // Required empty public constructor
     }
 
-    public static AddMealFragment newInstance() {
-        AddMealFragment fragment = new AddMealFragment();
+    public static FoodListFragment newInstance() {
+        FoodListFragment fragment = new FoodListFragment();
         return fragment;
     }
 
@@ -63,32 +69,65 @@ public class AddMealFragment extends Fragment implements NutritionTaskManager.Ca
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_add_meal, container, false);
+        View v = inflater.inflate(R.layout.fragment_food_list, container, false);
 
         MainActivity act = (MainActivity)getActivity();
         viewmodel = act.getViewModel();
 
         submitBtn = v.findViewById(R.id.submit);
+        submitBtn.setVisibility(View.INVISIBLE);
         food_list_view = v.findViewById(R.id.food_list);
-        added_food_list_view = v.findViewById(R.id.added_food_list);
         searchFood = v.findViewById(R.id.searchFood);
-        editTitle = v.findViewById(R.id.editMealTitle);
+        edit = v.findViewById(R.id.quantityValue);
 
-        taskManager.executeFoodSearchAsync(viewmodel.getDB(), "%" + "" + "%");
-        taskManager.executeLoadFoodFromMealAsync(viewmodel.getDB(), viewmodel.getMealId());
+        edit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+            }
 
-        submitBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Meal meal = new Meal();
-                meal.title = editTitle.getText().toString();
-                meal.day = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-                meal.time = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
 
-                taskManager.executeInsertMeal(viewmodel.getDB(), meal);
+            @Override
+            public void afterTextChanged(Editable s) {
 
+                if (TextUtils.isEmpty(s)) {
+
+                } else {
+                    quantity = Float.parseFloat(edit.getText().toString());
+
+                    MyAdapterFood myAdapter = new MyAdapterFood(getActivity().getApplicationContext(), food_list, selected_food, quantity);
+                    state = food_list_view.onSaveInstanceState();
+                    food_list_view.setAdapter(myAdapter);
+                    setListListener();
+                    food_list_view.onRestoreInstanceState(state);
+                }
 
             }
         });
+
+        taskManager.executeFoodSearchAsync(viewmodel.getDB(), "%" + "" + "%");
+
+        submitBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), viewmodel.getMealId(), selected_food, quantity);
+
+                act.getSupportFragmentManager().popBackStack();
+
+                act
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container_view, MealListFragment.class, null)
+                        .commit();
+
+            }
+        });
+
+
         return v;
     }
 
@@ -118,28 +157,17 @@ public class AddMealFragment extends Fragment implements NutritionTaskManager.Ca
         food_list_view.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?>adapter,View v, int position, long id){
-                Food food = food_list.get(position);
-                listItemsToAdd.add(food);
+                selected_food = id;
+                submitBtn.setVisibility(View.VISIBLE);
 
-                MyAdapterFood myAdapter = new MyAdapterFood(getActivity().getApplicationContext(), listItemsToAdd, -1, 100);
-                added_food_list_view.setAdapter(myAdapter);
-                setAddItemListListener();
+                MyAdapterFood myAdapter = new MyAdapterFood(getActivity().getApplicationContext(), food_list, selected_food, quantity);
+                state = food_list_view.onSaveInstanceState();
+                food_list_view.setAdapter(myAdapter);
+                setListListener();
+                food_list_view.onRestoreInstanceState(state);
             }
         });
 
-    }
-
-    public void setAddItemListListener(){
-        added_food_list_view.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?>adapter,View v, int position, long id){
-                listItemsToAdd.remove(position);
-
-                MyAdapterFood myAdapter = new MyAdapterFood(getActivity().getApplicationContext(), listItemsToAdd, -1, 100);
-                added_food_list_view.setAdapter(myAdapter);
-                setAddItemListListener();
-            }
-        });
     }
 
     @Override
@@ -151,24 +179,16 @@ public class AddMealFragment extends Fragment implements NutritionTaskManager.Ca
     @Override
     public void onLoadFoodComplete(List<Food> food) {
         food_list = food;
-        MyAdapterFood myAdapter = new MyAdapterFood(getActivity().getApplicationContext(), food, -1, 100);
+        MyAdapterFood myAdapter = new MyAdapterFood(getActivity().getApplicationContext(), food, selected_food, quantity);
+        state = food_list_view.onSaveInstanceState();
         food_list_view.setAdapter(myAdapter);
         setListListener();
+        food_list_view.onRestoreInstanceState(state);
     }
 
     @Override
     public void onInsertMealComplete(long mealId) {
-        id = mealId;
 
-        for(int i = 0; i < listItemsToAdd.size(); i++){
-            taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), id, listItemsToAdd.get(i).id, 100);
-        }
-
-        getActivity()
-                .getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container_view, MealListFragment.class, null)
-                .commit();
     }
 
     @Override

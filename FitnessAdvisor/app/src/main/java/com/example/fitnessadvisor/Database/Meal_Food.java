@@ -26,4 +26,7 @@ public class Meal_Food {
 
     @ColumnInfo(name = "food")
     public long food;
+
+    @ColumnInfo(name = "weight")
+    public float weight;
 }

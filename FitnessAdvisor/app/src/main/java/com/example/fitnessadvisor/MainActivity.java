@@ -41,12 +41,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         /*
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "MyDatabase")
-                .createFromAsset("database/myapp.db")
+                .createFromAsset("database/MyDatabase")
+                .fallbackToDestructiveMigration()
                 .build();
+
          */
 
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "MyDatabase").fallbackToDestructiveMigration().build();
+
+
 
         viewModel = new ViewModelProvider(this).get(SharedViewModel.class);
         viewModel.setDB(db);

@@ -1,17 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/listTitle"
-        android:layout_width="fill_parent"
+<LinearLayout
+    android:id="@+id/llsetreps"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:orientation="horizontal"
+    android:padding="7dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
-        android:textColor="@android:color/black"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp" />
+        android:elevation="3dp"
+        android:orientation="horizontal"
+        android:background="@drawable/meal_item"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft">
+
+            <TextView
+                android:id="@+id/mealName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:text="Breakfast"
+                android:textColor="#179a5b"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/mealInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:text="(4 items | 1000 Kcal)"
+                android:textColor="#179a5b"
+                android:textSize="17dp" />
+
+        </LinearLayout>
+        <Button
+            android:id="@+id/addFood"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:background="@drawable/ic_add_green"/>
+
+    </LinearLayout>
+
+</LinearLayout>
 
 </LinearLayout>

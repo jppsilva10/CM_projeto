@@ -48,7 +48,6 @@ public class WorkoutListFragment extends Fragment implements WorkoutTaskManager.
     protected WorkoutTaskManager taskManager = new WorkoutTaskManager(this);
     protected FloatingActionButton butt;
     protected long selected_id;
-    protected FloatingActionButton help; //This is just a button to add exercises preemptively
     protected Parcelable state;
     protected boolean auto = false;
 
@@ -80,9 +79,10 @@ public class WorkoutListFragment extends Fragment implements WorkoutTaskManager.
 
         taskManager.executeLoadWorkoutAsync(viewmodel.getDB());
 
+        //PopulateDatabase.populateExercises(viewmodel.getDB(), taskManager);
+
         registerForContextMenu(list);
         butt = v.findViewById(R.id.add_button);
-        help = v.findViewById(R.id.add_exercise);
         setListener();
         return v;
     }
@@ -191,13 +191,6 @@ public class WorkoutListFragment extends Fragment implements WorkoutTaskManager.
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
                 Spinner spinner = v.findViewById(R.id.daysValue);
                 spinner.setAdapter(adapter);
-            }
-        });
-        help.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Edit these values to add different exercises
-                PopulateDatabase.populateExercises(viewmodel.getDB(), taskManager);
             }
         });
     }

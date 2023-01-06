@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import com.example.fitnessadvisor.Database.Food;
 import com.example.fitnessadvisor.Database.Hydration;
 import com.example.fitnessadvisor.Database.Meal;
+import com.example.fitnessadvisor.Database.Meal_Food;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -116,7 +117,7 @@ public class HydrationFragment extends Fragment implements NutritionTaskManager.
     }
 
     @Override
-    public void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals) {
+    public void onLoadMealComplete(HashMap<Long, List<Meal_Food>> mealList, List<Meal> meals, HashMap<Long, Food> foods) {
 
     }
 

@@ -8,82 +8,143 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.fitnessadvisor.Database.Food;
+import com.example.fitnessadvisor.Database.Meal;
+import com.example.fitnessadvisor.Database.Meal_Food;
 
 public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
-    private List<String> expandableListTitle;
-    private HashMap<String, List<String>> expandableListDetail;
+    private List<Meal> meals;
+    private HashMap<Long, List<Meal_Food>> meal_foods;
+    private HashMap<Long, Food> foods;
+    private MainActivity act;
 
-    public CustomExpandableListAdapter(Context context, List<String> expandableListTitle,
-                                       HashMap<String, List<String>> expandableListDetail) {
+    public CustomExpandableListAdapter(MainActivity act, Context context, List<Meal> meals,
+                                       HashMap<Long, List<Meal_Food>> meal_foods, HashMap<Long, Food> foods) {
         this.context = context;
-        this.expandableListTitle = expandableListTitle;
-        this.expandableListDetail = expandableListDetail;
+        this.meal_foods = meal_foods;
+        this.act = act;
+        this.meals = meals;
+        this.foods = foods;
     }
 
     @Override
     public Object getChild(int listPosition, int expandedListPosition) {
-        return this.expandableListDetail.get(this.expandableListTitle.get(listPosition))
-                .get(expandedListPosition);
+        return this.foods.get(meal_foods.get(meals.get(listPosition).id)
+                .get(expandedListPosition).food);
     }
 
     @Override
     public long getChildId(int listPosition, int expandedListPosition) {
-        return expandedListPosition;
+        return this.meal_foods.get(meals.get(listPosition).id)
+                .get(expandedListPosition).id;
     }
 
     @Override
     public View getChildView(int listPosition, final int expandedListPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
-        final String expandedListText = (String) getChild(listPosition, expandedListPosition);
+        final String expandedListText = ((Food)getChild(listPosition, expandedListPosition)).name;
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_food, null);
         }
-        TextView expandedListTextView = (TextView) convertView
-                .findViewById(R.id.expandedListItem);
-        expandedListTextView.setText(expandedListText);
+        TextView name = (TextView) convertView.findViewById(R.id.foodName);
+        name.setText(expandedListText);
+
+        Food food = (Food) getChild(listPosition, expandedListPosition);
+        float quantity = meal_foods.get(meals.get(listPosition).id).get(expandedListPosition).weight;
+
+        TextView info = (TextView) convertView.findViewById(R.id.foodInfo);
+        String lip = String.format("%.1f", (food.fat/100)*quantity);
+        String carbs = String.format("%.1f", (food.carbohydrates/100)*quantity);
+        String prot = String.format("%.1f", (food.proteins/100)*quantity);
+        info.setText("(Lip:" + lip + "g | Carbs:" + carbs + "g | Prot:" + prot + "g)");
+        info.setText("(" + String.format("%.0f", quantity)  +"g)");
+
+        TextView cal = (TextView) convertView.findViewById(R.id.foodCal);
+        cal.setText(String.format("%.0f", (food.calories/100)*quantity) + "Kcal");
+
         return convertView;
     }
 
     @Override
     public int getChildrenCount(int listPosition) {
-        return this.expandableListDetail.get(this.expandableListTitle.get(listPosition))
+        return this.meal_foods.get(meals.get(listPosition).id)
                 .size();
     }
 
     @Override
     public Object getGroup(int listPosition) {
-        return this.expandableListTitle.get(listPosition);
+        return meals.get(listPosition);
     }
 
     @Override
     public int getGroupCount() {
-        return this.expandableListTitle.size();
+        return meals.size();
     }
 
     @Override
     public long getGroupId(int listPosition) {
-        return listPosition;
+        return meals.get(listPosition).id;
     }
 
     @Override
     public View getGroupView(int listPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-        String listTitle = (String) getGroup(listPosition);
+        String listTitle = ((Meal)getGroup(listPosition)).title;
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_meals, null);
         }
-        TextView listTitleTextView = (TextView) convertView
-                .findViewById(R.id.listTitle);
-        listTitleTextView.setTypeface(null, Typeface.BOLD);
-        listTitleTextView.setText(listTitle);
+
+        TextView name = (TextView) convertView.findViewById(R.id.mealName);
+        name.setText(listTitle);
+
+        TextView info = (TextView) convertView.findViewById(R.id.mealInfo);
+        String items = "" + getChildrenCount(listPosition) + " items";
+        String cal = String.format("%.0f", calculateMealCalories(listPosition)) + " Kcal";
+
+        info.setText("(" + items + " | " + cal + ")");
+
+        Button b = convertView.findViewById(R.id.addFood);
+        b.setFocusable(false);
+
+        b.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                act.getViewModel().setMealId(meals.get(listPosition).id);
+
+                act
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container_view, FoodListFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("stack")
+                        .commit();
+            }
+        });
+
         return convertView;
+    }
+
+    public float calculateMealCalories(int listPosition){
+        float result = 0;
+        for(int i=0; i<getChildrenCount(listPosition); i++){
+            Food food = (Food) getChild(listPosition, i);
+            result += (food.calories/100) * meal_foods.get(meals.get(listPosition).id).get(i).weight;
+        }
+        return result;
+    }
+
+    public float calculateFoodCalories(int listPosition, int expandedListPosition){
+        Food food = (Food) getChild(listPosition, expandedListPosition);
+        float result = (food.calories/100) * meal_foods.get(meals.get(listPosition).id).get(expandedListPosition).weight;
+        return result;
     }
 
     @Override

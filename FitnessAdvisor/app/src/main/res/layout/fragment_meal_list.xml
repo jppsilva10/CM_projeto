@@ -4,47 +4,83 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
-    tools:context=".MealListFragment">
+    android:background="@drawable/account_header"
+    tools:context=".WorkoutListFragment">
 
     <LinearLayout
-        android:id="@+id/body"
-        android:layout_width="wrap_content"
-        android:layout_height="500dp"
-        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ExpandableListView
-            android:id="@+id/expandableListView"
+        <LinearLayout
+            android:id="@+id/header"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:divider="#A4C739"
-            android:dividerHeight="0.5dp"
-            android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft" />
+            android:layout_height="70dp"
+            android:orientation="vertical">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/pageTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:text="My Meals"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/account_body"
+            android:paddingBottom="?android:attr/actionBarSize">
+
+            <SearchView
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clipToPadding="false">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/addMeal"
+                    android:layout_width="425dp"
+                    android:layout_height="425dp"
+                    android:layout_marginLeft="300dp"
+                    android:layout_marginTop="400dp"
+                    android:layout_marginBottom="10dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_add"
+                    app:backgroundTint="#65E8A9" />
+
+                <ExpandableListView
+                    android:id="@+id/expandableListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="500dp"
+                    android:divider="#A4C739"
+                    android:dividerHeight="0dp"
+                    android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+                    android:groupIndicator="@drawable/indicator"
+                    android:indicatorRight="50dp"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
-
-
-    <Button
-        android:id="@+id/addMeal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Adicionar Refeição"
-        android:layout_marginTop="75dp"
-        android:layout_gravity="top|center"/>
-
-
-    <EditText
-        android:id="@+id/pageTitle"
-        android:clickable="false"
-        android:cursorVisible="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:text="Refeições de Hoje"
-        android:textSize="25dp"
-        android:layout_gravity="top|center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-
 </FrameLayout>

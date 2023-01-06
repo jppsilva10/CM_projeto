@@ -42,7 +42,7 @@ public class NutritionTaskManager {
     }
 
     public interface Callback{
-        void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals);
+        void onLoadMealComplete(HashMap<Long, List<Meal_Food>> mealList, List<Meal> meals, HashMap<Long, Food> foods);
         void onLoadFoodComplete(List<Food> food);
         void onInsertMealComplete(long mealId);
         void onDeleteMealComplete();
@@ -94,19 +94,19 @@ public class NutritionTaskManager {
             Meal_FoodDao meal_foodDao = db.meal_foodDao();
             FoodDao foodDao = db.foodDao();
 
-            LinkedHashMap<String, List<String>> mealList = new LinkedHashMap<String, List<String>>();
+            LinkedHashMap<Long, List<Meal_Food>> mealList = new LinkedHashMap<Long, List<Meal_Food>>();
+            LinkedHashMap<Long, Food> foodList = new LinkedHashMap<Long, Food>();
             for(int i = 0; i < meals.size(); i++){
                 List<Meal_Food> meal_food_list = meal_foodDao.loadByMeal(meals.get(i).id);
-                List<String> one_meal = new ArrayList<String>();
                 for(int j = 0; j < meal_food_list.size(); j++){
                     Food food = foodDao.loadById(meal_food_list.get(j).food);
-                    one_meal.add(food.name);
+                    foodList.put(meal_food_list.get(j).food, food);
                 }
-                mealList.put(meals.get(i).title + " " + meals.get(i).day + " " + meals.get(i).time, one_meal);
+                mealList.put(meals.get(i).id, meal_food_list);
             }
 
             handler.post(() -> {
-                calback.onLoadMealComplete(mealList, meals);
+                calback.onLoadMealComplete(mealList, meals, foodList);
             });
         });
     }
@@ -139,6 +139,37 @@ public class NutritionTaskManager {
         return meal.id;
     }
 
+    public long executeInsertMeal(AppDatabase db, Meal meal, String day){
+        executor.execute(() -> {
+            long id;
+
+            MealDao mealDao = db.mealDao();
+            id = mealDao.insert(meal);
+
+            List<Meal> meals = mealDao.loadByDate(day);
+
+            Meal_FoodDao meal_foodDao = db.meal_foodDao();
+            FoodDao foodDao = db.foodDao();
+
+            LinkedHashMap<Long, List<Meal_Food>> mealList = new LinkedHashMap<Long, List<Meal_Food>>();
+            LinkedHashMap<Long, Food> foodList = new LinkedHashMap<Long, Food>();
+            for(int i = 0; i < meals.size(); i++){
+                List<Meal_Food> meal_food_list = meal_foodDao.loadByMeal(meals.get(i).id);
+                for(int j = 0; j < meal_food_list.size(); j++){
+                    Food food = foodDao.loadById(meal_food_list.get(j).food);
+                    foodList.put(meal_food_list.get(j).food, food);
+                }
+                mealList.put(meals.get(i).id, meal_food_list);
+            }
+
+            handler.post(() -> {
+                calback.onLoadMealComplete(mealList, meals, foodList);
+            });
+        });
+
+        return meal.id;
+    }
+
     public long executeInsertFood(AppDatabase db, Food food){
         executor.execute(() -> {
 
@@ -153,7 +184,7 @@ public class NutritionTaskManager {
         return food.id;
     }
 
-    public void executeInsertFoodIntoMeal(AppDatabase db, long mealId, long foodId){
+    public void executeInsertFoodIntoMeal(AppDatabase db, long mealId, long foodId, float quantity){
         executor.execute(() -> {
 
             Meal_FoodDao MealFoodDao = db.meal_foodDao();
@@ -161,6 +192,7 @@ public class NutritionTaskManager {
 
             meal_food.food = foodId;
             meal_food.meal = mealId;
+            meal_food.weight = quantity;
             MealFoodDao.insert(meal_food);
 
             handler.post(() -> {
