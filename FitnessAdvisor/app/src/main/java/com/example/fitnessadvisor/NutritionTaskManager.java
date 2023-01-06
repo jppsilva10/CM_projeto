@@ -198,7 +198,6 @@ public class NutritionTaskManager {
 
 
             FoodDao foodDao = db.foodDao();
-            foodDao.insert(food);
             if(foodDao.loadByName(food.name).size() == 0){
                 foodDao.insert(food);
             }
