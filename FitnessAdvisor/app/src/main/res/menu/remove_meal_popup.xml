@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
     <item android:id="@+id/option1"
-        android:title="Remover Refeição" />
+        android:title="Remove Meal" />
 
     <item android:id="@+id/option2"
-        android:title="Cancelar" />
+        android:title="Cancel" />
 
 
 </menu>
