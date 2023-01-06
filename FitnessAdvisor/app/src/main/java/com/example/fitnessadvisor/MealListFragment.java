@@ -103,6 +103,7 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
 
         addBtn = v.findViewById(R.id.addMeal);
 
+
         title= v.findViewById(R.id.date);
         title.setText("" + today);
 
@@ -338,6 +339,32 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
                         public boolean onMenuItemClick(MenuItem item) {
                             if (item.getTitle().equals("Remove Meal")) {
                                 taskManager.executeDeleteMeal(viewmodel.getDB(), meal_list.get(position).id);
+                            }
+                            else if(item.getTitle().equals("Rename Meal")) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                AlertDialog mydialog;
+
+                                builder.setTitle("New name for this meal:");
+                                final EditText input = new EditText(getActivity());
+                                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                                builder.setView(input);
+
+
+                                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                taskManager.renamemeal(viewmodel.getDB(),input.getText().toString(),meal_list.get(position).id);
+                                            }
+                                        })
+                                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                dialogInterface.cancel();
+                                            }
+                                        });
+
+                                mydialog = builder.create();
+                                mydialog.show();
                             }
                             return true;
                         }

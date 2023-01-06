@@ -222,6 +222,17 @@ public class NutritionTaskManager {
             });
         });
     }
+    public void renamemeal(AppDatabase db,String name, long mealId){
+        executor.execute(() -> {
+
+            MealDao mealDao = db.mealDao();
+
+            mealDao.updateName(name,mealId);
+            handler.post(() -> {
+                calback.onDeleteMealComplete();
+            });
+        });
+    }
 
     public void executeDeleteMeal(AppDatabase db, long mealId){
         executor.execute(() -> {

@@ -6,7 +6,7 @@
         android:title="Remove Meal" />
 
     <item android:id="@+id/option2"
-        android:title="Cancel" />
+        android:title="Rename Meal" />
 
 
 </menu>
