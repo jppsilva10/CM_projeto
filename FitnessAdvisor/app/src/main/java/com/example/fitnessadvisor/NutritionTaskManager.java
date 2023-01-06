@@ -274,11 +274,11 @@ public class NutritionTaskManager {
 
 
             HydrationDao hydrationDao = db.hydrationDao();
+            hydrationDao.insert(hydration);
             List<Hydration> hydrationList = hydrationDao.loadByDay(hydration.day);
-            if(hydrationList.size() == 0) hydrationDao.insert(hydration);
 
             handler.post(() -> {
-
+                calback.onLoadHydrationComplete(hydrationList);
             });
         });
         return hydration.id;

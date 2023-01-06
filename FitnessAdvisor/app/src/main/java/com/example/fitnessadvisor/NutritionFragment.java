@@ -135,12 +135,6 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         Button h = v.findViewById(R.id.goToHydration);
         h.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-                Hydration hydrationToday = new Hydration();
-                hydrationToday.quantity = 0;
-                hydrationToday.objective = (float)3.0;
-                hydrationToday.day = today;
-                taskManager.executeInsertHydration(viewmodel.getDB(), hydrationToday);
 
                 getActivity()
                         .getSupportFragmentManager()

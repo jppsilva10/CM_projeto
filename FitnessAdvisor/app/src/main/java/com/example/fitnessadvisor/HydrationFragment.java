@@ -1,16 +1,27 @@
 package com.example.fitnessadvisor;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.Editable;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -20,6 +31,8 @@ import com.example.fitnessadvisor.Database.Hydration;
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Meal_Food;
 import com.example.fitnessadvisor.Database.Profile;
+import com.example.fitnessadvisor.Database.Workout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -33,14 +46,16 @@ public class HydrationFragment extends Fragment implements NutritionTaskManager.
 
     protected SharedViewModel viewmodel;
     protected NutritionTaskManager taskManager = new NutritionTaskManager(this);
-    TextView waterLeft;
-    EditText waterGoal;
-    EditText waterDrank;
-    EditText hydrationDate;
+    TextView waterGoal;
+    TextView waterDrank;
+    TextView hydrationDate;
     final Calendar myCalendar= Calendar.getInstance();
-    Button updateButton;
-    TextView waterGoalPast;
-    TextView waterDrankPast;
+    FloatingActionButton addButton;
+    private ProgressBar progress;
+    protected ListView list;
+    protected Parcelable state;
+    protected long selected_id;
+    protected float waterQuantityGoal = 3;
 
     public HydrationFragment() {
         // Required empty public constructor
@@ -66,16 +81,16 @@ public class HydrationFragment extends Fragment implements NutritionTaskManager.
 
         String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
-        waterLeft = v.findViewById(R.id.waterLeft);
         waterGoal = v.findViewById(R.id.waterGoal);
         waterDrank = v.findViewById(R.id.waterDrank);
-        waterGoalPast = v.findViewById(R.id.waterGoalPast);
-        waterDrankPast = v.findViewById(R.id.waterDrankPast);
-        updateButton = v.findViewById(R.id.updateBtn);
+        addButton = v.findViewById(R.id.add_button);
+        list = v.findViewById(R.id.hydration_list);
+        progress = v.findViewById(R.id.progress);
+        progress.setProgress(0);
 
         taskManager.executeLoadHydrationAsync(viewmodel.getDB(), today);
 
-        hydrationDate = v.findViewById(R.id.hydrationDate);
+        hydrationDate = v.findViewById(R.id.date);
         hydrationDate.setText(today);
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -86,6 +101,7 @@ public class HydrationFragment extends Fragment implements NutritionTaskManager.
                 updateLabel();
             }
         };
+
         hydrationDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,17 +109,80 @@ public class HydrationFragment extends Fragment implements NutritionTaskManager.
             }
         });
 
-        updateButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                float updatedObjective = Float.valueOf(waterGoal.getText().toString());
-                float updatedQuantity = Float.valueOf(waterDrank.getText().toString());
-                taskManager.executeUpdateHydration(viewmodel.getDB(), today, updatedObjective, updatedQuantity);
-
-            }
-        });
+        setListener();
 
         return v;
+    }
+
+    public void setListener(){
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                AlertDialog mydialog;
+
+                builder.setTitle("Quantity: ");
+                final EditText input = new EditText(getActivity());
+                input.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                builder.setView(input);
+
+                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Hydration hydration = new Hydration();
+                                hydration.day = viewmodel.getSetDate();
+                                hydration.quantity = Float.parseFloat(input.getText().toString());
+                                taskManager.executeInsertHydration(viewmodel.getDB(), hydration);
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+
+                mydialog = builder.create();
+                mydialog.show();
+
+                ((AlertDialog) mydialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+                input.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before,
+                                              int count) {
+                    }
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count,
+                                                  int after) {
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                        if (TextUtils.isEmpty(s)) {
+                            ((AlertDialog) mydialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+
+                        } else {
+                            ((AlertDialog) mydialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                        }
+
+                    }
+                });
+            }
+        });
+    }
+
+    public void setListListener() {
+        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapter, View v, int position, long id) {
+
+                selected_id = id;
+                return false;
+            }
+        });
     }
 
     private void updateLabel(){
@@ -149,43 +228,18 @@ public class HydrationFragment extends Fragment implements NutritionTaskManager.
 
     @Override
     public void onLoadHydrationComplete(List<Hydration> hydration) {
-        if(hydration.size() == 0) {
-            waterDrank.setVisibility(View.GONE);
-            waterGoal.setVisibility(View.GONE);
-            waterDrankPast.setVisibility(View.GONE);
-            waterGoalPast.setVisibility(View.GONE);
-            waterLeft.setVisibility(View.GONE);
-            return;
+        try {
+            MyAdapterHydration myAdapterHydration = new MyAdapterHydration(getActivity().getApplicationContext(), hydration);
+            state = list.onSaveInstanceState();
+            list.setAdapter(myAdapterHydration);
+            setListListener();
+            list.onRestoreInstanceState(state);
+            float total_quantity = myAdapterHydration.getTotalHydration();
+            waterDrank.setText(String.format("%.2f", total_quantity));
+            progress.setProgress((int)(100 * total_quantity/waterQuantityGoal));
+        }catch(Exception e){
+            System.out.println("erro");
         }
-
-        String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-        if(hydration.get(0).day.equals(today)) {
-            waterDrank.setText(Float.toString(hydration.get(0).quantity));
-            waterGoal.setText(Float.toString(hydration.get(0).objective));
-
-            waterDrank.setVisibility(View.VISIBLE);
-            waterGoal.setVisibility(View.VISIBLE);
-            waterLeft.setVisibility(View.VISIBLE);
-            waterDrankPast.setVisibility(View.GONE);
-            waterGoalPast.setVisibility(View.GONE);
-        }
-        else{
-            waterDrankPast.setText(Float.toString(hydration.get(0).quantity));
-            waterGoalPast.setText(Float.toString(hydration.get(0).objective));
-
-            waterDrankPast.setVisibility(View.VISIBLE);
-            waterGoalPast.setVisibility(View.VISIBLE);
-            waterLeft.setVisibility(View.VISIBLE);
-            waterDrank.setVisibility(View.GONE);
-            waterGoal.setVisibility(View.GONE);
-        }
-
-        DecimalFormat df = new DecimalFormat("#.00");
-        float waterLeftNumber = Float.valueOf(df.format(hydration.get(0).objective - hydration.get(0).quantity));
-        if (waterLeftNumber < 0) {
-            waterLeftNumber = 0;
-        }
-        waterLeft.setText(Float.toString(waterLeftNumber));
     }
 
     @Override
