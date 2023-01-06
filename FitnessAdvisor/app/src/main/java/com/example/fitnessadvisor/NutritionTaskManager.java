@@ -198,7 +198,11 @@ public class NutritionTaskManager {
     public void executeGetBMR(AppDatabase db){
         executor.execute(() -> {
             ProfileDao profiledao = db.profileDao();
-            Profile profile = profiledao.getAll().get(0);
+            List<Profile> profileList = profiledao.getAll();
+            if(profileList.size() == 0) return;
+
+            Profile profile = profileList.get(0);
+
             Calendar cal = Calendar.getInstance();
             Date today = cal.getTime();
             int age = today.getYear() - profile.birth_date.getYear();

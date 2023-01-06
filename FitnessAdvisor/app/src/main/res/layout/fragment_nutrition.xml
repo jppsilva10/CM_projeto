@@ -174,20 +174,84 @@
                     <TextView
                         android:id="@+id/macronutrientsLabel"
                         style="@style/LableNutrition"
-                        android:text="macronutrients" />
+                        android:text="Macronutrients" />
 
-                    <com.anychart.AnyChartView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/pieChartMarcronutrients">
+                    <org.eazegraph.lib.charts.PieChart
+                        android:id="@+id/pieChartMarcronutrients"
+                        android:layout_width="94dp"
+                        android:layout_height="94dp"
+                        android:layout_gravity="center">
 
-                    </com.anychart.AnyChartView>
+                    </org.eazegraph.lib.charts.PieChart>
+
+                    <FrameLayout
+                        android:id="@+id/view3"
+                        android:layout_width="150dp"
+                        android:layout_height="120dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/carbsLabel"
+                            style="@style/LableNutrition"
+                            android:text="Carbohydrates"
+                            android:layout_width="wrap_content"
+                            android:layout_height="16dp"/>
+
+                        <TextView
+                            android:id="@+id/proteinsLabel"
+                            style="@style/LableNutrition"
+                            android:layout_width="wrap_content"
+                            android:layout_height="16dp"
+                            android:layout_marginTop="20dp"
+                            android:text="Proteins" />
+
+                        <TextView
+                            android:id="@+id/fatLabel"
+                            style="@style/LableNutrition"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="35dp"
+                            android:text="Fat" />
+
+                        <View
+                            android:id="@+id/carbColor"
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_gravity="top|right"
+                            android:background="#6495ED"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginRight="30dp" />
+
+                        <View
+                            android:id="@+id/proteinColor"
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_gravity="top|right"
+                            android:background="#228B22"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="30dp" />
+
+                        <View
+                            android:id="@+id/fatColor"
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_gravity="top|right"
+                            android:background="#E97451"
+                            android:layout_marginTop="35dp"
+                            android:layout_marginRight="30dp" />
+
+
+                    </FrameLayout>
 
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+
         </LinearLayout>
+
+
+
 
 
         <Button

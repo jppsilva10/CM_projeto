@@ -3,6 +3,8 @@ package com.example.fitnessadvisor;
 import java.text.SimpleDateFormat;
 
 import java.time.LocalDateTime;
+
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,12 +16,6 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-
-import com.anychart.AnyChart;
-import com.anychart.AnyChartView;
-import com.anychart.chart.common.dataentry.DataEntry;
-import com.anychart.chart.common.dataentry.ValueDataEntry;
-import com.anychart.charts.Pie;
 import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Food;
 import com.example.fitnessadvisor.Database.Hydration;
@@ -28,6 +24,8 @@ import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
 import com.example.fitnessadvisor.Database.Workout_Exercise;
 
+import org.eazegraph.lib.charts.PieChart;
+import org.eazegraph.lib.models.PieModel;
 import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
@@ -49,7 +47,7 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
     private TextView text;
     private TextView text2;
 
-    AnyChartView anyChartView;
+    PieChart chart;
 
     private TextView bmr;
     private TextView bmr2;
@@ -90,7 +88,7 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         text = v.findViewById(R.id.kcal_num);
         text2 = v.findViewById(R.id.calories);
 
-        anyChartView = v.findViewById(R.id.pieChartMarcronutrients);
+        chart = v.findViewById(R.id.pieChartMarcronutrients);
 
         taskManager.executeGetBMR(viewmodel.getDB());
         progress = v.findViewById(R.id.progress);
@@ -136,15 +134,10 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
     }
 
     private void setUpChartView(){
-        Pie pie = AnyChart.pie();
-        List<DataEntry> dataEntries = new ArrayList<DataEntry>();
-
-        dataEntries.add(new ValueDataEntry("Lípidos",fat));
-        dataEntries.add(new ValueDataEntry("Proteínas",proteins));
-        dataEntries.add(new ValueDataEntry("Carbohidratos",carbohydrates));
-
-        pie.data(dataEntries);
-        anyChartView.setChart(pie);
+        chart.addPieSlice(new PieModel("Lípidos", fat, Color.parseColor("#E97451")));
+        chart.addPieSlice(new PieModel("Carbohidratos", carbohydrates, Color.parseColor("#6495ED")));
+        chart.addPieSlice(new PieModel("Proteínas", proteins, Color.parseColor("#228B22")));
+        chart.startAnimation();
     }
 
     private void PutMealsIntoDatabase()
