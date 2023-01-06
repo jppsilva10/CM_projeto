@@ -91,7 +91,7 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
         addBtn = (Button) v.findViewById(R.id.addMeal);
 
         editText=(EditText) v.findViewById(R.id.pageTitle);
-        editText.setText("Refeições do dia " + today);
+        editText.setText("List of Meals for " + today);
 
         if(viewmodel.getSetDate().equals("")){
             taskManager.executeLoadMealAsync(viewmodel.getDB(), today);
@@ -139,7 +139,7 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
 
         String myFormat="dd-MM-yyyy";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.getDefault());
-        editText.setText("Refeições do dia " + dateFormat.format(myCalendar.getTime()));
+        editText.setText("List of Meals for " + dateFormat.format(myCalendar.getTime()));
         viewmodel.setSetDate(dateFormat.format(myCalendar.getTime()));
         taskManager.executeLoadMealAsync(viewmodel.getDB(), dateFormat.format(myCalendar.getTime()));
         
@@ -237,7 +237,7 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
 
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         public boolean onMenuItemClick(MenuItem item) {
-                            if (item.getTitle().equals("Remover Refeição")) {
+                            if (item.getTitle().equals("Remove Meal")) {
                                 taskManager.executeDeleteMeal(viewmodel.getDB(), meal_list.get(position).id);
                             }
                             return true;

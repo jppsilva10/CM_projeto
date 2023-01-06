@@ -22,7 +22,7 @@
         android:id="@+id/waterGoalLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Objetivo diário (L):"
+        android:text="Daily Objective (L):"
         android:layout_gravity="top|center"
         android:layout_marginTop="120dp"
         android:textSize="20dp"/>
@@ -51,7 +51,7 @@
         android:id="@+id/waterDrankLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Água já bebida (L):"
+        android:text="Water already drank (L):"
         android:layout_gravity="top|center"
         android:layout_marginTop="225dp"
         android:textSize="20dp"/>
@@ -80,7 +80,7 @@
         android:id="@+id/waterLeftLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Quantidade de água que falta beber (L):"
+        android:text="Quantity of water left to drink (L):"
         android:layout_gravity="top|center"
         android:layout_marginTop="325dp"
         android:textSize="20dp"/>
@@ -98,7 +98,7 @@
         android:id="@+id/updateBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Atualizar"
+        android:text="Update"
         android:layout_gravity="top|center"
         android:layout_marginTop="420dp"/>
 
