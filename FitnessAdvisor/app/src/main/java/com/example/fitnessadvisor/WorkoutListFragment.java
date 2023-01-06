@@ -81,7 +81,7 @@ public class WorkoutListFragment extends Fragment implements WorkoutTaskManager.
         taskManager.executeLoadWorkoutAsync(viewmodel.getDB());
         taskManager.executeLoadProfileAsync(viewmodel.getDB());
 
-        //PopulateDatabase.populateExercises(viewmodel.getDB(), taskManager);
+        PopulateDatabase.populateExercises(viewmodel.getDB(), taskManager);
 
         registerForContextMenu(list);
         butt = v.findViewById(R.id.add_button);
