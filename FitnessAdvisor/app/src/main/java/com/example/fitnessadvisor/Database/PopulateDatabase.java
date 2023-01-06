@@ -1,5 +1,6 @@
 package com.example.fitnessadvisor.Database;
 
+import com.example.fitnessadvisor.NutritionTaskManager;
 import com.example.fitnessadvisor.R;
 import com.example.fitnessadvisor.TaskManager;
 import com.example.fitnessadvisor.WorkoutTaskManager;
@@ -503,4 +504,111 @@ public class PopulateDatabase {
         exercise.muscle_groups  = "Medial Delts";
         taskManager.executeExerciseInsertionAsync(db,exercise);
     }
+
+    public static void populateFoods(AppDatabase db, NutritionTaskManager taskManager){
+        Food food = new Food();
+        food.name = "Chicken Breast";
+        food.calories = 110f;
+        food.fat = 1.24f;
+        food.proteins = 23.09f;
+        food.carbohydrates = 0f;
+        taskManager.executeInsertFood(db, food);
+
+        food = new Food();
+        food.name = "Beef";
+        food.calories = 288f;
+        food.fat = 19.54f;
+        food.proteins = 26.33f;
+        food.carbohydrates = 0f;
+        taskManager.executeInsertFood(db, food);
+
+        food = new Food();
+        food.name = "Pork";
+        food.calories = 271f;
+        food.fat = 17.04f;
+        food.proteins = 25.7f;
+        food.carbohydrates = 0f;
+        taskManager.executeInsertFood(db, food);
+
+        food = new Food();
+        food.name = "Bacon";
+        food.calories = 541f;
+        food.fat = 41.78f;
+        food.proteins = 1.43f;
+        food.carbohydrates = 37.04f;
+        taskManager.executeInsertFood(db, food);
+
+        food = new Food();
+        food.name = "Rice";
+        food.calories = 129f;
+        food.fat = 0.28f;
+        food.proteins = 2.66f;
+        food.carbohydrates = 27.9f;
+        taskManager.executeInsertFood(db, food);
+
+        food = new Food();
+        food.name = "Spaghetti";
+        food.calories = 158f;
+        food.fat = 0.93f;
+        food.proteins = 5.8f;
+        food.carbohydrates = 30.86f;
+        taskManager.executeInsertFood(db, food);
+
+        food = new Food();
+        food.name = "Boiled potatoes";
+        food.calories = 87f;
+        food.fat = 0.1f;
+        food.proteins = 1.87f;
+        food.carbohydrates = 20.13f;
+        taskManager.executeInsertFood(db, food);
+
+        food = new Food();
+        food.name = "Roast Potatoes";
+        food.calories = 149f;
+        food.fat = 7f;
+        food.proteins = 2.32f;
+        food.carbohydrates = 20.06f;
+        taskManager.executeInsertFood(db, food);
+
+        food = new Food();
+        food.name = "Potato Chips";
+        food.calories = 274f;
+        food.fat = 14.06f;
+        food.proteins = 3.48f;
+        food.carbohydrates = 35.66f;
+        taskManager.executeInsertFood(db, food);
+
+        food = new Food();
+        food.name = "Carrots";
+        food.calories = 41f;
+        food.fat = 0.24f;
+        food.proteins = 0.93f;
+        food.carbohydrates = 9.58f;
+        taskManager.executeInsertFood(db, food);
+
+        food = new Food();
+        food.name = "Onions";
+        food.calories = 42f;
+        food.fat = 0.08f;
+        food.proteins = 0.92f;
+        food.carbohydrates = 10.11f;
+        taskManager.executeInsertFood(db, food);
+
+        food = new Food();
+        food.name = "Black Beans";
+        food.calories = 91f;
+        food.fat = 0.08f;
+        food.proteins = 0.92f;
+        food.carbohydrates = 10.11f;
+        taskManager.executeInsertFood(db, food);
+
+        food = new Food();
+        food.name = "Apples";
+        food.calories = 52f;
+        food.fat = 0.29f;
+        food.proteins = 16.56f;
+        food.carbohydrates = 6.03f;
+        taskManager.executeInsertFood(db, food);
+    }
+
 }

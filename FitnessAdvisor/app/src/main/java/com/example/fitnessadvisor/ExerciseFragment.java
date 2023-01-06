@@ -56,6 +56,11 @@ public class ExerciseFragment extends Fragment implements WorkoutTaskManager.Cal
     }
 
     @Override
+    public void onLoadProfileComplete(Profile profile, boolean empty) {
+
+    }
+
+    @Override
     public void onLoadExerciseComplete(List<Exercise> exercises) {
 
     }

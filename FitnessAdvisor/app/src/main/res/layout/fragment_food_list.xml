@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/account_header"
-    tools:context=".WorkoutListFragment">
+    tools:context=".ExerciseListFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,13 +29,24 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
-                    android:text="My Workout Plans"
+                    android:text="Foods"
                     android:textColor="#FFFFFF"
                     android:textSize="20dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/submit"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/ic_confirm"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TouchTargetSizeCheck" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -49,7 +60,7 @@
             android:paddingBottom="?android:attr/actionBarSize">
 
             <SearchView
-                android:id="@+id/search"
+                android:id="@+id/searchFood"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -59,28 +70,51 @@
                 android:layout_weight="1"
                 android:clipToPadding="false">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/add_button"
-                    android:layout_width="425dp"
-                    android:layout_height="425dp"
-                    android:layout_marginLeft="300dp"
-                    android:layout_marginTop="400dp"
-                    android:layout_marginBottom="10dp"
-                    android:clickable="true"
-                    android:src="@drawable/ic_add"
-                    app:backgroundTint="#65E8A9" />
-
                 <ListView
-                    android:id="@+id/workout_list"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/food_list"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
+                    android:divider="@null"
                     android:dividerHeight="15.0sp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:divider="@null"/>
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp" />
             </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/quantityLable"
+                    style="@style/Lable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:paddingRight="20dp"
+                    android:text="Quantity:"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+
+                <EditText
+                    android:id="@+id/quantityValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="100dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:textSize="20dp"
+                    android:inputType="numberDecimal"
+                    android:text="100"
+                    android:hint="(in g)"/>
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
 </FrameLayout>

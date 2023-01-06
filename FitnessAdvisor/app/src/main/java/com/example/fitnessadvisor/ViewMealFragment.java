@@ -16,6 +16,7 @@ import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Food;
 import com.example.fitnessadvisor.Database.Hydration;
 import com.example.fitnessadvisor.Database.Meal;
+import com.example.fitnessadvisor.Database.Meal_Food;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
 import com.example.fitnessadvisor.Database.Workout_Exercise;
@@ -80,7 +81,7 @@ public class ViewMealFragment extends Fragment implements NutritionTaskManager.C
 
 
     @Override
-    public void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals) {
+    public void onLoadMealComplete(HashMap<Long, List<Meal_Food>> mealList, List<Meal> meals, HashMap<Long, Food> foods) {
 
     }
 

@@ -37,6 +37,7 @@ public class WorkoutTaskManager {
     }
 
     public interface Callback{
+        void onLoadProfileComplete(Profile profile, boolean empty);
         void onLoadExerciseComplete(List<Exercise> exercises);
         void onLoadExerciseComplete(Exercise exercise);
         void onAddExerciseComplete(Workout_Exercise we);
@@ -44,6 +45,22 @@ public class WorkoutTaskManager {
         void onLoadWorkoutComplete(Workout workout);
         void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes);
         void onLoadWorkout_ExerciseComplete(Workout_Exercise we, Exercise exercise);
+    }
+
+    public void executeLoadProfileAsync(AppDatabase db){
+        executor.execute(() -> {
+
+            ProfileDao profileDao = db.profileDao();
+            List<Profile> profiles = profileDao.getAll();
+            Profile profile = new Profile();
+            if(profiles.size()!=0)
+                profile = profiles.get(0);
+
+            Profile finalProfile = profile;
+            handler.post(() -> {
+                calback.onLoadProfileComplete(finalProfile, profiles.size()==0);
+            });
+        });
     }
 
     public void executeLoadWorkoutAsync(AppDatabase db){
