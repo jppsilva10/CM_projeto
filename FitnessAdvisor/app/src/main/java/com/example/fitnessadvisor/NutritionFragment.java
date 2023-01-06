@@ -22,6 +22,7 @@ import com.example.fitnessadvisor.Database.Food;
 import com.example.fitnessadvisor.Database.Hydration;
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Meal_Food;
+import com.example.fitnessadvisor.Database.PopulateDatabase;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
 import com.example.fitnessadvisor.Database.Workout_Exercise;
@@ -82,6 +83,8 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         //in the next iterations, new food is gonna be generated for the same meal ids and it's a problem
         //PutFoodIntoDatabase();
         //PutMealsIntoDatabase();
+
+        //PopulateDatabase.populateFoods(viewmodel.getDB(), taskManager);
 
         String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         taskManager.executeLoadFoodFromdayAsync(viewmodel.getDB(), today);
