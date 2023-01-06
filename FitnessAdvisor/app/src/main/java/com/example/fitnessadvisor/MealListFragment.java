@@ -226,7 +226,7 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
             expandableListDetail = mealList;
             fillTheScreen();
         }catch(Exception e){
-
+            System.out.println("here");
         }
     }
 
