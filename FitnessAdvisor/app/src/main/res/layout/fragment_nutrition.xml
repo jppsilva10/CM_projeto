@@ -144,6 +144,8 @@
                         android:layout_marginTop="12dp"
                         android:text="BMR" />
 
+
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -159,6 +161,24 @@
                         android:id="@+id/hydrationLabel"
                         style="@style/LableNutrition"
                         android:text="Hydration" />
+
+                    <TextView
+                        android:id="@+id/hydrationNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textSize="30dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="12dp"
+                        android:text="0.00" />
+
+                    <TextView
+                        android:id="@+id/liters"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="12dp"
+                        android:text="Liters left until goal" />
 
                 </LinearLayout>
 
@@ -268,7 +288,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hidratação"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:layout_gravity="top|center"
             android:textSize="25sp" />
 
