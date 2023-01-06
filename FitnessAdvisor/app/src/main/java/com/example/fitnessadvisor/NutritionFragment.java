@@ -1,5 +1,10 @@
 package com.example.fitnessadvisor;
 
+import java.text.SimpleDateFormat;
+
+import java.time.LocalDateTime;
+
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,18 +13,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Food;
 import com.example.fitnessadvisor.Database.Hydration;
 import com.example.fitnessadvisor.Database.Meal;
-import com.example.fitnessadvisor.Database.Meal_Food;
-import com.example.fitnessadvisor.Database.PopulateDatabase;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
 import com.example.fitnessadvisor.Database.Workout_Exercise;
 
+import org.eazegraph.lib.charts.PieChart;
+import org.eazegraph.lib.models.PieModel;
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +39,18 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
 
     NutritionTaskManager taskManager = new NutritionTaskManager(this);
     SharedViewModel viewmodel;
+    private float kcal = 0.0f;
+    private float proteins = 0.0f;
+    private float carbohydrates = 0.0f;
+    private float fat = 0.0f;
+    private ProgressBar progress;
+    private TextView text;
+    private TextView text2;
+
+    PieChart chart;
+
+    private TextView bmr;
+    private TextView bmr2;
 
     public NutritionFragment() {
         // Required empty public constructor
@@ -58,7 +80,22 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         //PutFoodIntoDatabase();
         //PutMealsIntoDatabase();
 
-        //PopulateDatabase.populateFoods(viewmodel.getDB(), taskManager);
+        String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        taskManager.executeLoadFoodFromdayAsync(viewmodel.getDB(), today);
+
+
+        progress = v.findViewById(R.id.progress);
+        text = v.findViewById(R.id.kcal_num);
+        text2 = v.findViewById(R.id.calories);
+
+        chart = v.findViewById(R.id.pieChartMarcronutrients);
+
+        taskManager.executeGetBMR(viewmodel.getDB());
+        progress = v.findViewById(R.id.progress);
+        text = v.findViewById(R.id.kcal_num);
+        text2 = v.findViewById(R.id.calories);
+        bmr = v.findViewById(R.id.bmr);
+        bmr2 = v.findViewById(R.id.caloriesday);
 
         Button b = v.findViewById(R.id.goToMealList);
         b.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +133,12 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         return v;
     }
 
+    private void setUpChartView(){
+        chart.addPieSlice(new PieModel("Lípidos", fat, Color.parseColor("#E97451")));
+        chart.addPieSlice(new PieModel("Carbohidratos", carbohydrates, Color.parseColor("#6495ED")));
+        chart.addPieSlice(new PieModel("Proteínas", proteins, Color.parseColor("#228B22")));
+        chart.startAnimation();
+    }
 
     private void PutMealsIntoDatabase()
     {
@@ -109,9 +152,9 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         meal.day = currentDate;
         meal.time = currentTime;
         taskManager.executeInsertMeal(viewmodel.getDB(), meal);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 1, 1, 100);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 1, 3, 100);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 1, 5, 100);
+        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 1, 1);
+        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 1, 3);
+        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 1, 5);
 
         currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
@@ -120,9 +163,9 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         meal.day = currentDate;
         meal.time = currentTime;
         taskManager.executeInsertMeal(viewmodel.getDB(), meal);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 2, 2, 100);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 2, 4, 100);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 2, 6, 100);
+        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 2, 2);
+        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 2, 4);
+        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 2, 6);
 
         currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
@@ -131,9 +174,9 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         meal.day = currentDate;
         meal.time = currentTime;
         taskManager.executeInsertMeal(viewmodel.getDB(), meal);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 3, 3, 100);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 3, 4, 100);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 3, 5, 100);
+        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 3, 3);
+        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 3, 4);
+        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 3, 5);
     }
 
     private void PutFoodIntoDatabase()
@@ -191,16 +234,38 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
 
     }
 
+    @Override
+    public void onLoadBMR(float BMR) {
+        bmr.setText(String.valueOf((int)BMR));
+        bmr2.setText("Calories/Day");
+    }
 
     @Override
-    public void onLoadMealComplete(HashMap<Long, List<Meal_Food>> mealList, List<Meal> meals, HashMap<Long, Food> foods) {
-
+    public void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals) {
 
     }
 
     @Override
     public void onLoadFoodComplete(List<Food> food) {
+        List<Food> foods = food;
+        if(foods.size() == 0){
+            progress.setProgress(0);
+        }
+        else{
+            kcal = 0.0f;
+            for(int i=0;i<foods.size();i++){
+                kcal = kcal + foods.get(i).calories;
+                carbohydrates = carbohydrates + foods.get(i).calories;
+                proteins = proteins + foods.get(i).proteins;
+                fat = fat + foods.get(i).fat;
+            }
+            int value = 100*((int) kcal)/2000;
+            progress.setProgress(value);
+            text.setText(String.valueOf((int)kcal));
+            text2.setText("kcal");
+        }
 
+        setUpChartView();
     }
 
     @Override
@@ -226,7 +291,6 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
 
     @Override
     public void onLoadFoodFromMeal(Meal meal, List<Food> foodList) {
-
     }
 
 }

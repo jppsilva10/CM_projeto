@@ -25,7 +25,11 @@ import com.example.fitnessadvisor.Database.WorkoutDao;
 import com.example.fitnessadvisor.Database.Workout_Exercise;
 import com.example.fitnessadvisor.Database.Workout_ExerciseDao;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -49,6 +53,7 @@ public class NutritionTaskManager {
         void onLoadHydrationComplete(List<Hydration> hydration);
         void onUpdateHydrationComplete();
         void onLoadFoodFromMeal(Meal meal, List<Food> foodList);
+        void onLoadBMR(float bmr);
     }
 
     public void executeLoadFoodAsync(AppDatabase db){
@@ -222,6 +227,31 @@ public class NutritionTaskManager {
         });
     }
 
+    public void executeGetBMR(AppDatabase db){
+        executor.execute(() -> {
+            ProfileDao profiledao = db.profileDao();
+            List<Profile> profileList = profiledao.getAll();
+            if(profileList.size() == 0) return;
+
+            Profile profile = profileList.get(0);
+
+            Calendar cal = Calendar.getInstance();
+            Date today = cal.getTime();
+            int age = today.getYear() - profile.birth_date.getYear();
+            float value;
+            if(profile.gender.equals("Male")) {
+                value = 88.362f + (13.397f * profile.weight) + (4.799f * profile.height) - (5.677f * age);
+            }
+            else{
+                value = 447.593f + (9.247f * profile.weight) + (3.098f * profile.height) - (4.330f * age);
+            }
+
+            handler.post(() -> {
+                calback.onLoadBMR(value);
+            });
+        });
+    }
+
     public long executeInsertHydration(AppDatabase db, Hydration hydration){
         executor.execute(() -> {
 
@@ -235,6 +265,32 @@ public class NutritionTaskManager {
             });
         });
         return hydration.id;
+    }
+
+    public void executeLoadFoodFromdayAsync(AppDatabase db,String day){
+        executor.execute(() -> {
+
+            MealDao meaDao = db.mealDao();
+            List<Meal> meal = meaDao.loadByDate(day);
+
+            Meal_FoodDao mealDao = db.meal_foodDao();
+            FoodDao foodDao = db.foodDao();
+            List<Meal_Food> meals;
+            List<Food> foods = new ArrayList<>();
+
+            for(int i=0;i<meal.size();i++){
+                meals = mealDao.loadByMeal(meal.get(i).id);
+                for(int j=0;j<meals.size();j++){
+                    Food food = foodDao.loadById(meals.get(j).food);
+                    foods.add(food);
+                }
+            }
+
+
+            handler.post(() -> {
+                calback.onLoadFoodComplete(foods);
+            });
+        });
     }
 
     public void executeUpdateHydration(AppDatabase db, String day, float objective, float quantity){
