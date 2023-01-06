@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -69,6 +70,7 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
     TextView title;
     FloatingActionButton addBtn;
     List<Meal> meal_list;
+    protected Parcelable state;
 
 
     public MealListFragment() {
@@ -101,8 +103,8 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
 
         addBtn = v.findViewById(R.id.addMeal);
 
-        title= v.findViewById(R.id.pageTitle);
-        title.setText("My Meals (" + today + ")");
+        title= v.findViewById(R.id.date);
+        title.setText("" + today);
 
         if(viewmodel.getSetDate().equals("")){
             taskManager.executeLoadMealAsync(viewmodel.getDB(), today);
@@ -197,7 +199,7 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
 
         String myFormat="dd-MM-yyyy";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.getDefault());
-        title.setText("My Meals (" + dateFormat.format(myCalendar.getTime()) + ")");
+        title.setText("" + dateFormat.format(myCalendar.getTime()));
         viewmodel.setSetDate(dateFormat.format(myCalendar.getTime()));
         taskManager.executeLoadMealAsync(viewmodel.getDB(), dateFormat.format(myCalendar.getTime()));
         
@@ -215,12 +217,14 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
     @Override
     public void onLoadMealComplete(HashMap<Long, List<Meal_Food>> mealList, List<Meal> meals, HashMap<Long, Food> foods) {
         try{
+
             foods_list = foods;
             meal_list = meals;
             expandableListDetail = mealList;
             fillTheScreen();
         }catch(Exception e){
-
+            System.out.println("erro");
+            System.out.println(e.getMessage());
         }
     }
 
