@@ -216,15 +216,14 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
 
     @Override
     public void onLoadMealComplete(HashMap<Long, List<Meal_Food>> mealList, List<Meal> meals, HashMap<Long, Food> foods) {
-        try{
 
+        try {
             foods_list = foods;
             meal_list = meals;
             expandableListDetail = mealList;
             fillTheScreen();
         }catch(Exception e){
-            System.out.println("erro");
-            System.out.println(e.getMessage());
+
         }
     }
 
@@ -288,7 +287,8 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
         expandableListAdapter = new CustomExpandableListAdapter(act, act.getApplicationContext(), meal_list, expandableListDetail, foods_list);
         System.out.println("COUNT1: " + expandableListAdapter.getGroupCount());
         System.out.println("COUNT: " + expandableListAdapter.getChildrenCount(0));
-        System.out.println("COUNT: " + ((Food)expandableListAdapter.getChild(0, 0)).name);
+
+        state = expandableListView.onSaveInstanceState();
         expandableListView.setAdapter(expandableListAdapter);
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
@@ -348,6 +348,7 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
                 return false;
             }
         });
+        expandableListView.onRestoreInstanceState(state);
 
     }
 

@@ -22,6 +22,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     private HashMap<Long, List<Meal_Food>> meal_foods;
     private HashMap<Long, Food> foods;
     private MainActivity act;
+    LayoutInflater inflater;
 
     public CustomExpandableListAdapter(MainActivity act, Context context, List<Meal> meals,
                                        HashMap<Long, List<Meal_Food>> meal_foods, HashMap<Long, Food> foods) {
@@ -30,6 +31,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         this.act = act;
         this.meals = meals;
         this.foods = foods;
+        inflater = (LayoutInflater.from(context));
     }
 
     @Override
@@ -97,11 +99,11 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int listPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
         String listTitle = ((Meal)getGroup(listPosition)).title;
-        if (convertView == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) this.context.
-                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.list_meals, null);
-        }
+
+            //System.out.println("entrou");
+            //LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        convertView = inflater.inflate(R.layout.list_meals, null);
+
 
         TextView name = (TextView) convertView.findViewById(R.id.mealName);
         name.setText(listTitle);
