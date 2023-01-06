@@ -21,6 +21,7 @@ import com.example.fitnessadvisor.Database.Exercise;
 import com.example.fitnessadvisor.Database.Food;
 import com.example.fitnessadvisor.Database.Hydration;
 import com.example.fitnessadvisor.Database.Meal;
+import com.example.fitnessadvisor.Database.Meal_Food;
 import com.example.fitnessadvisor.Database.Profile;
 import com.example.fitnessadvisor.Database.Workout;
 import com.example.fitnessadvisor.Database.Workout_Exercise;
@@ -158,9 +159,9 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         meal.day = currentDate;
         meal.time = currentTime;
         taskManager.executeInsertMeal(viewmodel.getDB(), meal);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 1, 1);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 1, 3);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 1, 5);
+        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 1, 1, 100);
+        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 1, 3, 100);
+        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 1, 5, 100);
 
         currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
@@ -169,9 +170,9 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         meal.day = currentDate;
         meal.time = currentTime;
         taskManager.executeInsertMeal(viewmodel.getDB(), meal);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 2, 2);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 2, 4);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 2, 6);
+        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 2, 2, 100);
+        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 2, 4, 100);
+        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 2, 6, 100);
 
         currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
@@ -180,9 +181,9 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         meal.day = currentDate;
         meal.time = currentTime;
         taskManager.executeInsertMeal(viewmodel.getDB(), meal);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 3, 3);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 3, 4);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 3, 5);
+        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 3, 3, 100);
+        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 3, 4, 100);
+        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 3, 5, 100);
     }
 
     private void PutFoodIntoDatabase()
@@ -247,7 +248,7 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
     }
 
     @Override
-    public void onLoadMealComplete(HashMap<String, List<String>> mealList, List<Meal> meals) {
+    public void onLoadMealComplete(HashMap<Long, List<Meal_Food>> mealList, List<Meal> meals, HashMap<Long, Food> foods) {
 
     }
 
