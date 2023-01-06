@@ -237,7 +237,6 @@ public class NutritionTaskManager {
             }
 
             mealDao.delete(meal);
-
             handler.post(() -> {
                 calback.onDeleteMealComplete();
             });

@@ -259,7 +259,6 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
                 taskManager.executeLoadMealAsync(viewmodel.getDB(), viewmodel.getSetDate());
             }
         }catch(Exception e){
-
         }
     }
 
@@ -318,7 +317,7 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
 
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         public boolean onMenuItemClick(MenuItem item) {
-                            if (item.getTitle().equals("Remover Refeição")) {
+                            if (item.getTitle().equals("Remove Meal")) {
                                 taskManager.executeDeleteMeal(viewmodel.getDB(), meal_list.get(position).id);
                             }
                             return true;

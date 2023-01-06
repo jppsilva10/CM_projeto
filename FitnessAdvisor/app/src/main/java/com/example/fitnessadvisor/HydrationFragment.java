@@ -86,7 +86,6 @@ public class HydrationFragment extends Fragment implements NutritionTaskManager.
         addButton = v.findViewById(R.id.add_button);
         list = v.findViewById(R.id.hydration_list);
         progress = v.findViewById(R.id.progress);
-        progress.setProgress(0);
 
         taskManager.executeLoadHydrationAsync(viewmodel.getDB(), today);
 

@@ -102,9 +102,6 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
 
         taskManager.executeGetBMR(viewmodel.getDB());
 
-        progress = v.findViewById(R.id.progress);
-        text = v.findViewById(R.id.kcal_num);
-        text2 = v.findViewById(R.id.calories);
         bmr = v.findViewById(R.id.bmr);
         bmr2 = v.findViewById(R.id.caloriesday);
         hydra = v.findViewById(R.id.hydrationNumber);
@@ -149,99 +146,7 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         chart.startAnimation();
     }
 
-    private void PutMealsIntoDatabase()
-    {
-        MainActivity act = (MainActivity)getActivity();
-        viewmodel = act.getViewModel();
 
-        String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-        String currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
-        Meal meal = new Meal();
-        meal.title = "Pequeno Almoço";
-        meal.day = currentDate;
-        meal.time = currentTime;
-        taskManager.executeInsertMeal(viewmodel.getDB(), meal);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 1, 1, 100);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 1, 3, 100);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 1, 5, 100);
-
-        currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-        currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
-        meal = new Meal();
-        meal.title = "Almoço";
-        meal.day = currentDate;
-        meal.time = currentTime;
-        taskManager.executeInsertMeal(viewmodel.getDB(), meal);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 2, 2, 100);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 2, 4, 100);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 2, 6, 100);
-
-        currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-        currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
-        meal = new Meal();
-        meal.title = "Jantar";
-        meal.day = currentDate;
-        meal.time = currentTime;
-        taskManager.executeInsertMeal(viewmodel.getDB(), meal);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 3, 3, 100);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 3, 4, 100);
-        taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), 3, 5, 100);
-    }
-
-    private void PutFoodIntoDatabase()
-    {
-        MainActivity act = (MainActivity)getActivity();
-        viewmodel = act.getViewModel();
-
-        Food food = new Food();
-        food.name = "Cenoura";
-        food.calories = 25;
-        food.fat = (float)0.2;
-        food.proteins = (float)0.9;
-        food.carbohydrates = (float)9.6;
-        taskManager.executeInsertFood(viewmodel.getDB(), food);
-
-        food = new Food();
-        food.name = "Carne de Vaca";
-        food.calories = 265;
-        food.fat = (float)19;
-        food.proteins = (float)21;
-        food.carbohydrates = (float)0;
-        taskManager.executeInsertFood(viewmodel.getDB(), food);
-
-        food = new Food();
-        food.name = "Carne de Porco";
-        food.calories = 297;
-        food.fat = (float)20.8;
-        food.proteins = (float)25.7;
-        food.carbohydrates = (float)0;
-        taskManager.executeInsertFood(viewmodel.getDB(), food);
-
-        food = new Food();
-        food.name = "Bacon";
-        food.calories = 43;
-        food.fat = (float)3.3;
-        food.proteins = (float)3;
-        food.carbohydrates = (float)0.1;
-        taskManager.executeInsertFood(viewmodel.getDB(), food);
-
-        food = new Food();
-        food.name = "Couve";
-        food.calories = 22;
-        food.fat = (float)0.1;
-        food.proteins = (float)1.1;
-        food.carbohydrates = (float)5.2;
-        taskManager.executeInsertFood(viewmodel.getDB(), food);
-
-        food = new Food();
-        food.name = "Batatas cozidas";
-        food.calories = 161;
-        food.fat = (float)1;
-        food.proteins = (float)4;
-        food.carbohydrates = (float)37;
-        taskManager.executeInsertFood(viewmodel.getDB(), food);
-
-    }
 
     @Override
     public void onLoadBMR(float BMR) {
@@ -305,6 +210,8 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         List<Food> foods = food;
         if(foods.size() == 0){
             progress.setProgress(0);
+            text.setText("");
+            text2.setText("");
         }
         else{
             kcal = 0.0f;
