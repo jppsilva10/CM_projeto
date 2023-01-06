@@ -1,5 +1,6 @@
 package com.example.fitnessadvisor;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
 import java.time.LocalDateTime;
@@ -46,6 +47,7 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
     private ProgressBar progress;
     private TextView text;
     private TextView text2;
+    private TextView hydra;
 
     PieChart chart;
 
@@ -91,11 +93,15 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         chart = v.findViewById(R.id.pieChartMarcronutrients);
 
         taskManager.executeGetBMR(viewmodel.getDB());
+
         progress = v.findViewById(R.id.progress);
         text = v.findViewById(R.id.kcal_num);
         text2 = v.findViewById(R.id.calories);
         bmr = v.findViewById(R.id.bmr);
         bmr2 = v.findViewById(R.id.caloriesday);
+        hydra = v.findViewById(R.id.hydrationNumber);
+
+        taskManager.executeLoadHydrationAsync(viewmodel.getDB(), today);
 
         Button b = v.findViewById(R.id.goToMealList);
         b.setOnClickListener(new View.OnClickListener() {
@@ -280,7 +286,14 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
 
     @Override
     public void onLoadHydrationComplete(List<Hydration> hydration) {
+        if(hydration.size() == 0) return;
 
+        DecimalFormat df = new DecimalFormat("#.00");
+        float waterLeftNumber = Float.valueOf(df.format(hydration.get(0).objective - hydration.get(0).quantity));
+        if (waterLeftNumber < 0) {
+            waterLeftNumber = 0;
+        }
+        hydra.setText(Float.toString(waterLeftNumber));
     }
 
 
