@@ -46,6 +46,7 @@ public class NutritionTaskManager {
     }
 
     public interface Callback{
+        void onLoadProfileComplete(Profile profile, boolean empty);
         void onLoadMealComplete(HashMap<Long, List<Meal_Food>> mealList, List<Meal> meals, HashMap<Long, Food> foods);
         void onLoadFoodComplete(List<Food> food);
         void onInsertMealComplete(long mealId);
@@ -54,6 +55,22 @@ public class NutritionTaskManager {
         void onUpdateHydrationComplete();
         void onLoadFoodFromMeal(Meal meal, List<Food> foodList);
         void onLoadBMR(float bmr);
+    }
+
+    public void executeLoadProfileAsync(AppDatabase db){
+        executor.execute(() -> {
+
+            ProfileDao profileDao = db.profileDao();
+            List<Profile> profiles = profileDao.getAll();
+            Profile profile = new Profile();
+            if(profiles.size()!=0)
+                profile = profiles.get(0);
+
+            Profile finalProfile = profile;
+            handler.post(() -> {
+                calback.onLoadProfileComplete(finalProfile, profiles.size()==0);
+            });
+        });
     }
 
     public void executeLoadFoodAsync(AppDatabase db){

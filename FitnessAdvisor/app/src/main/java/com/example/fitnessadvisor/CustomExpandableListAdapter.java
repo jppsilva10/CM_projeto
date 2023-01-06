@@ -134,11 +134,70 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
+    public float calculateTotalCalories(){
+        float result = 0;
+        for(int i=0; i<getGroupCount(); i++){
+            result += calculateMealCalories(i);
+        }
+        return result;
+    }
+
+    public float calculateTotalFat(){
+        float result = 0;
+        for(int i=0; i<getGroupCount(); i++){
+            result += calculateMealFat(i);
+        }
+        return result;
+    }
+
+    public float calculateTotalCarbs(){
+        float result = 0;
+        for(int i=0; i<getGroupCount(); i++){
+            result += calculateMealCarbs(i);
+        }
+        return result;
+    }
+
+    public float calculateTotalProteins(){
+        float result = 0;
+        for(int i=0; i<getGroupCount(); i++){
+            result += calculateMealProteins(i);
+        }
+        return result;
+    }
+
     public float calculateMealCalories(int listPosition){
         float result = 0;
         for(int i=0; i<getChildrenCount(listPosition); i++){
             Food food = (Food) getChild(listPosition, i);
             result += (food.calories/100) * meal_foods.get(meals.get(listPosition).id).get(i).weight;
+        }
+        return result;
+    }
+
+    public float calculateMealFat(int listPosition){
+        float result = 0;
+        for(int i=0; i<getChildrenCount(listPosition); i++){
+            Food food = (Food) getChild(listPosition, i);
+            result += (food.fat/100) * meal_foods.get(meals.get(listPosition).id).get(i).weight;
+        }
+        return result;
+    }
+
+    public float calculateMealCarbs(int listPosition){
+        float result = 0;
+        for(int i=0; i<getChildrenCount(listPosition); i++){
+            Food food = (Food) getChild(listPosition, i);
+            result += (food.carbohydrates/100) * meal_foods.get(meals.get(listPosition).id).get(i).weight;
+        }
+        return result;
+    }
+
+    public float calculateMealProteins(int listPosition){
+        float result = 0;
+        for(int i=0; i<getChildrenCount(listPosition); i++){
+            Food food = (Food) getChild(listPosition, i);
+            result += (food.proteins/100) * meal_foods.get(meals.get(listPosition).id).get(i).weight;
         }
         return result;
     }

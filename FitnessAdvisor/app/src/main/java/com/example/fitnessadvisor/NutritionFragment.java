@@ -1,5 +1,6 @@
 package com.example.fitnessadvisor;
 
+import java.security.spec.ECField;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
@@ -56,6 +57,9 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
     private TextView bmr;
     private TextView bmr2;
 
+    float dailyCal = 2000;
+    protected boolean no_profile = false;
+
     public NutritionFragment() {
         // Required empty public constructor
     }
@@ -87,7 +91,7 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         //PopulateDatabase.populateFoods(viewmodel.getDB(), taskManager);
 
         String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-        taskManager.executeLoadFoodFromdayAsync(viewmodel.getDB(), today);
+        taskManager.executeLoadMealAsync(viewmodel.getDB(), today);
 
 
         progress = v.findViewById(R.id.progress);
@@ -106,6 +110,7 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         hydra = v.findViewById(R.id.hydrationNumber);
 
         taskManager.executeLoadHydrationAsync(viewmodel.getDB(), today);
+        taskManager.executeLoadProfileAsync(viewmodel.getDB());
 
         Button b = v.findViewById(R.id.goToMealList);
         b.setOnClickListener(new View.OnClickListener() {
@@ -246,13 +251,59 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
 
     @Override
     public void onLoadBMR(float BMR) {
-        bmr.setText(String.valueOf((int)BMR));
-        bmr2.setText("Calories/Day");
+        dailyCal = BMR+400;
+        if(no_profile){
+            System.out.println("entrou");
+            bmr.setText("Only available with a profile");
+            bmr2.setVisibility(View.GONE);
+        }
+        else{
+            bmr.setText(String.valueOf((int)BMR));
+            bmr2.setText("Calories/Day");
+        }
+    }
+
+    @Override
+    public void onLoadProfileComplete(Profile profile, boolean empty) {
+        no_profile = empty;
+        System.out.println(no_profile);
     }
 
     @Override
     public void onLoadMealComplete(HashMap<Long, List<Meal_Food>> mealList, List<Meal> meals, HashMap<Long, Food> foods) {
 
+        try {
+            CustomExpandableListAdapter adapter = new CustomExpandableListAdapter((MainActivity) getActivity(), getActivity().getApplicationContext(), meals, mealList, foods);
+
+            if (foods.size() == 0) {
+                progress.setProgress(0);
+                kcal=0;
+                text.setText(String.valueOf((int) kcal));
+                text2.setText("Kcal");
+            } else {
+                kcal = adapter.calculateTotalCalories();
+                carbohydrates = adapter.calculateTotalCarbs();
+                proteins = adapter.calculateTotalProteins();
+                fat = adapter.calculateTotalFat();
+
+                int value = (int)(100 *  (kcal / dailyCal));
+                if(!no_profile){
+                    progress.setProgress(value);
+                }
+
+                text.setText(String.valueOf((int) kcal));
+                text2.setText("Kcal");
+                if(no_profile){
+                    //progress.setVisibility(View.INVISIBLE);
+                    //text2.setVisibility(View.INVISIBLE);
+                    //text.setText("(Only available with a profile)");
+                }
+            }
+
+            setUpChartView();
+        }catch(Exception e){
+
+        }
     }
 
     @Override
@@ -264,10 +315,11 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         else{
             kcal = 0.0f;
             for(int i=0;i<foods.size();i++){
-                kcal = kcal + foods.get(i).calories;
-                carbohydrates = carbohydrates + foods.get(i).calories;
-                proteins = proteins + foods.get(i).proteins;
-                fat = fat + foods.get(i).fat;
+                Food f = foods.get(i);
+                kcal = kcal + (f.calories/100);
+                carbohydrates = carbohydrates + (f.calories/100);
+                proteins = proteins + (f.proteins/100);
+                fat = fat + (f.fat/100);
             }
             int value = 100*((int) kcal)/2000;
             progress.setProgress(value);

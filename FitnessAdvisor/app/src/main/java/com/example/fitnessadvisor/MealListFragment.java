@@ -212,7 +212,10 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
     }
 
 
+    @Override
+    public void onLoadProfileComplete(Profile profile, boolean empty) {
 
+    }
 
     @Override
     public void onLoadMealComplete(HashMap<Long, List<Meal_Food>> mealList, List<Meal> meals, HashMap<Long, Food> foods) {

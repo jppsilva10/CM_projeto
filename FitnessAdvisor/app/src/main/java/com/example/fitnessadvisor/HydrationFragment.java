@@ -19,6 +19,7 @@ import com.example.fitnessadvisor.Database.Food;
 import com.example.fitnessadvisor.Database.Hydration;
 import com.example.fitnessadvisor.Database.Meal;
 import com.example.fitnessadvisor.Database.Meal_Food;
+import com.example.fitnessadvisor.Database.Profile;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -118,6 +119,11 @@ public class HydrationFragment extends Fragment implements NutritionTaskManager.
 
     @Override
     public void onLoadBMR(float BMR) {
+
+    }
+
+    @Override
+    public void onLoadProfileComplete(Profile profile, boolean empty) {
 
     }
 
