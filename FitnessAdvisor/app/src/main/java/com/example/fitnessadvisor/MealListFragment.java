@@ -203,13 +203,6 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
         title.setText("" + dateFormat.format(myCalendar.getTime()));
         viewmodel.setSetDate(dateFormat.format(myCalendar.getTime()));
         taskManager.executeLoadMealAsync(viewmodel.getDB(), viewmodel.getSetDate());
-        
-        if(today.equals(dateFormat.format(myCalendar.getTime()))){
-            addBtn.setVisibility(View.VISIBLE);
-        }
-        else{
-            addBtn.setVisibility(View.GONE);
-        }
     }
 
     private void updateLabelWithSetDate(String day){
@@ -221,13 +214,6 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
         myCalendar.set(Calendar.YEAR, Integer.valueOf(arr_day[2]));
         myCalendar.set(Calendar.MONTH,Integer.valueOf(arr_day[1])-1);
         myCalendar.set(Calendar.DAY_OF_MONTH,Integer.valueOf(arr_day[0]));
-
-        if(day.equals(today)){
-            addBtn.setVisibility(View.VISIBLE);
-        }
-        else{
-            addBtn.setVisibility(View.GONE);
-        }
     }
 
 

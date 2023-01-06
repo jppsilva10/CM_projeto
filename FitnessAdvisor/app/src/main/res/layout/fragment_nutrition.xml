@@ -154,7 +154,7 @@
                         android:text="Only available with a profile" />
 
                     <TextView
-                        android:id="@+id/caloriesday"
+                        android:id="@+id/bmrLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"

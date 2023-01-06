@@ -29,6 +29,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class AccountFragment extends Fragment implements AccountTaskManager.Callback{
 
@@ -130,6 +131,17 @@ public class AccountFragment extends Fragment implements AccountTaskManager.Call
             text = act.findViewById(R.id.bmiValue);
             float bmi = (float) (profile.weight / (Math.pow(profile.height / 100, 2)));
             text.setText(String.format("%.2f", bmi));
+
+            text = act.findViewById(R.id.targetWeightValue);
+            text.setText(String.format("%.2f", profile.target_weight) + " Kg");
+
+            text = act.findViewById(R.id.goalDeadlineValue);
+            String myFormat="dd-MM-yyyy";
+            SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.getDefault());
+            Calendar myCalendar = Calendar.getInstance();
+            myCalendar.setTime(profile.goal_deadline);
+            text.setText(dateFormat.format(myCalendar.getTime()));
+
         }catch (Exception e){
 
         }

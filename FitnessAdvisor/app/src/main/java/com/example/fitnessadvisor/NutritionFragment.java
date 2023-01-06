@@ -112,13 +112,13 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         taskManager.executeGetBMR(viewmodel.getDB());
 
         bmr = v.findViewById(R.id.bmr);
-        bmr2 = v.findViewById(R.id.caloriesday);
+        bmr2 = v.findViewById(R.id.bmrLabel);
         hydra = v.findViewById(R.id.hydrationNumber);
         date = v.findViewById(R.id.date);
 
+        taskManager.executeLoadProfileAsync(viewmodel.getDB());
         taskManager.executeLoadMealAsync(viewmodel.getDB(), viewmodel.getSetDate());
         taskManager.executeLoadHydrationAsync(viewmodel.getDB(), viewmodel.getSetDate());
-        taskManager.executeLoadProfileAsync(viewmodel.getDB());
 
         Button b = v.findViewById(R.id.goToMealList);
         b.setOnClickListener(new View.OnClickListener() {
@@ -220,6 +220,9 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
     public void onLoadProfileComplete(Profile profile, boolean empty) {
         no_profile = empty;
         System.out.println(no_profile);
+        if(no_profile){
+            bmr2.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
