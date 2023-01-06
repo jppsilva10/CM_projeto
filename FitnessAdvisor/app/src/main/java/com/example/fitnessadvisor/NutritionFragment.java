@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 
 import java.time.LocalDateTime;
 
+import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -34,6 +36,7 @@ import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +54,7 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
     private TextView text;
     private TextView text2;
     private TextView hydra;
+    private TextView date;
 
     PieChart chart;
 
@@ -59,6 +63,8 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
 
     float dailyCal = 2000;
     protected boolean no_profile = false;
+
+    final Calendar myCalendar= Calendar.getInstance();
 
     public NutritionFragment() {
         // Required empty public constructor
@@ -105,6 +111,7 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         bmr = v.findViewById(R.id.bmr);
         bmr2 = v.findViewById(R.id.caloriesday);
         hydra = v.findViewById(R.id.hydrationNumber);
+        date = v.findViewById(R.id.dateNutrition);
 
         taskManager.executeLoadHydrationAsync(viewmodel.getDB(), today);
         taskManager.executeLoadProfileAsync(viewmodel.getDB());
@@ -136,10 +143,47 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
             }
         });
 
+
+        date.setText("" + today);
+
+        DatePickerDialog.OnDateSetListener dateCalendar = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH,month);
+                myCalendar.set(Calendar.DAY_OF_MONTH,day);
+                updateLabel();
+            }
+        };
+        date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(act,dateCalendar,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
         return v;
     }
 
+    private void updateLabel(){
+        String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+
+        String myFormat="dd-MM-yyyy";
+        SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.getDefault());
+        date.setText("" + dateFormat.format(myCalendar.getTime()));
+        viewmodel.setSetDate(dateFormat.format(myCalendar.getTime()));
+
+        kcal = 0.0f;
+        proteins = 0.0f;
+        carbohydrates = 0.0f;
+        fat = 0.0f;
+
+        taskManager.executeLoadMealAsync(viewmodel.getDB(), dateFormat.format(myCalendar.getTime()));
+        taskManager.executeLoadHydrationAsync(viewmodel.getDB(), dateFormat.format(myCalendar.getTime()));
+    }
+
     private void setUpChartView(){
+        chart.clearChart();
         chart.addPieSlice(new PieModel("Lípidos", fat, Color.parseColor("#E97451")));
         chart.addPieSlice(new PieModel("Carbohidratos", carbohydrates, Color.parseColor("#6495ED")));
         chart.addPieSlice(new PieModel("Proteínas", proteins, Color.parseColor("#228B22")));
@@ -215,6 +259,9 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         }
         else{
             kcal = 0.0f;
+            proteins = 0.0f;
+            carbohydrates = 0.0f;
+            fat = 0.0f;
             for(int i=0;i<foods.size();i++){
                 Food f = foods.get(i);
                 kcal = kcal + (f.calories/100);
