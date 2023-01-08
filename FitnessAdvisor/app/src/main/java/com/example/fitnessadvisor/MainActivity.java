@@ -41,8 +41,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "MyDatabase")
-                .createFromAsset("database/MyDatabase")
-                .fallbackToDestructiveMigration()
+                .createFromAsset("database/MyDatabase.db")
                 .build();
 
 
@@ -51,10 +50,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         /*
         db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "MyDatabase").fallbackToDestructiveMigration().build();
-
+                AppDatabase.class, "MyDatabase").build();
 
          */
+
+
 
 
 

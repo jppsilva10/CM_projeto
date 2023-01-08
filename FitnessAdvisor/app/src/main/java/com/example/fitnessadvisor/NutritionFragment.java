@@ -202,43 +202,44 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
 
     @Override
     public void onLoadBMR(float BMR) {
-        if(no_profile){
-            dailyCal = BMR + 400;
-            bmr.setText("Only available with a profile");
-            bmr2.setVisibility(View.GONE);
-        }
-        else{
-            Date today = new Date();
-            Date goal = myProfile.goal_deadline;
+        try {
+            if (no_profile) {
+                dailyCal = BMR + 400;
+                bmr.setText("Only available with a profile");
+                bmr2.setVisibility(View.GONE);
+            } else {
+                Date today = new Date();
+                Date goal = myProfile.goal_deadline;
 
-            long diffInMillies = Math.abs(today.getTime() - goal.getTime());
-            long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+                long diffInMillies = Math.abs(today.getTime() - goal.getTime());
+                long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 
-            DecimalFormat df = new DecimalFormat("#.0");
+                DecimalFormat df = new DecimalFormat("#.0");
 
             /*float weeks;
             weeks = Float.valueOf(df.format(diff/7));*/
 
-            dailyCal = 0;
-            float sustainWeightCals = BMR * myProfile.activity_level;
+                dailyCal = 0;
+                float sustainWeightCals = BMR * myProfile.activity_level;
 
-            if(myProfile.weight > myProfile.target_weight){
-                //lose weight
-                float losingWeightCals = (myProfile.weight - myProfile.target_weight) * (1100 / diff);
-                dailyCal = Float.valueOf(df.format(sustainWeightCals - losingWeightCals));
-            }
-            else if(myProfile.weight < myProfile.target_weight){
-                //gain weight
-                float gainingWeightCals = (myProfile.target_weight - myProfile.weight) * (1100 / diff);
-                dailyCal = Float.valueOf(df.format(sustainWeightCals + gainingWeightCals));
-            }
-            else{
-                //maintain weight
-                dailyCal = Float.valueOf(df.format(sustainWeightCals));
-            }
+                if (myProfile.weight > myProfile.target_weight) {
+                    //lose weight
+                    float losingWeightCals = (myProfile.weight - myProfile.target_weight) * (1100 / diff);
+                    dailyCal = sustainWeightCals - losingWeightCals;
+                } else if (myProfile.weight < myProfile.target_weight) {
+                    //gain weight
+                    float gainingWeightCals = (myProfile.target_weight - myProfile.weight) * (1100 / diff);
+                    dailyCal = sustainWeightCals + gainingWeightCals;
+                } else {
+                    //maintain weight
+                    dailyCal = sustainWeightCals;
+                }
 
-            bmr.setText(String.valueOf((int)BMR));
-            bmr2.setText("Calories/Day");
+                bmr.setText(String.valueOf((int) BMR));
+                bmr2.setText("Calories/Day");
+            }
+        }catch (Exception e){
+
         }
     }
 
@@ -249,12 +250,16 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
 
     @Override
     public void onLoadProfileComplete(Profile profile, boolean empty) {
-        no_profile = empty;
-        if(no_profile){
-            bmr2.setVisibility(View.INVISIBLE);
-        }
+        try {
+            no_profile = empty;
+            if (no_profile) {
+                bmr2.setVisibility(View.INVISIBLE);
+            }
 
-        if(!no_profile) myProfile = profile;
+            if (!no_profile) myProfile = profile;
+        }catch (Exception e){
+
+        }
     }
 
     @Override
@@ -296,31 +301,34 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
 
     @Override
     public void onLoadFoodComplete(List<Food> food) {
-        List<Food> foods = food;
-        if(foods.size() == 0){
-            progress.setProgress(0);
-            text.setText("");
-            text2.setText("");
-        }
-        else{
-            kcal = 0.0f;
-            proteins = 0.0f;
-            carbohydrates = 0.0f;
-            fat = 0.0f;
-            for(int i=0;i<foods.size();i++){
-                Food f = foods.get(i);
-                kcal = kcal + (f.calories/100);
-                carbohydrates = carbohydrates + (f.calories/100);
-                proteins = proteins + (f.proteins/100);
-                fat = fat + (f.fat/100);
+        try {
+            List<Food> foods = food;
+            if (foods.size() == 0) {
+                progress.setProgress(0);
+                text.setText("");
+                text2.setText("");
+            } else {
+                kcal = 0.0f;
+                proteins = 0.0f;
+                carbohydrates = 0.0f;
+                fat = 0.0f;
+                for (int i = 0; i < foods.size(); i++) {
+                    Food f = foods.get(i);
+                    kcal = kcal + (f.calories / 100);
+                    carbohydrates = carbohydrates + (f.calories / 100);
+                    proteins = proteins + (f.proteins / 100);
+                    fat = fat + (f.fat / 100);
+                }
+                int value = 100 * ((int) kcal) / 2000;
+                progress.setProgress(value);
+                text.setText(String.valueOf((int) kcal));
+                text2.setText("kcal");
             }
-            int value = 100*((int) kcal)/2000;
-            progress.setProgress(value);
-            text.setText(String.valueOf((int)kcal));
-            text2.setText("kcal");
-        }
 
-        setUpChartView();
+            setUpChartView();
+        }catch (Exception e){
+
+        }
     }
 
     @Override

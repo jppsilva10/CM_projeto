@@ -60,8 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@drawable/account_body"
-            android:paddingBottom="?android:attr/actionBarSize">
+            android:background="@drawable/account_body">
 
             <SearchView
                 android:id="@+id/search"
@@ -74,27 +73,33 @@
                 android:layout_weight="1"
                 android:clipToPadding="false">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/addMeal"
-                    android:layout_width="425dp"
-                    android:layout_height="425dp"
-                    android:layout_marginLeft="300dp"
-                    android:layout_marginTop="400dp"
-                    android:layout_marginBottom="10dp"
-                    android:clickable="true"
-                    android:src="@drawable/ic_add"
-                    app:backgroundTint="#65E8A9" />
-
                 <ExpandableListView
                     android:id="@+id/expandableListView"
                     android:layout_width="match_parent"
-                    android:layout_height="500dp"
+                    android:layout_height="match_parent"
                     android:divider="#A4C739"
                     android:dividerHeight="0dp"
-                    android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
                     android:groupIndicator="@drawable/indicator"
-                    android:indicatorRight="50dp"
-                    />
+                    android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+                    android:indicatorRight="50dp" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/addMeal"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="30dp"
+                        android:clickable="true"
+                        android:src="@drawable/ic_add"
+                        app:backgroundTint="#65E8A9"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

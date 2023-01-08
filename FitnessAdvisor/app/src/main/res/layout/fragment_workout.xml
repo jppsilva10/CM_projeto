@@ -56,8 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@drawable/account_body"
-            android:paddingBottom="?android:attr/actionBarSize">
+            android:background="@drawable/account_body">
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"
@@ -71,24 +70,33 @@
                 android:clipToPadding="false"
                 android:layout_gravity="center">
 
-                <ListView
-                    android:id="@+id/workout_list"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="90dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
-                    android:divider="@null" />
+                    android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/button_start"
-                    android:layout_width="225dp"
-                    android:layout_height="55dp"
-                    android:layout_marginLeft="75dp"
-                    android:layout_marginTop="400dp"
-                    android:layout_marginBottom="20dp"
-                    android:src="@drawable/ic_add"
-                    android:text="Start"
-                    app:backgroundTint="#65E8A9" />
+                    <ListView
+                        android:id="@+id/workout_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:divider="@null" />
+
+                    <Button
+                        android:id="@+id/button_start"
+                        android:layout_width="225dp"
+                        android:layout_height="55dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:src="@drawable/ic_add"
+                        android:text="Start"
+                        app:backgroundTint="#65E8A9" />
+
+                </LinearLayout>
+
+
 
             </RelativeLayout>
 

@@ -298,20 +298,26 @@ public class WorkoutListFragment extends Fragment implements WorkoutTaskManager.
     @Override
     public void onLoadWorkoutComplete(Workout workout) {
         viewmodel.setWorkoutId(workout.id);
+        try {
+            if (auto) {
+                getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container_view, WorkoutFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("stack")
+                        .commit();
+            } else {
+                getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container_view, ManuallyWorkoutFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack("stack")
+                        .commit();
+            }
+        }catch (Exception e){
 
-        if(auto){
-            getActivity()
-                    .getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container_view, WorkoutFragment.class, null)
-                    .commit();
-        }
-        else {
-            getActivity()
-                    .getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container_view, ManuallyWorkoutFragment.class, null)
-                    .commit();
         }
     }
 

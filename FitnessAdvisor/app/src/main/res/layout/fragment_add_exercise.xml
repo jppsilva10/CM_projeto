@@ -62,8 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/exercise_body"
-            android:orientation="vertical"
-            android:paddingBottom="?android:attr/actionBarSize">
+            android:orientation="vertical">
 
             <ScrollView
                 android:layout_width="match_parent"

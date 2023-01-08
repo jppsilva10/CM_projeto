@@ -348,9 +348,9 @@ public class WorkoutTaskManager {
 
                 //Wide-Grip Lat Pull Down
                 we = new Workout_Exercise();
-                we.day = 21;
+                we.day = 1;
                 we.workout = workout.id;
-                we.exercise = 1;
+                we.exercise = 21;
                 we.repetitions = 10;
                 we.sets = 4;
                 we.weight = (float) (profile.weight * percent);
