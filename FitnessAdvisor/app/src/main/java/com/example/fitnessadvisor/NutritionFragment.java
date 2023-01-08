@@ -97,7 +97,7 @@ public class NutritionFragment extends Fragment implements NutritionTaskManager.
         //PutFoodIntoDatabase();
         //PutMealsIntoDatabase();
 
-        PopulateDatabase.populateFoods(viewmodel.getDB(), taskManager);
+        //PopulateDatabase.populateFoods(viewmodel.getDB(), taskManager);
 
         String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
