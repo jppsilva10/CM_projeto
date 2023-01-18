@@ -149,31 +149,38 @@ public class AddExerciseFragment extends Fragment implements WorkoutTaskManager.
 
     @Override
     public void onLoadExerciseComplete(Exercise exercise) {
-        MainActivity act = (MainActivity) getActivity();
+        try {
+            MainActivity act = (MainActivity) getActivity();
 
-        TextView name = act.findViewById(R.id.exerciseName);
-        name.setText(exercise.name);
+            TextView name = act.findViewById(R.id.exerciseName);
+            name.setText(exercise.name);
 
-        GifImageView img = act.findViewById(R.id.exerciseImage);
-        img.setImageResource(exercise.image);
+            GifImageView img = act.findViewById(R.id.exerciseImage);
+            img.setImageResource(exercise.image);
 
-        TextView description = act.findViewById(R.id.exerciseDescription);
-        description.setText(exercise.description);
+            TextView description = act.findViewById(R.id.exerciseDescription);
+            description.setText(exercise.description);
 
-        TextView muscles = act.findViewById(R.id.exerciseMuscles);
-        muscles.setText(exercise.muscle_groups);
+            TextView muscles = act.findViewById(R.id.exerciseMuscles);
+            muscles.setText(exercise.muscle_groups);
+        }catch (Exception e){
+
+        }
     }
 
     @Override
     public void onAddExerciseComplete(Workout_Exercise we) {
+        try {
+            getActivity().getSupportFragmentManager().popBackStack();
+            getActivity().getSupportFragmentManager().popBackStack();
+            getActivity()
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container_view, ManuallyWorkoutFragment.class, null)
+                    .commit();
+        }catch (Exception e){
 
-        getActivity().getSupportFragmentManager().popBackStack();
-        getActivity().getSupportFragmentManager().popBackStack();
-        getActivity()
-                .getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container_view, ManuallyWorkoutFragment.class, null)
-                .commit();
+        }
     }
 
     @Override
@@ -193,31 +200,35 @@ public class AddExerciseFragment extends Fragment implements WorkoutTaskManager.
 
     @Override
     public void onLoadWorkout_ExerciseComplete(Workout_Exercise we, Exercise exercise) {
-        this.we = we;
+        try {
+            this.we = we;
 
-        MainActivity act = (MainActivity) getActivity();
+            MainActivity act = (MainActivity) getActivity();
 
-        TextView name = act.findViewById(R.id.exerciseName);
-        name.setText(exercise.name);
+            TextView name = act.findViewById(R.id.exerciseName);
+            name.setText(exercise.name);
 
-        GifImageView img = act.findViewById(R.id.exerciseImage);
-        img.setImageResource(exercise.image);
+            GifImageView img = act.findViewById(R.id.exerciseImage);
+            img.setImageResource(exercise.image);
 
-        TextView description = act.findViewById(R.id.exerciseDescription);
-        description.setText(exercise.description);
+            TextView description = act.findViewById(R.id.exerciseDescription);
+            description.setText(exercise.description);
 
-        TextView muscles = act.findViewById(R.id.exerciseMuscles);
-        muscles.setText(exercise.muscle_groups);
+            TextView muscles = act.findViewById(R.id.exerciseMuscles);
+            muscles.setText(exercise.muscle_groups);
 
-        EditText sets = act.findViewById(R.id.setsValue);
-        sets.setText("" + we.sets);
+            EditText sets = act.findViewById(R.id.setsValue);
+            sets.setText("" + we.sets);
 
 
-        EditText reps = act.findViewById(R.id.repsValue);
-        reps.setText("" + we.repetitions);
+            EditText reps = act.findViewById(R.id.repsValue);
+            reps.setText("" + we.repetitions);
 
-        EditText weight = act.findViewById(R.id.weightValue);
-        weight.setText("" + we.weight);
+            EditText weight = act.findViewById(R.id.weightValue);
+            weight.setText("" + we.weight);
+        }catch (Exception e){
+
+        }
 
     }
 }

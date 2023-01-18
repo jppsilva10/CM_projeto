@@ -232,7 +232,11 @@ public class HydrationFragment extends Fragment implements NutritionTaskManager.
     @Override
     public void onLoadWaterGoal(float waterGoal) {
         waterQuantityGoal = waterGoal/1000;
-        this.waterGoal.setText("/" + String.format("%.2f", waterQuantityGoal)+"L");
+        try {
+            this.waterGoal.setText("/" + String.format("%.2f", waterQuantityGoal) + "L");
+        }catch (Exception e){
+
+        }
     }
 
     @Override

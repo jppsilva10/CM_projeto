@@ -67,19 +67,23 @@ public class ExerciseFragment extends Fragment implements WorkoutTaskManager.Cal
 
     @Override
     public void onLoadExerciseComplete(Exercise exercise) {
-        MainActivity act = (MainActivity) getActivity();
+        try {
+            MainActivity act = (MainActivity) getActivity();
 
-        TextView name = act.findViewById(R.id.exerciseName);
-        name.setText(exercise.name);
+            TextView name = act.findViewById(R.id.exerciseName);
+            name.setText(exercise.name);
 
-        GifImageView img = act.findViewById(R.id.exerciseImage);
-        img.setImageResource(exercise.image);
+            GifImageView img = act.findViewById(R.id.exerciseImage);
+            img.setImageResource(exercise.image);
 
-        TextView description = act.findViewById(R.id.exerciseDescription);
-        description.setText(exercise.description);
+            TextView description = act.findViewById(R.id.exerciseDescription);
+            description.setText(exercise.description);
 
-        TextView muscles = act.findViewById(R.id.exerciseMuscles);
-        muscles.setText(exercise.muscle_groups);
+            TextView muscles = act.findViewById(R.id.exerciseMuscles);
+            muscles.setText(exercise.muscle_groups);
+        }catch (Exception e){
+
+        }
     }
 
     @Override

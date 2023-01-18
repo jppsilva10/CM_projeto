@@ -279,11 +279,11 @@ public class UpdateProfileFragment extends Fragment implements AccountTaskManage
         if (!empty) {
             this.profile = profile;
 
-            MainActivity act = (MainActivity) getActivity();
-            EditText text;
-            Spinner spinner;
+            try{
+                MainActivity act = (MainActivity) getActivity();
+                EditText text;
+                Spinner spinner;
 
-            try {
                 text = act.findViewById(R.id.nameValue);
                 text.setText(profile.name);
 

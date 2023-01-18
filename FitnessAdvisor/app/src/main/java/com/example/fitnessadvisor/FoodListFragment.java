@@ -183,12 +183,16 @@ public class FoodListFragment extends Fragment implements NutritionTaskManager.C
 
     @Override
     public void onLoadFoodComplete(List<Food> food) {
-        food_list = food;
-        MyAdapterFood myAdapter = new MyAdapterFood(getActivity().getApplicationContext(), food, selected_food, quantity);
-        state = food_list_view.onSaveInstanceState();
-        food_list_view.setAdapter(myAdapter);
-        setListListener();
-        food_list_view.onRestoreInstanceState(state);
+        try {
+            food_list = food;
+            MyAdapterFood myAdapter = new MyAdapterFood(getActivity().getApplicationContext(), food, selected_food, quantity);
+            state = food_list_view.onSaveInstanceState();
+            food_list_view.setAdapter(myAdapter);
+            setListListener();
+            food_list_view.onRestoreInstanceState(state);
+        }catch (Exception e){
+
+        }
     }
 
     @Override

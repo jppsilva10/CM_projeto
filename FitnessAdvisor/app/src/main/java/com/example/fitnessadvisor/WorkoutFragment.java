@@ -211,11 +211,15 @@ public class WorkoutFragment extends Fragment implements WorkoutTaskManager.Call
 
     @Override
     public void onLoadWorkout_ExerciseComplete(List<Exercise> exercises, List<Workout_Exercise> wes) {
-        myAdapter = new MyAdapterExerciseWorkout(getActivity().getApplicationContext(), exercises, wes, value[viewmodel.getDay()-1]);
-        state = list.onSaveInstanceState();
-        list.setAdapter(myAdapter);
-        setListListener();
-        list.onRestoreInstanceState(state);
+        try {
+            myAdapter = new MyAdapterExerciseWorkout(getActivity().getApplicationContext(), exercises, wes, value[viewmodel.getDay() - 1]);
+            state = list.onSaveInstanceState();
+            list.setAdapter(myAdapter);
+            setListListener();
+            list.onRestoreInstanceState(state);
+        }catch (Exception e){
+
+        }
     }
 
     @Override

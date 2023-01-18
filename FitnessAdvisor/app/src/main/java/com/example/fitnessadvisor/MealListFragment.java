@@ -71,6 +71,8 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
     FloatingActionButton addBtn;
     List<Meal> meal_list;
     protected Parcelable state;
+    protected long selected_id;
+    protected int selected_position;
 
 
     public MealListFragment() {
@@ -104,6 +106,7 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
         View v = inflater.inflate(R.layout.fragment_meal_list, container, false);
 
         expandableListView = (ExpandableListView) v.findViewById(R.id.expandableListView);
+        registerForContextMenu(expandableListView);
 
         addBtn = v.findViewById(R.id.addMeal);
 
@@ -316,8 +319,18 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
         expandableListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapter, View v, int position, long id) {
-                String today = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-                if(viewmodel.getSetDate().equals(today)) {
+                System.out.println("SELECTED ID: "+id);
+                System.out.println("SELECTED POSITION: "+position);
+                selected_id = id;
+                selected_position = position;
+                /*
+                boolean is_meal = true;
+                try{
+                    is_meal = expandableListAdapter.getGroupId(position)==id;
+                }catch(Exception e){
+                    is_meal = false;
+                }
+                if(is_meal) {
                     PopupMenu popup = new PopupMenu(act, expandableListView);
                     popup.getMenuInflater().inflate(R.menu.remove_meal_popup, popup.getMenu());
 
@@ -339,7 +352,7 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
                                 builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
-                                                taskManager.renamemeal(viewmodel.getDB(),input.getText().toString(),meal_list.get(position).id);
+                                                taskManager.renamemeal(viewmodel.getDB(),input.getText().toString(),id);
                                             }
                                         })
                                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -358,32 +371,95 @@ public class MealListFragment extends Fragment implements NutritionTaskManager.C
 
                     popup.show();//showing popup menu
                 }
-                return false;
-            }
-        });
+                else{
+                    PopupMenu popup = new PopupMenu(act, expandableListView);
+                    popup.getMenuInflater().inflate(R.menu.remove_food_popup, popup.getMenu());
 
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v,
-                                        int groupPosition, int childPosition, long id) {
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item) {
+                            taskManager.executeDeleteFood(viewmodel.getDB(), id);
+                            return true;
+                        }
+                    });
 
+                    popup.show();//showing popup menu
+                }
 
-                Meal selectedMeal = meal_list.get(groupPosition);
-                viewmodel.setMealId(selectedMeal.id);
-
-                getActivity()
-                        .getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container_view, ViewMealFragment.class, null)
-                        .setReorderingAllowed(true)
-                        .addToBackStack("stack")
-                        .commit();
-
+                 */
                 return false;
             }
         });
         expandableListView.onRestoreInstanceState(state);
 
+    }
+
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        ExpandableListView.ExpandableListContextMenuInfo info = (ExpandableListView.ExpandableListContextMenuInfo) menuInfo;
+
+        int type = ExpandableListView.getPackedPositionType(info.packedPosition);
+
+        if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+            getActivity().getMenuInflater().inflate(R.menu.remove_food_popup, menu);
+        }
+        else{
+            getActivity().getMenuInflater().inflate(R.menu.remove_meal_popup, menu);
+        }
+
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        ExpandableListView.ExpandableListContextMenuInfo info = (ExpandableListView.ExpandableListContextMenuInfo) item.getMenuInfo();
+
+        int groupPos = 0, childPos = 0;
+        groupPos = ExpandableListView.getPackedPositionGroup(info.packedPosition);
+
+        int type = ExpandableListView.getPackedPositionType(info.packedPosition);
+        if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD)
+        {
+            childPos = ExpandableListView.getPackedPositionChild(info.packedPosition);
+            selected_id = expandableListAdapter.getChildId(groupPos, childPos);
+        }
+        else{
+            selected_id = expandableListAdapter.getGroupId(groupPos);
+        }
+
+        if (item.getTitle().equals("Remove Meal")) {
+            taskManager.executeDeleteMeal(viewmodel.getDB(), selected_id);
+        }
+        else if(item.getTitle().equals("Rename Meal")) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            AlertDialog mydialog;
+
+            builder.setTitle("New name for this meal:");
+            final EditText input = new EditText(getActivity());
+            input.setInputType(InputType.TYPE_CLASS_TEXT);
+            builder.setView(input);
+
+
+            builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            taskManager.renamemeal(viewmodel.getDB(),input.getText().toString(), selected_id);
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+
+            mydialog = builder.create();
+            mydialog.show();
+        }
+        else{
+            taskManager.executeDeleteFood(viewmodel.getDB(), selected_id);
+        }
+        return true;
     }
 
 }

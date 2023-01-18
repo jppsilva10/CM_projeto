@@ -228,8 +228,21 @@ public class NutritionTaskManager {
         executor.execute(() -> {
 
             MealDao mealDao = db.mealDao();
-
             mealDao.updateName(name,mealId);
+
+            handler.post(() -> {
+                calback.onDeleteMealComplete();
+            });
+        });
+    }
+
+    public void executeDeleteFood(AppDatabase db, long foodId){
+        executor.execute(() -> {
+
+            Meal_FoodDao meal_foodDao = db.meal_foodDao();
+            Meal_Food meal_food = meal_foodDao.loadById(foodId);
+            meal_foodDao.delete(meal_food);
+
             handler.post(() -> {
                 calback.onDeleteMealComplete();
             });
@@ -241,15 +254,8 @@ public class NutritionTaskManager {
 
             MealDao mealDao = db.mealDao();
             Meal meal = mealDao.loadById(mealId);
-
-            Meal_FoodDao meal_foodDao = db.meal_foodDao();
-            List<Meal_Food> meal_food = meal_foodDao.loadByMeal(mealId);
-
-            for(int i = 0; i < meal_food.size(); i++){
-                meal_foodDao.delete(meal_food.get(i));
-            }
-
             mealDao.delete(meal);
+
             handler.post(() -> {
                 calback.onDeleteMealComplete();
             });

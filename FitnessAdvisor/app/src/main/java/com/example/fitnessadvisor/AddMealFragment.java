@@ -155,25 +155,33 @@ public class AddMealFragment extends Fragment implements NutritionTaskManager.Ca
 
     @Override
     public void onLoadFoodComplete(List<Food> food) {
-        food_list = food;
-        MyAdapterFood myAdapter = new MyAdapterFood(getActivity().getApplicationContext(), food, -1, 100);
-        food_list_view.setAdapter(myAdapter);
-        setListListener();
+        try {
+            food_list = food;
+            MyAdapterFood myAdapter = new MyAdapterFood(getActivity().getApplicationContext(), food, -1, 100);
+            food_list_view.setAdapter(myAdapter);
+            setListListener();
+        }catch (Exception e){
+
+        }
     }
 
     @Override
     public void onInsertMealComplete(long mealId) {
-        id = mealId;
+        try {
+            id = mealId;
 
-        for(int i = 0; i < listItemsToAdd.size(); i++){
-            taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), id, listItemsToAdd.get(i).id, 100);
+            for (int i = 0; i < listItemsToAdd.size(); i++) {
+                taskManager.executeInsertFoodIntoMeal(viewmodel.getDB(), id, listItemsToAdd.get(i).id, 100);
+            }
+
+            getActivity()
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container_view, MealListFragment.class, null)
+                    .commit();
+        }catch (Exception e){
+
         }
-
-        getActivity()
-                .getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container_view, MealListFragment.class, null)
-                .commit();
     }
 
     @Override
